@@ -1,13 +1,20 @@
 package com.tretiakov.sample;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.util.Log;
 
-public class MainActivity extends AppCompatActivity {
+import com.tretiakov.absframework.abs.AbsActivity;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+import org.androidannotations.annotations.Click;
+import org.androidannotations.annotations.EActivity;
+
+@SuppressWarnings("unchecked")
+@EActivity(R.layout.activity_main)
+public class MainActivity extends AbsActivity {
+
+    @Click
+    void show() {
+        switchActivity(SecondActivity_.class, null, RESULT_REQUEST, data -> {
+            Log.d("TAG", (String) data);
+        });
     }
 }

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ru.favorme.favorme.ui.views.toolbar.Toolbar
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    app:layout_scrollFlags="enterAlways|scroll"
+    app:contentInsetStart="@null"
+    >
+
+    <ru.favorme.favorme.ui.views.Spinner
+        android:id="@+id/toolbarSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@null"
+        android:visibility="gone"
+        />
+
+    <com.tretiakov.absframework.views.text.TextView
+        android:id="@+id/toolbarTitle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:visibility="visible"
+        app:font="@string/medium"
+        />
+
+    <com.tretiakov.absframework.views.text.TextView
+        android:id="@+id/toolbarSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="?attr/actionBarSize"
+        android:layout_marginRight="?attr/actionBarSize"
+        android:textSize="16sp"
+        android:visibility="gone"
+        app:font="@string/medium"
+        />
+
+    <ImageButton
+        android:id="@+id/toolbarButton"
+        android:layout_width="?attr/actionBarSize"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_gravity="end"
+        android:contentDescription="@null"
+        />
+
+</ru.favorme.favorme.ui.views.toolbar.Toolbar>

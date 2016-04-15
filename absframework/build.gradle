@@ -1,5 +1,16 @@
 apply plugin: 'com.android.library'
+apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.novoda.bintray-release'
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.novoda:bintray-release:0.3.4'
+        classpath 'me.tatarka:gradle-retrolambda:3.2.5'
+    }
+}
 
 android {
     compileSdkVersion 23
@@ -9,7 +20,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 23
         versionCode 1
-        versionName "1.0"
+        versionName "0.0.2"
     }
     buildTypes {
         release {
@@ -25,13 +36,19 @@ android {
 
 dependencies {
     testCompile 'junit:junit:4.12'
+    compile 'com.android.support:design:23.3.0'
     compile 'com.android.support:appcompat-v7:23.3.0'
+    compile 'com.android.support:recyclerview-v7:23.3.0'
+    compile 'com.android.support:support-annotations:23.3.0'
+
+    compile 'com.annimon:stream:1.0.3'
+    compile 'io.reactivex:rxandroid:1.1.0'
 }
 
 publish {
     groupId = 'com.github.andreytretiakov'
     artifactId = 'absframework'
-    publishVersion = '1.0'
+    publishVersion = '0.0.2'
     desc = 'Abstract Android library'
     licences = ['MIT']
     website = 'https://github.com/AndreyTretiakov/absframework.git'

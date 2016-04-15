@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="Toolbar">
+        <attr name="menu_layout" format="reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="Font">
+        <attr name="font" format="integer"/>
+    </declare-styleable>
+
+</resources>
