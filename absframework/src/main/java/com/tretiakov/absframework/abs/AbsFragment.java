@@ -17,7 +17,7 @@ import java.util.HashMap;
  * @author Andrey Tretiakov. Created 4/15/2016.
  */
 @SuppressWarnings("unchecked")
-public class AbsFragment<T> extends Fragment {
+public abstract class AbsFragment<T> extends Fragment {
 
     private AbsActivity mActivity;
 
@@ -27,12 +27,6 @@ public class AbsFragment<T> extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         mActivity = (AbsActivity) context;
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mActivity = null;
     }
 
     public void setCallback(@NonNull IRouter<T> router) {
@@ -62,24 +56,41 @@ public class AbsFragment<T> extends Fragment {
         alertDialog.show();
     }
 
+    protected void showFragment(Class fragment, IRouter<T> callback) {
+        showFragment(fragment, Bundle.EMPTY, true, R.id.fragment, callback);
+    }
+
+    protected void showFragment(Class fragment, Bundle bundle, IRouter<T> callback) {
+        showFragment(fragment, bundle, true, R.id.fragment, callback);
+    }
+
     protected void showFragment(Class fragment, Bundle bundle, Boolean addToBackStack) {
-        if (mActivity != null) mActivity.showFragment(fragment, bundle, addToBackStack, R.id.fragment, null);
+        showFragment(fragment, bundle, addToBackStack, R.id.fragment, null);
+    }
+
+    protected void showFragment(Class fragment, Bundle bundle, Boolean addToBackStack, IRouter<T> callback) {
+        showFragment(fragment, bundle, addToBackStack, R.id.fragment, callback);
     }
 
     protected void showFragment(Class fragment, Bundle bundle, int id, Boolean addToBackStack) {
-        if (mActivity != null) mActivity.showFragment(fragment, bundle, addToBackStack, id, null);
+        showFragment(fragment, bundle, addToBackStack, id, null);
     }
 
-    private void showFragment(Class fragment, Bundle bundle, Boolean addToBackStack, int id, IRouter<T> callback) {
+    protected void showFragment(Class fragment, Bundle bundle, Boolean addToBackStack, int id, IRouter<T> callback) {
         if (mActivity != null) mActivity.showFragment(fragment, bundle, addToBackStack, id, callback);
     }
 
-    public void onData(@Nullable T data, boolean needBack) {
+    protected void onData(@Nullable T data, boolean needBack) {
         if (mRouter != null) {
             mRouter.onData(data);
         }
 
-        if (needBack && mActivity != null)
+        if (needBack)
+            onBackPressed();
+    }
+
+    protected void onBackPressed() {
+        if (mActivity != null)
             mActivity.onBackPressed();
     }
 

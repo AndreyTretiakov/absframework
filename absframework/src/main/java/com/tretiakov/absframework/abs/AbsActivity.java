@@ -23,7 +23,7 @@ import java.util.Map;
  * @author Andrey Tretiakov. Created 4/15/2016.
  */
 @SuppressWarnings("unchecked")
-public class AbsActivity<T> extends AppCompatActivity implements Constants {
+public abstract class AbsActivity<T> extends AppCompatActivity implements Constants {
 
     private IRouter<T> mRouter;
 
@@ -109,7 +109,6 @@ public class AbsActivity<T> extends AppCompatActivity implements Constants {
         if (router != null) f.setCallback(router);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (addToBackStack) transaction.addToBackStack(fragment.getName());
-
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaction.replace(id, f);
         transaction.commit();

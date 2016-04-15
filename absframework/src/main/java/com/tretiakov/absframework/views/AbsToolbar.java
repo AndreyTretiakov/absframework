@@ -49,6 +49,11 @@ public class AbsToolbar extends Toolbar {
         setNavigationOnClickListener(cl);
     }
 
+    public void hideBackArrow() {
+        setNavigationIcon(null);
+        setNavigationOnClickListener(null);
+    }
+
     public void setSearchMode() {
         findViewById(R.id.toolbarTitle).setVisibility(GONE);
         findViewById(R.id.toolbarSearch).setVisibility(VISIBLE);

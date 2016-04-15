@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ru.favorme.favorme.ui.views.toolbar.Toolbar
+<com.tretiakov.absframework.views.AbsToolbar
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
     app:layout_scrollFlags="enterAlways|scroll"
-    app:contentInsetStart="@null"
     >
 
-    <ru.favorme.favorme.ui.views.Spinner
+    <com.tretiakov.absframework.views.AbsSpinner
         android:id="@+id/toolbarSpinner"
         android:layout_width="wrap_content"
         android:layout_height="?attr/actionBarSize"
@@ -21,18 +20,20 @@
         android:id="@+id/toolbarTitle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center_vertical"
         android:textColor="@color/white"
         android:textSize="18sp"
         android:visibility="visible"
         app:font="@string/medium"
         />
 
-    <com.tretiakov.absframework.views.text.AbsTextView
+    <com.tretiakov.absframework.views.text.AbsEditText
         android:id="@+id/toolbarSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="?attr/actionBarSize"
         android:layout_marginRight="?attr/actionBarSize"
+        android:gravity="center_vertical"
         android:textSize="16sp"
         android:visibility="gone"
         app:font="@string/medium"
@@ -44,6 +45,8 @@
         android:layout_height="?attr/actionBarSize"
         android:layout_gravity="end"
         android:contentDescription="@null"
+        android:background="@color/transparent"
+        android:visibility="gone"
         />
 
-</ru.favorme.favorme.ui.views.toolbar.Toolbar>
+</com.tretiakov.absframework.views.AbsToolbar>

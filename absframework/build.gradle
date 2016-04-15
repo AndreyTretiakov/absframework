@@ -13,14 +13,14 @@ buildscript {
 }
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    compileSdkVersion COMPILE_SDK_VERSION as int
+    buildToolsVersion BUILD_TOOLS_VERSION
 
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 23
-        versionCode 1
-        versionName "0.0.3"
+        minSdkVersion MIN_SDK_VERSION as int
+        targetSdkVersion TARGET_SDK_VERSION as int
+        versionCode VERSION_CODE as int
+        versionName VERSION_NAME
     }
     lintOptions {
         abortOnError false
@@ -51,7 +51,7 @@ dependencies {
 publish {
     groupId = 'com.github.andreytretiakov'
     artifactId = 'absframework'
-    publishVersion = '0.0.3'
+    publishVersion = '0.0.9'
     desc = 'Abstract Android library'
     licences = ['MIT']
     website = 'https://github.com/AndreyTretiakov/absframework.git'

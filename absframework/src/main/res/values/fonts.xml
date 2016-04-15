@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="black">Roboto-Black</string>
+    <string name="black_italic">Roboto-BlackItalic</string>
     <string name="bold">Roboto-Bold</string>
+    <string name="bold_italic">Roboto-BoldItalic</string>
+    <string name="thin">Roboto-Thin</string>
+    <string name="thin_italic">Roboto-ThinItalic</string>
+    <string name="italic">Roboto-Italic</string>
     <string name="light">Roboto-Light</string>
-    <string name="medium">Roboto-Medium</string>
+    <string name="light_italic">Roboto-LightItalic</string>
     <string name="regular">Roboto-Regular</string>
 </resources>

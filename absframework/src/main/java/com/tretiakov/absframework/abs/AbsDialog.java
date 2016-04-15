@@ -14,7 +14,7 @@ import com.tretiakov.absframework.routers.IRouter;
 /**
  * @author Andrey Tretiakov. Created 4/15/2016.
  */
-public class AbsDialog<T> extends DialogFragment {
+public abstract class AbsDialog<T> extends DialogFragment {
 
     private IRouter<T> mRouter;
 
@@ -30,7 +30,7 @@ public class AbsDialog<T> extends DialogFragment {
         return dialog;
     }
 
-    public void onData(T data) {
+    public void onData(@Nullable T data) {
         if (mRouter != null) {
             mRouter.onData(data);
         }

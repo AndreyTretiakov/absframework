@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tag_action">tag_action</string>
+    <string name="tag_position">tag_position</string>
+    <string name="tag_item">tag_item</string>
+</resources>
