@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.graphics.drawable.DrawerArrowDrawable;
+import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -14,19 +15,19 @@ import com.tretiakov.absframework.R;
 /**
  * @author Andrey Tretiakov. Created 4/15/2016.
  */
-public class Toolbar extends android.support.v7.widget.Toolbar {
+public class AbsToolbar extends Toolbar {
 
     private int mMenuLayout;
 
-    public Toolbar(Context context) {
+    public AbsToolbar(Context context) {
         super(context);
     }
 
-    public Toolbar(Context context, @Nullable AttributeSet attrs) {
+    public AbsToolbar(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
 
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.Toolbar);
-        mMenuLayout = a.getResourceId(R.styleable.Toolbar_menu_layout, 0);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AbsToolbar);
+        mMenuLayout = a.getResourceId(R.styleable.AbsToolbar_menu_layout_res, 0);
         a.recycle();
 
         if (mMenuLayout != 0) inflateMenu(mMenuLayout);

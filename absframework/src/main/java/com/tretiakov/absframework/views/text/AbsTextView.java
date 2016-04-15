@@ -10,21 +10,21 @@ import com.tretiakov.absframework.R;
 /**
  * @author Andrey Tretiakov. Created 4/15/2016.
  */
-public class TextView extends android.widget.TextView {
+public class AbsTextView extends android.widget.TextView {
 
-    public TextView(@NonNull Context context) {
+    public AbsTextView(@NonNull Context context) {
         super(context);
         init(context, null);
     }
 
-    public TextView(@NonNull Context context, AttributeSet attrs) {
+    public AbsTextView(@NonNull Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
     }
 
     private void init(@NonNull Context context, AttributeSet attrs) {
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.Font);
-        String font = a.getString(R.styleable.Font_font);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AbsFont);
+        String font = a.getString(R.styleable.AbsFont_font);
         a.recycle();
 
         setTypeface(FontsHelper.getTypeFace(getContext(), "fonts/" +

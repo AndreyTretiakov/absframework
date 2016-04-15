@@ -20,7 +20,10 @@ android {
         minSdkVersion 14
         targetSdkVersion 23
         versionCode 1
-        versionName "0.0.2"
+        versionName "0.0.3"
+    }
+    lintOptions {
+        abortOnError false
     }
     buildTypes {
         release {
@@ -48,7 +51,7 @@ dependencies {
 publish {
     groupId = 'com.github.andreytretiakov'
     artifactId = 'absframework'
-    publishVersion = '0.0.2'
+    publishVersion = '0.0.3'
     desc = 'Abstract Android library'
     licences = ['MIT']
     website = 'https://github.com/AndreyTretiakov/absframework.git'

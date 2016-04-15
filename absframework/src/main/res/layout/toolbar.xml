@@ -17,7 +17,7 @@
         android:visibility="gone"
         />
 
-    <com.tretiakov.absframework.views.text.TextView
+    <com.tretiakov.absframework.views.text.AbsTextView
         android:id="@+id/toolbarTitle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -27,7 +27,7 @@
         app:font="@string/medium"
         />
 
-    <com.tretiakov.absframework.views.text.TextView
+    <com.tretiakov.absframework.views.text.AbsTextView
         android:id="@+id/toolbarSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -11,9 +11,9 @@ import com.tretiakov.absframework.routers.OnItemPositionListener;
 /**
  * @author Andrey Tretiakov. Created 4/15/2016.
  */
-public class Spinner extends AppCompatSpinner {
+public class AbsSpinner extends AppCompatSpinner {
 
-    public Spinner(Context context, AttributeSet attrs) {
+    public AbsSpinner(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 

@@ -8,7 +8,7 @@
     android:background="@drawable/toast_background"
     >
 
-    <com.tretiakov.absframework.views.text.TextView
+    <com.tretiakov.absframework.views.text.AbsTextView
         android:id="@+id/toastTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
