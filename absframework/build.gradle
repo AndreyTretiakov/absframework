@@ -51,7 +51,7 @@ dependencies {
 publish {
     groupId = 'com.github.andreytretiakov'
     artifactId = 'absframework'
-    publishVersion = '0.0.9'
+    publishVersion = '0.0.12'
     desc = 'Abstract Android library'
     licences = ['MIT']
     website = 'https://github.com/AndreyTretiakov/absframework.git'

@@ -10,4 +10,6 @@
     <string name="light">Roboto-Light</string>
     <string name="light_italic">Roboto-LightItalic</string>
     <string name="regular">Roboto-Regular</string>
+    <string name="medium">Roboto-Medium</string>
+    <string name="medium_italic">Roboto-MediumItalic</string>
 </resources>

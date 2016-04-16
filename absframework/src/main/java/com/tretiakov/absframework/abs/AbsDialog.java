@@ -8,13 +8,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.view.Window;
 
-import com.tretiakov.absframework.R;
+import com.tretiakov.absframework.constants.AbsConstants;
 import com.tretiakov.absframework.routers.IRouter;
 
 /**
  * @author Andrey Tretiakov. Created 4/15/2016.
  */
-public abstract class AbsDialog<T> extends DialogFragment {
+public abstract class AbsDialog<T> extends DialogFragment implements AbsConstants {
 
     private IRouter<T> mRouter;
 

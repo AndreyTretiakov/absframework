@@ -10,15 +10,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
-import com.tretiakov.absframework.R;
-import com.tretiakov.absframework.constants.Constants;
+import com.tretiakov.absframework.constants.AbsConstants;
 import com.tretiakov.absframework.routers.OnItemPositionListener;
 
 /**
  * @author Andrey Tretiakov. Created 4/15/2016.
  */
 @SuppressWarnings("unchecked")
-public class AbsSpinner extends AppCompatSpinner implements Constants {
+public class AbsSpinner extends AppCompatSpinner implements AbsConstants {
 
     public AbsSpinner(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -27,7 +26,7 @@ public class AbsSpinner extends AppCompatSpinner implements Constants {
     public void setDefaultAdpater(@ArrayRes int stringArray, @LayoutRes int item,
                                   @NonNull OnItemPositionListener listener) {
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter(getContext(),
-                item == Constants.NO_ID ? android.R.layout.simple_spinner_item : item,
+                item == AbsConstants.NO_ID ? android.R.layout.simple_spinner_item : item,
                 getResources().getStringArray(stringArray));
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         setAdapter(spinnerArrayAdapter);

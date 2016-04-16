@@ -9,4 +9,6 @@
     <dimen name="margin_large">32dp</dimen>
     <dimen name="margin_large1">36dp</dimen>
     <dimen name="margin_large2">30dp</dimen>
+
+    <dimen name="default_divider_height">1dp</dimen>
 </resources>

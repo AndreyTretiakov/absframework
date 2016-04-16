@@ -13,4 +13,10 @@
         <attr name="touchable" format="boolean" />
     </declare-styleable>
 
+    <declare-styleable name="AbsRecyclerView">
+        <attr name="divider_height" format="dimension"/>
+        <attr name="has_divider" format="boolean"/>
+        <attr name="has_item_animator" format="boolean"/>
+    </declare-styleable>
+
 </resources>

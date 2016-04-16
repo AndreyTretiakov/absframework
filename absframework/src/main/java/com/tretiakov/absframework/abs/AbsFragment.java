@@ -1,7 +1,6 @@
 package com.tretiakov.absframework.abs;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 
 import com.tretiakov.absframework.R;
+import com.tretiakov.absframework.constants.AbsConstants;
 import com.tretiakov.absframework.routers.IRouter;
 
 import java.util.HashMap;
@@ -17,7 +17,7 @@ import java.util.HashMap;
  * @author Andrey Tretiakov. Created 4/15/2016.
  */
 @SuppressWarnings("unchecked")
-public abstract class AbsFragment<T> extends Fragment {
+public abstract class AbsFragment<T> extends Fragment implements AbsConstants {
 
     private AbsActivity mActivity;
 

@@ -2,6 +2,7 @@ package com.tretiakov.absframework.utils;
 
 import android.annotation.SuppressLint;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,10 @@ public class Message {
 
     public static void shortToast(String msg) {
         showToast(msg, Toast.LENGTH_SHORT);
+    }
+
+    public static void shortToast(@StringRes int msg) {
+        showToast(AbsContext.getInstance().getContext().getString(msg), Toast.LENGTH_SHORT);
     }
 
     @SuppressLint("InflateParams")

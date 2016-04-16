@@ -17,7 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 
 import com.tretiakov.absframework.R;
-import com.tretiakov.absframework.constants.Constants;
+import com.tretiakov.absframework.constants.AbsConstants;
 import com.tretiakov.absframework.routers.IRouter;
 import com.tretiakov.absframework.routers.TypedFilter;
 import com.tretiakov.absframework.utils.Keyboard;
@@ -32,7 +32,7 @@ import java.util.List;
  */
 @SuppressWarnings("unchecked")
 public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
-        extends RecyclerView.Adapter<H> implements Constants {
+        extends RecyclerView.Adapter<H> implements AbsConstants {
 
     private IRouter mRouter;
     private Context mContext;
@@ -60,7 +60,7 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
         super.onAttachedToRecyclerView(recyclerView);
         mRecyclerView = recyclerView;
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            
+
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
@@ -69,7 +69,7 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
                             .findViewById(android.R.id.content));
                 }
             }
-            
+
         });
     }
 

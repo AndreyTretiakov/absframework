@@ -9,21 +9,19 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import com.tretiakov.absframework.R;
-import com.tretiakov.absframework.constants.Constants;
+import com.tretiakov.absframework.constants.AbsConstants;
 import com.tretiakov.absframework.routers.IRouter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 /**
  * @author Andrey Tretiakov. Created 4/15/2016.
  */
 @SuppressWarnings("unchecked")
-public abstract class AbsActivity<T> extends AppCompatActivity implements Constants {
+public abstract class AbsActivity<T> extends AppCompatActivity implements AbsConstants {
 
     private IRouter<T> mRouter;
 
