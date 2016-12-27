@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog;
 
 import com.tretiakov.absframework.R;
 import com.tretiakov.absframework.constants.AbsConstants;
+import com.tretiakov.absframework.context.AbsContext;
 import com.tretiakov.absframework.routers.IRouter;
 
 import java.util.HashMap;
@@ -27,6 +28,13 @@ public abstract class AbsFragment<T> extends Fragment implements AbsConstants {
     public void onAttach(Context context) {
         super.onAttach(context);
         mActivity = (AbsActivity) context;
+    }
+
+    public static AbsFragment instance(Class<? extends AbsFragment> fClass, Bundle bundle, IRouter callback) {
+        AbsFragment f = (AbsFragment) instantiate(AbsContext.getInstance().getContext(), fClass.getName());
+        f.setArguments(bundle);
+        f.setCallback(callback);
+        return f;
     }
 
     public void setCallback(@NonNull IRouter<T> router) {

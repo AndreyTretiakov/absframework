@@ -37,6 +37,16 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
         }
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
     public void startActivityAndClearStack(Class activity) {
         Intent intent = new Intent(this, activity);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
