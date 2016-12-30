@@ -37,14 +37,10 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
         }
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
+    protected void showDialog(Class dialog, Bundle bundle, IRouter<T> callback) {
+        AbsDialog d = (AbsDialog) AbsDialog.instantiate(this, dialog.getName(), bundle);
+        if (callback != null) d.setCallback(callback);
+        d.show(getSupportFragmentManager(), dialog.getName());
     }
 
     public void startActivityAndClearStack(Class activity) {

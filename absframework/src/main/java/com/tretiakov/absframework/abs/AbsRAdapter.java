@@ -2,6 +2,7 @@ package com.tretiakov.absframework.abs;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Handler;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DimenRes;
 import android.support.annotation.LayoutRes;
@@ -47,6 +48,7 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
 
     private E mFooter;
     private boolean mHasFooter;
+    private Handler mHandler = new Handler();
 
     public AbsRAdapter(Context context, List<E> items, IRouter router) {
         mInflater = LayoutInflater.from(context);
@@ -118,8 +120,10 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
         int index = mItems.indexOf(item);
         boolean result = mItems.remove(item);
 
-        if (needRefresh)
+        if (needRefresh) {
             notifyItemRemoved(index);
+            mHandler.postDelayed(this::notifyDataSetChanged, 500);
+        }
 
         return result;
     }

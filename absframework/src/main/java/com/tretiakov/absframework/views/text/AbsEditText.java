@@ -3,7 +3,9 @@ package com.tretiakov.absframework.views.text;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.AppCompatEditText;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.View;
@@ -15,7 +17,7 @@ import com.tretiakov.absframework.utils.Keyboard;
 /**
  * @author Andrey Tretiakov. Created 4/15/2016.
  */
-public class AbsEditText extends android.widget.EditText {
+public class AbsEditText extends AppCompatEditText {
 
     public interface OnSimpleTextChangeListener {
         void onTextChanged(String text);
@@ -56,6 +58,14 @@ public class AbsEditText extends android.widget.EditText {
 
         return false;
     };
+
+    public String text() {
+        return getText().toString();
+    }
+
+    public boolean isEmpty() {
+        return TextUtils.isEmpty(getText());
+    }
 
     public void setSelectableMode(View.OnClickListener cl) {
         setOnClickListener(cl);
