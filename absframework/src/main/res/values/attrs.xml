@@ -17,6 +17,9 @@
         <attr name="divider_height" format="dimension"/>
         <attr name="has_divider" format="boolean"/>
         <attr name="has_item_animator" format="boolean"/>
+        <attr name="type" format="string"/>
+        <attr name="columnCount" format="integer"/>
+        <attr name="spaceSize" format="dimension"/>
     </declare-styleable>
 
 </resources>

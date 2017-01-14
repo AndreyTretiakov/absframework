@@ -91,6 +91,11 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
         notifyItems(needRefresh);
     }
 
+    public void setItem(int location, E item, boolean needRefresh) {
+        mItems.set(location, item);
+        notifyItems(needRefresh);
+    }
+
     public void setItems(E[] items, boolean needRefresh) {
         mItems.clear();
         Collections.addAll(mItems, items);

@@ -15,6 +15,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 
 import com.annimon.stream.Stream;
@@ -59,7 +60,9 @@ public class AbsDialog<T> extends DialogFragment implements AbsConstants {
     protected void setCustomWidth(View view, int width) {
         Point point = new Point();
         getActivity().getWindowManager().getDefaultDisplay().getSize(point);
-        view.getLayoutParams().width = (int) (point.x - getContext().getResources().getDimension(width) * 2);
+        ViewGroup.LayoutParams params = view.getLayoutParams();
+        params.width = (int) (point.x - getContext().getResources().getDimension(width) * 2);
+        view.setLayoutParams(params);
     }
 
     public void onData(@Nullable T data) {
@@ -78,6 +81,14 @@ public class AbsDialog<T> extends DialogFragment implements AbsConstants {
         if (needDismiss) {
             close();
         }
+    }
+
+    public void onDataAllowingStateLoss(@Nullable T data) {
+        if (mRouter != null) {
+            mRouter.onData(data);
+        }
+
+        dismissAllowingStateLoss();
     }
 
     private void close() {

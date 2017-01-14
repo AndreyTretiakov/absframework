@@ -1,13 +1,19 @@
 package com.tretiakov.absframework.abs;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 
+import com.annimon.stream.Stream;
 import com.tretiakov.absframework.R;
 import com.tretiakov.absframework.constants.AbsConstants;
 import com.tretiakov.absframework.routers.IRouter;
@@ -24,6 +30,8 @@ import java.util.Map;
 public abstract class AbsActivity<T> extends AppCompatActivity implements AbsConstants {
 
     private IRouter<T> mRouter;
+    private IRouter<Bundle> mPermissionRouter;
+    private static final short REQUEST_PERMISSION = 1010;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -113,7 +121,6 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
         if (router != null) f.setCallback(router);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (addToBackStack) transaction.addToBackStack(fragment.getName());
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaction.replace(id, f);
         transaction.commit();
         return f;
@@ -123,5 +130,34 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
     protected void onDestroy() {
         super.onDestroy();
         mRouter = null;
+    }
+
+    public void requestPermission(IRouter<Bundle> router, String... permissions) {
+        mPermissionRouter = router;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            for (String permission : permissions) {
+                if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(this, new String[]{permission},
+                            REQUEST_PERMISSION);
+                } else {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("permission", permission);
+                    bundle.putBoolean("granted", true);
+                    mPermissionRouter.onData(bundle);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(final int requestCode, @NonNull final String[] permissions, @NonNull final int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_PERMISSION && mPermissionRouter != null) {
+            Bundle bundle = new Bundle();
+            bundle.putString("permission", permissions[0]);
+            bundle.putBoolean("granted", grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED);
+            mPermissionRouter.onData(bundle);
+        }
     }
 }

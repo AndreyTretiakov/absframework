@@ -40,5 +40,6 @@ public interface AbsConstants {
     int TEXT1 = android.R.id.text1;
     int TEXT2 = android.R.id.text2;
     int EDIT = android.R.id.edit;
+    int CONTENT = android.R.id.content;
 
 }
