@@ -42,9 +42,8 @@ public class AbsPagerAdapter<F extends Fragment> extends FragmentPagerAdapter {
         }
     }
 
-    @Nullable
     public F getItem(int position) {
-        return isEmpty() ? null : mItems.get(position);
+        return mItems.get(position);
     }
 
     @NonNull

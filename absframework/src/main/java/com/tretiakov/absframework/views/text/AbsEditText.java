@@ -34,16 +34,16 @@ public class AbsEditText extends AppCompatEditText {
     }
 
     private void init(@NonNull Context context, AttributeSet attrs) {
+        if (!isInEditMode()) {
+            TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AbsFont);
+            String font = a.getString(R.styleable.AbsFont_font);
+            a.recycle();
 
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AbsFont);
-        String font = a.getString(R.styleable.AbsFont_font);
-        a.recycle();
-
-        setTypeface(FontsHelper.getTypeFace(getContext(), "fonts/" +
-                (font == null ? "Roboto-Regular" : font) + ".ttf"));
-        setOnTouchListener(onTouch);
-        setOnEditorActionListener(onEdit);
-
+            setTypeface(FontsHelper.getTypeFace(getContext(), "fonts/" +
+                    (font == null ? "Roboto-Regular" : font) + ".ttf"));
+//        setOnTouchListener(onTouch);
+//        setOnEditorActionListener(onEdit);
+        }
     }
 
     private final OnTouchListener onTouch = (v, event) -> {

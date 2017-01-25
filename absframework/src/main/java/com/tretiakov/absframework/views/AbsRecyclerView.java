@@ -26,39 +26,41 @@ public class AbsRecyclerView extends RecyclerView {
     public AbsRecyclerView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
 
-        int verticalSpaceHeight;
-        boolean hasItemAnimator;
-        boolean hasDivider;
+        if (!isInEditMode()) {
+            int verticalSpaceHeight;
+            boolean hasItemAnimator;
+            boolean hasDivider;
 
-        String type;
-        int columnCount;
-        int spaceSize;
+            String type;
+            int columnCount;
+            int spaceSize;
 
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AbsRecyclerView);
-        verticalSpaceHeight = (int) a.getDimension(R.styleable.AbsRecyclerView_divider_height, 0);
-        hasDivider = a.getBoolean(R.styleable.AbsRecyclerView_has_divider, false);
-        hasItemAnimator = a.getBoolean(R.styleable.AbsRecyclerView_has_item_animator, false);
+            TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AbsRecyclerView);
+            verticalSpaceHeight = (int) a.getDimension(R.styleable.AbsRecyclerView_divider_height, 0);
+            hasDivider = a.getBoolean(R.styleable.AbsRecyclerView_has_divider, false);
+            hasItemAnimator = a.getBoolean(R.styleable.AbsRecyclerView_has_item_animator, false);
 
-        type = a.getString(R.styleable.AbsRecyclerView_type);
-        columnCount = a.getInt(R.styleable.AbsRecyclerView_columnCount, 0);
-        spaceSize = a.getDimensionPixelOffset(R.styleable.AbsRecyclerView_spaceSize, 0);
+            type = a.getString(R.styleable.AbsRecyclerView_type);
+            columnCount = a.getInt(R.styleable.AbsRecyclerView_columnCount, 0);
+            spaceSize = a.getDimensionPixelOffset(R.styleable.AbsRecyclerView_spaceSize, 0);
 
-        if (!TextUtils.isEmpty(type)) {
-            switch (type) {
-                case "linear":
-                    setLayoutManager(new LinearLayoutManager(getContext()));
-                    break;
-                case "grid":
-                    setLayoutManager(new GridLayoutManager(getContext(), columnCount));
-                    addItemDecoration(new ItemDecorationAlbumColumns(spaceSize, columnCount));
-                    break;
+            if (!TextUtils.isEmpty(type)) {
+                switch (type) {
+                    case "linear":
+                        setLayoutManager(new LinearLayoutManager(getContext()));
+                        break;
+                    case "grid":
+                        setLayoutManager(new GridLayoutManager(getContext(), columnCount));
+                        addItemDecoration(new ItemDecorationAlbumColumns(spaceSize, columnCount));
+                        break;
+                }
             }
-        }
-        a.recycle();
+            a.recycle();
 
-        if (hasItemAnimator) setItemAnimator(new DefaultItemAnimator());
-        if (hasDivider && verticalSpaceHeight ==0) addItemDecoration(new VerticalSpaceItemDecoration((int) getResources().getDimension(R.dimen.default_divider_height)));
-        else if (verticalSpaceHeight != 0) addItemDecoration(new VerticalSpaceItemDecoration(verticalSpaceHeight));
+            if (hasItemAnimator) setItemAnimator(new DefaultItemAnimator());
+            if (hasDivider && verticalSpaceHeight ==0) addItemDecoration(new VerticalSpaceItemDecoration((int) getResources().getDimension(R.dimen.default_divider_height)));
+            else if (verticalSpaceHeight != 0) addItemDecoration(new VerticalSpaceItemDecoration(verticalSpaceHeight));
+        }
     }
 
     private static class VerticalSpaceItemDecoration extends RecyclerView.ItemDecoration {

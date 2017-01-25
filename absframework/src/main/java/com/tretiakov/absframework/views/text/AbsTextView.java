@@ -23,11 +23,13 @@ public class AbsTextView extends android.widget.TextView {
     }
 
     private void init(@NonNull Context context, AttributeSet attrs) {
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AbsFont);
-        String font = a.getString(R.styleable.AbsFont_font);
-        a.recycle();
+        if (!isInEditMode()) {
+            TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AbsFont);
+            String font = a.getString(R.styleable.AbsFont_font);
+            a.recycle();
 
-        setTypeface(FontsHelper.getTypeFace(getContext(), "fonts/" +
-                (font == null ? "Roboto-Regular" : font) + ".ttf"));
+            setTypeface(FontsHelper.getTypeFace(getContext(), "fonts/" +
+                    (font == null ? "Roboto-Regular" : font) + ".ttf"));
+        }
     }
 }

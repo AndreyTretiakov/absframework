@@ -2,6 +2,7 @@ package com.tretiakov.absframework.abs;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DimenRes;
@@ -79,6 +80,14 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
     public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
         super.onDetachedFromRecyclerView(recyclerView);
         mRouter = null;
+    }
+
+    protected <T> void showDialog(Class dialog, Bundle bundle, IRouter<T> callback) {
+        if (mContext instanceof AbsActivity) {
+            AbsDialog d = (AbsDialog) AbsDialog.instantiate(getContext(), dialog.getName(), bundle);
+            if (callback != null) d.setCallback(callback);
+            d.show(((AbsActivity) mContext).getSupportFragmentManager(), dialog.getName());
+        }
     }
 
     public void setHasFooter(@Nullable E footer, boolean value) {
@@ -207,9 +216,10 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
 
     protected abstract void onView(H h, E item, int pos);
 
-    protected View.OnClickListener onClick = v ->
-            onData(getItem((Integer) v.getTag(R.string.tag_position)));
-    
+    protected View.OnClickListener onClick = v -> {
+        onData(getItem((Integer) v.getTag(R.string.tag_position)));
+    };
+
     /** RESOURCES METHODS */
 
     protected Context getContext() {

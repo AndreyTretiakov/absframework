@@ -140,4 +140,13 @@ public class AbsDialog<T> extends DialogFragment implements AbsConstants {
     protected int optColor(@ColorRes int color) {
         return ContextCompat.getColor(getContext(), color);
     }
+
+    @NonNull
+    protected String getAction(Bundle bundle) {
+        if (bundle == null) {
+            return "";
+        }
+
+        return bundle.getString("action", "");
+    }
 }

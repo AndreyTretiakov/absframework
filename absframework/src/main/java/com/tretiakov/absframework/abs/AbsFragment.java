@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 
 import com.tretiakov.absframework.R;
 import com.tretiakov.absframework.constants.AbsConstants;
@@ -35,6 +36,10 @@ public abstract class AbsFragment<T> extends Fragment implements AbsConstants {
         f.setArguments(bundle);
         f.setCallback(callback);
         return f;
+    }
+
+    protected void requestPermission(IRouter<Bundle> router, String... permissions) {
+        mActivity.requestPermission(router, permissions);
     }
 
     public void setCallback(@NonNull IRouter<T> router) {
@@ -100,6 +105,15 @@ public abstract class AbsFragment<T> extends Fragment implements AbsConstants {
     protected void onBackPressed() {
         if (mActivity != null)
             mActivity.onBackPressed();
+    }
+
+    @NonNull
+    protected String getAction(Bundle bundle) {
+        if (bundle == null) {
+            return "";
+        }
+
+        return bundle.getString("action", "");
     }
 
 }

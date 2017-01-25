@@ -19,8 +19,10 @@ import com.tretiakov.absframework.constants.AbsConstants;
 import com.tretiakov.absframework.routers.IRouter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -138,8 +140,7 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             for (String permission : permissions) {
                 if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(this, new String[]{permission},
-                            REQUEST_PERMISSION);
+                    ActivityCompat.requestPermissions(this, new String[]{permission}, REQUEST_PERMISSION);
                 } else {
                     Bundle bundle = new Bundle();
                     bundle.putString("permission", permission);
@@ -147,6 +148,11 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
                     mPermissionRouter.onData(bundle);
                 }
             }
+        } else {
+            Bundle bundle = new Bundle();
+            bundle.putString("permission", Arrays.toString(permissions));
+            bundle.putBoolean("granted", true);
+            mPermissionRouter.onData(bundle);
         }
     }
 
