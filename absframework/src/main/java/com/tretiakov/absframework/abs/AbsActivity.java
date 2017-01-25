@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -165,5 +166,9 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
             bundle.putBoolean("granted", grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED);
             mPermissionRouter.onData(bundle);
         }
+    }
+
+    public int optColor(@ColorRes int colorRes) {
+        return ContextCompat.getColor(this, colorRes);
     }
 }
