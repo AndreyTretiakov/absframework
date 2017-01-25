@@ -350,4 +350,8 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
         }
     }
 
+    public int optColor(@ColorRes int colorRes) {
+        return ContextCompat.getColor(getContext(), colorRes);
+    }
+
 }
