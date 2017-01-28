@@ -3,7 +3,6 @@ package com.tretiakov.absframework.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -23,10 +22,6 @@ public class Keyboard {
     public static void hide(Activity activity) {
         new Handler().postDelayed(() ->
                 activity.getWindow().setSoftInputMode(SOFT_INPUT_STATE_ALWAYS_HIDDEN), 200);
-    }
-
-    public static void hide(Fragment f) {
-        new Handler().post(() -> f.getActivity().getWindow().setSoftInputMode(SOFT_INPUT_STATE_ALWAYS_HIDDEN));
     }
 
     public static void hide(Context context, View view) {

@@ -39,7 +39,7 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (mRouter != null) {
+        if (mRouter != null && data != null) {
             if (data.hasExtra(KEY_DATA)) {
                 mRouter.onData((T) data.getExtras().get(KEY_DATA));
             } else {
