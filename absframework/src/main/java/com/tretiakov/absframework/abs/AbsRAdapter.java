@@ -82,6 +82,10 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
         mRouter = null;
     }
 
+    protected void setRouter(IRouter router) {
+        mRouter = router;
+    }
+
     protected <T> void showDialog(Class dialog, Bundle bundle, IRouter<T> callback) {
         if (mContext instanceof AbsActivity) {
             AbsDialog d = (AbsDialog) AbsDialog.instantiate(getContext(), dialog.getName(), bundle);
@@ -198,6 +202,15 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
         return false;
     }
 
+    @NonNull
+    protected String getAction(Bundle bundle) {
+        if (bundle == null) {
+            return "";
+        }
+
+        return bundle.getString("action", "");
+    }
+
     @Nullable
     protected H getHolder(int position) {
         try {
@@ -208,16 +221,29 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
         }
     }
 
+    protected <T> void showFragment(Class fragment, Bundle bundle, Boolean addToBackStack, IRouter<T> router) {
+        if (getContext() instanceof AbsActivity) {
+            ((AbsActivity) getContext()).showFragment(fragment, bundle, addToBackStack, router);
+        }
+    }
+
     @Override
     public void onBindViewHolder(H h, int position) {
         h.itemView.setTag(R.string.tag_position, position);
         onView(h, getItem(position), position);
     }
 
+    protected void notifyByPos(int pos) {
+        notifyItemChanged(pos);
+        mRecyclerView.postDelayed(() -> notifyDataSetChanged(), 300);
+    }
+
     protected abstract void onView(H h, E item, int pos);
 
     protected View.OnClickListener onClick = v -> {
-        onData(getItem((Integer) v.getTag(R.string.tag_position)));
+        int position = (int) v.getTag(R.string.tag_position);
+        E item = getItem(position);
+        onData(item);
     };
 
     /** RESOURCES METHODS */
