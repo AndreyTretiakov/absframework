@@ -61,6 +61,10 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
         finish();
     }
 
+    protected <K extends String, V> void switchActivity(Class act) {
+        switchActivity(act, null, NO_REQUEST, null);
+    }
+
     protected <K extends String, V> void switchActivity(@NonNull Class activity, @Nullable HashMap<K, V> map,
                                                         int request, @Nullable IRouter<T> router) {
         mRouter = router;
