@@ -180,4 +180,13 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
     public int optColor(@ColorRes int colorRes) {
         return ContextCompat.getColor(this, colorRes);
     }
+
+    @NonNull
+    protected String getAction(Bundle bundle) {
+        if (bundle == null) {
+            return "";
+        }
+
+        return bundle.getString("action", "");
+    }
 }
