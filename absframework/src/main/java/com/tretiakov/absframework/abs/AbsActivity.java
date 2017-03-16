@@ -117,6 +117,11 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
     }
 
     @NonNull
+    public <F extends AbsFragment> F showMenuFragment(@NonNull Class fragment, int id, @Nullable IRouter<T> router) {
+        return showFragment(fragment, Bundle.EMPTY, false, id, router);
+    }
+
+    @NonNull
     public <F extends AbsFragment> F showFragment(@NonNull Class fragment, @NonNull Bundle bundle, @NonNull Boolean addToBackStack, @Nullable IRouter<T> router) {
         return showFragment(fragment, bundle, addToBackStack, R.id.fragment, router);
     }
