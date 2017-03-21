@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -30,6 +31,8 @@ public abstract class AbsFragment<T> extends Fragment implements AbsConstants {
     private AbsActivity mActivity;
 
     private IRouter<T> mRouter;
+
+    private Handler mHandler = new Handler();
 
     @Override
     public void onAttach(Context context) {
@@ -124,6 +127,10 @@ public abstract class AbsFragment<T> extends Fragment implements AbsConstants {
 
     public int optColor(@ColorRes int colorRes) {
         return ContextCompat.getColor(getContext(), colorRes);
+    }
+
+    protected Handler getHandler() {
+        return mHandler;
     }
 
     protected void sendLocalBroadcast(Intent intent) {
