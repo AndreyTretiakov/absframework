@@ -12,6 +12,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.annimon.stream.Stream;
@@ -188,5 +189,9 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
         }
 
         return bundle.getString("action", "");
+    }
+
+    protected void sendLocalAction(@NonNull String action) {
+        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(action));
     }
 }

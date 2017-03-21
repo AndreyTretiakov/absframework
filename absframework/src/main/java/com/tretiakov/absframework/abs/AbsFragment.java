@@ -1,7 +1,9 @@
 package com.tretiakov.absframework.abs;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
@@ -126,5 +128,18 @@ public abstract class AbsFragment<T> extends Fragment implements AbsConstants {
 
     protected void sendLocalBroadcast(Intent intent) {
         LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
+    }
+
+    protected void registerLocalBroadcast(BroadcastReceiver receiver, String... actions) {
+        IntentFilter filter = new IntentFilter();
+        for (String action : actions) {
+            filter.addAction(action);
+        }
+
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(receiver, filter);
+    }
+
+    protected void unregisterLocalBroadcast(BroadcastReceiver receiver) {
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(receiver);
     }
 }
