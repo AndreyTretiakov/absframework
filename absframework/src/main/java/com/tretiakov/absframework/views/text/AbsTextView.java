@@ -3,6 +3,7 @@ package com.tretiakov.absframework.views.text;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 
 import com.tretiakov.absframework.R;
@@ -10,7 +11,7 @@ import com.tretiakov.absframework.R;
 /**
  * @author Andrey Tretiakov. Created 4/15/2016.
  */
-public class AbsTextView extends android.widget.TextView {
+public class AbsTextView extends AppCompatTextView {
 
     public AbsTextView(@NonNull Context context) {
         super(context);
@@ -31,5 +32,13 @@ public class AbsTextView extends android.widget.TextView {
             setTypeface(FontsHelper.getTypeFace(getContext(), "fonts/" +
                     (font == null ? "Roboto-Regular" : font) + ".ttf"));
         }
+    }
+
+    public void setMediumFont() {
+        setTypeface(FontsHelper.getTypeFace(getContext(), "fonts/Roboto-Medium.ttf"));
+    }
+
+    public void setRegularFont() {
+        setTypeface(FontsHelper.getTypeFace(getContext(), "fonts/Roboto-Regular.ttf"));
     }
 }
