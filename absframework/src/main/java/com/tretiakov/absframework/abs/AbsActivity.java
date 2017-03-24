@@ -194,4 +194,8 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
     protected void sendLocalAction(@NonNull String action) {
         LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(action));
     }
+
+    protected void sendLocalBroadcast(@NonNull Intent intent) {
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+    }
 }
