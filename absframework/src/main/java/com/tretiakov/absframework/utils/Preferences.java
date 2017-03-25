@@ -31,6 +31,14 @@ public class Preferences {
         return mInstance;
     }
 
+    public static String getPrimaryOwnerID() {
+        return Preferences.getString(null, "primary_owner_id");
+    }
+
+    public static void setPrimaryOwnerID(String id) {
+        Preferences.saveString(null, "primary_owner_id", id);
+    }
+
     public static boolean has(String ownerId, String key, Class c) {
         if (c == String.class) {
             String o = getInstance().mPreferences.getString(ownerId == null ? key : ownerId + ":" + key, null);
