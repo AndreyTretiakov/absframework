@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="black">Roboto-Black</string>
-    <string name="black_italic">Roboto-BlackItalic</string>
-    <string name="bold">Roboto-Bold</string>
-    <string name="bold_italic">Roboto-BoldItalic</string>
-    <string name="thin">Roboto-Thin</string>
-    <string name="thin_italic">Roboto-ThinItalic</string>
-    <string name="italic">Roboto-Italic</string>
-    <string name="light">Roboto-Light</string>
-    <string name="light_italic">Roboto-LightItalic</string>
-    <string name="regular">Roboto-Regular</string>
-    <string name="medium">Roboto-Medium</string>
-    <string name="medium_italic">Roboto-MediumItalic</string>
+    <string translatable="false" name="black">Roboto-Black</string>
+    <string translatable="false" name="black_italic">Roboto-BlackItalic</string>
+    <string translatable="false" name="bold">Roboto-Bold</string>
+    <string translatable="false" name="bold_italic">Roboto-BoldItalic</string>
+    <string translatable="false" name="thin">Roboto-Thin</string>
+    <string translatable="false" name="thin_italic">Roboto-ThinItalic</string>
+    <string translatable="false" name="italic">Roboto-Italic</string>
+    <string translatable="false" name="light">Roboto-Light</string>
+    <string translatable="false" name="light_italic">Roboto-LightItalic</string>
+    <string translatable="false" name="regular">Roboto-Regular</string>
+    <string translatable="false" name="medium">Roboto-Medium</string>
+    <string translatable="false" name="medium_italic">Roboto-MediumItalic</string>
 </resources>
