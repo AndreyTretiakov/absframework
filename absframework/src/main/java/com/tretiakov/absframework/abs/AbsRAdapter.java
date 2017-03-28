@@ -38,7 +38,7 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
 
     private IRouter mRouter;
     private Context mContext;
-    private List<E> mItems;
+    protected List<E> mItems;
     private LayoutInflater mInflater;
     private RecyclerView mRecyclerView;
 
