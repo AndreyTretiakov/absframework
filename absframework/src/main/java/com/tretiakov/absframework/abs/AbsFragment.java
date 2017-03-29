@@ -55,6 +55,10 @@ public abstract class AbsFragment<T> extends Fragment implements AbsConstants {
         mRouter = router;
     }
 
+    protected <K extends String, V> void switchActivity(@NonNull Class activity) {
+        if (mActivity != null) mActivity.switchActivity(activity, null, NO_REQUEST, null);
+    }
+
     protected <K extends String, V> void switchActivity(@NonNull Class activity, @Nullable HashMap<K, V> map,
                                                         int request, @Nullable IRouter<T> router) {
         if (mActivity != null) mActivity.switchActivity(activity, map, request, router);

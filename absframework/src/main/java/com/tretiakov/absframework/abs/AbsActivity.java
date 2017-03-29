@@ -10,11 +10,14 @@ import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 
+import com.annimon.stream.Objects;
 import com.annimon.stream.Stream;
 import com.tretiakov.absframework.R;
 import com.tretiakov.absframework.constants.AbsConstants;
@@ -197,5 +200,18 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
 
     protected void sendLocalBroadcast(@NonNull Intent intent) {
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+    }
+
+    protected boolean hasFragment(Class o) {
+        List<Fragment> fs = getSupportFragmentManager().getFragments();
+        if (fs != null) {
+            for (Fragment f : fs) {
+                if (f != null && TextUtils.equals(f.getClass().getName(), o.getName())) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }
