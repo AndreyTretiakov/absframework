@@ -12,4 +12,8 @@ public class Utils {
     public static List emptyList() {
         return new ArrayList();
     }
+
+    public static Object[] toArray(Object... objects) {
+        return objects;
+    }
 }
