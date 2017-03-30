@@ -150,8 +150,10 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
         if (mItems != null && !mItems.isEmpty() && position < mItems.size())
             mItems.remove(position);
 
-        if (needRefresh)
+        if (needRefresh) {
             notifyItemRemoved(position);
+            mHandler.postDelayed(this::notifyDataSetChanged, 500);
+        }
     }
 
     public void clear(boolean needRefresh) {
