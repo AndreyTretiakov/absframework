@@ -104,6 +104,13 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
         notifyItems(needRefresh);
     }
 
+    public void clearFilter() {
+        mOriginalValues = null;
+        mFilter = null;
+        mPrefix = null;
+        notifyDataSetChanged();
+    }
+
     public void setItem(int location, E item, boolean needRefresh) {
         mItems.set(location, item);
         notifyItems(needRefresh);
@@ -311,6 +318,10 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
         @NonNull
         protected FilterResults performFiltering(@Nullable CharSequence prefix) {
             FilterResults results = new FilterResults();
+
+            if (mOriginalValues == null) {
+                return results;
+            }
 
             if (prefix == null || prefix.length() == 0) {
                 results.values = mOriginalValues;
