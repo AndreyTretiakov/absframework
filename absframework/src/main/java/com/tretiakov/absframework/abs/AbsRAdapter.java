@@ -12,6 +12,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,8 +48,6 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
     private ArrayFilter mFilter;
     private int mSearchMode;
 
-    private E mFooter;
-    private boolean mHasFooter;
     private Handler mHandler = new Handler();
 
     public AbsRAdapter(Context context, List<E> items, IRouter router) {
@@ -82,6 +81,15 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
         mRouter = null;
     }
 
+    @Override
+    public int getItemCount() {
+        return mItems.size();
+    }
+
+    public E getItem(int position) {
+        return mItems.get(position);
+    }
+
     protected void setRouter(IRouter router) {
         mRouter = router;
     }
@@ -94,21 +102,10 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
         }
     }
 
-    public void setHasFooter(@Nullable E footer, boolean value) {
-        mHasFooter = value;
-        if (value) mFooter = footer;
-    }
-
     public void setItems(List<E> items, boolean needRefresh) {
         mItems = items;
+        mOriginalValues = mItems;
         notifyItems(needRefresh);
-    }
-
-    public void clearFilter() {
-        mOriginalValues = null;
-        mFilter = null;
-        mPrefix = null;
-        notifyDataSetChanged();
     }
 
     public void setItem(int location, E item, boolean needRefresh) {
@@ -170,23 +167,22 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
         }
     }
 
-    protected void notifyItems(boolean needRefresh) {
-        if (needRefresh)
+    public void reverse() {
+        if (mItems != null) {
+            Collections.reverse(mItems);
+        }
+
+        if (mOriginalValues != null && mOriginalValues != mItems) {
+            Collections.reverse(mOriginalValues);
+        }
+
+        notifyDataSetChanged();
+    }
+
+    private void notifyItems(boolean needRefresh) {
+        if (needRefresh) {
             notifyDataSetChanged();
-    }
-
-    @Override
-    public int getItemCount() {
-        return mItems.size() + (mHasFooter ? 1 : 0);
-    }
-
-    public E getItem(int position) {
-        return position == getItemCount() ? mFooter : mItems.get(position);
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        return mHasFooter ? position == mItems.size() ? FOOTER : ITEM : super.getItemViewType(position);
+        }
     }
 
     @NonNull
@@ -239,7 +235,7 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
     @Override
     public void onBindViewHolder(H h, int position) {
         h.itemView.setTag(R.string.tag_position, position);
-        onView(h, getItem(position), position);
+        onView(h, mItems.get(position), position);
     }
 
     protected void notifyByPos(int pos) {
@@ -251,7 +247,7 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
 
     protected View.OnClickListener onClick = v -> {
         int position = (int) v.getTag(R.string.tag_position);
-        E item = getItem(position);
+        E item = mItems.get(position);
         onData(item);
     };
 
@@ -307,33 +303,30 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
         return mFilter;
     }
 
-    private class ArrayFilter extends Filter {
+    private final class ArrayFilter extends Filter {
 
         ArrayFilter() {
-            if (mOriginalValues == null) {
-                mOriginalValues = new ArrayList<>(mItems);
-            }
+            updateFilter();
+        }
+
+        void updateFilter() {
+            mOriginalValues = new ArrayList<E>(mItems);
         }
 
         @NonNull
         protected FilterResults performFiltering(@Nullable CharSequence prefix) {
             FilterResults results = new FilterResults();
 
-            if (mOriginalValues == null) {
-                return results;
-            }
-
-            if (prefix == null || prefix.length() == 0) {
+            if (TextUtils.isEmpty(prefix)) {
                 results.values = mOriginalValues;
                 results.count = mOriginalValues.size();
             } else {
                 String prefixString = prefix.toString().toLowerCase();
 
-                ArrayList<E> values = new ArrayList<>(mOriginalValues);
-                final ArrayList<E> newValues = new ArrayList<>();
+                ArrayList<E> newValues = new ArrayList<>();
+                for (E value : mOriginalValues) {
+                    String valueText;
 
-                for (final E value : values) {
-                    final String valueText;
                     if (value instanceof TypedFilter) {
                         valueText = ((TypedFilter) value).getSearchable().toLowerCase();
                     } else {
@@ -341,6 +334,7 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
                     }
 
                     switch (mSearchMode) {
+
                         case MODE_SEARCH_START: {
                             if (valueText.startsWith(prefixString)) {
                                 newValues.add(value);
@@ -375,7 +369,7 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
                     }
                 }
 
-                results.values = newValues;
+                results.values = new ArrayList<>(newValues);
                 results.count = newValues.size();
             }
 

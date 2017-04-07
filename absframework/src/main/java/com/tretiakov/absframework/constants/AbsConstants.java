@@ -18,13 +18,6 @@ public interface AbsConstants {
     @Retention(RetentionPolicy.SOURCE)
     @interface SearchMode {}
 
-    int HEADER = 0;
-    int ITEM = 1;
-    int FOOTER = 2;
-    @IntDef({HEADER, ITEM, FOOTER})
-    @Retention(RetentionPolicy.SOURCE)
-    @interface ItemType {}
-
     int NO_ID = -1;
     int NO_REQUEST = -1;
     int RESULT_REQUEST = 1;
