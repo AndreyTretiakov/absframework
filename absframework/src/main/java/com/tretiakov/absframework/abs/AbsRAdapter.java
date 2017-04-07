@@ -46,7 +46,7 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
     private String mPrefix = "";
     private List<E> mOriginalValues;
     private ArrayFilter mFilter;
-    private int mSearchMode;
+    private int mSearchMode = MODE_SEARCH_ALL;
 
     private Handler mHandler = new Handler();
 
