@@ -13,7 +13,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
-import android.text.TextUtils;
 
 import com.tretiakov.absframework.R;
 import com.tretiakov.absframework.constants.AbsConstants;
@@ -103,7 +102,7 @@ public abstract class AbsFragment<T> extends Fragment implements AbsConstants {
     }
 
     protected void showFragment(Class fragment, Bundle bundle, Boolean addToBackStack, int id, IRouter<T> callback) {
-        if (mActivity != null) mActivity.showFragment(fragment, bundle, addToBackStack, id, callback);
+        if (mActivity != null) mActivity.replaceFragment(fragment, bundle, addToBackStack, id, callback);
     }
 
     protected void onData(@Nullable T data, boolean needBack) {

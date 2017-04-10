@@ -1,6 +1,5 @@
 package com.tretiakov.absframework.abs;
 
-import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -16,9 +15,9 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.Window;
+import android.view.WindowManager;
 
-import com.annimon.stream.Objects;
-import com.annimon.stream.Stream;
 import com.tretiakov.absframework.R;
 import com.tretiakov.absframework.constants.AbsConstants;
 import com.tretiakov.absframework.routers.IRouter;
@@ -122,22 +121,34 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
 
     @NonNull
     public <F extends AbsFragment> F showMenuFragment(@NonNull Class fragment, int id, @Nullable IRouter<T> router) {
-        return showFragment(fragment, Bundle.EMPTY, false, id, router);
+        return replaceFragment(fragment, Bundle.EMPTY, false, id, router);
     }
 
     @NonNull
-    public <F extends AbsFragment> F showFragment(@NonNull Class fragment, @NonNull Bundle bundle, @NonNull Boolean addToBackStack, @Nullable IRouter<T> router) {
-        return showFragment(fragment, bundle, addToBackStack, R.id.fragment, router);
+    public <F extends AbsFragment> F replaceFragment(@NonNull Class fragment, @NonNull Bundle bundle, @NonNull Boolean addToBackStack, @Nullable IRouter<T> router) {
+        return replaceFragment(fragment, bundle, addToBackStack, R.id.fragment, router);
     }
 
     @NonNull
-    public <F extends AbsFragment> F showFragment(@NonNull Class fragment, @NonNull Bundle bundle,
-                                                  @NonNull Boolean addToBackStack, int id, @Nullable IRouter<T> router) {
+    public <F extends AbsFragment> F replaceFragment(@NonNull Class fragment, @NonNull Bundle bundle,
+                                                     @NonNull Boolean addToBackStack, int id, @Nullable IRouter<T> router) {
         F f = (F) AbsFragment.instantiate(this, fragment.getName(), bundle);
         if (router != null) f.setCallback(router);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (addToBackStack) transaction.addToBackStack(fragment.getName());
         transaction.replace(id, f);
+        transaction.commit();
+        return f;
+    }
+
+    @NonNull
+    public <F extends AbsFragment> F addFragment(@NonNull Class fragment, @NonNull Bundle bundle,
+                                                  @NonNull Boolean addToBackStack, int id, @Nullable IRouter<T> router) {
+        F f = (F) AbsFragment.instantiate(this, fragment.getName(), bundle);
+        if (router != null) f.setCallback(router);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        if (addToBackStack) transaction.addToBackStack(fragment.getName());
+        transaction.add(id, f);
         transaction.commit();
         return f;
     }
@@ -213,5 +224,18 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
         }
 
         return false;
+    }
+
+    protected void setStatusBarColor(@ColorRes int color) {
+        Window window = getWindow();
+
+        // clear FLAG_TRANSLUCENT_STATUS flag:
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+        // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
+        // finally change the color
+        window.setStatusBarColor(ContextCompat.getColor(this, color));
     }
 }

@@ -228,7 +228,7 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
 
     protected <T> void showFragment(Class fragment, Bundle bundle, Boolean addToBackStack, IRouter<T> router) {
         if (getContext() instanceof AbsActivity) {
-            ((AbsActivity) getContext()).showFragment(fragment, bundle, addToBackStack, router);
+            ((AbsActivity) getContext()).replaceFragment(fragment, bundle, addToBackStack, router);
         }
     }
 
