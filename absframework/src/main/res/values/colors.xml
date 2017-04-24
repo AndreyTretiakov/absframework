@@ -4,8 +4,16 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="textPrimary">#000000</color>
+    <color name="textSecondary">#909499</color>
+    <color name="textPrimaryLight">#d9d8d1</color>
+    <color name="textSecondaryLight">#999890</color>
+
     <color name="white">#fff</color>
 
     <color name="transparent">#0000</color>
     <color name="transparent_black">#8000</color>
+    <color name="gray_transparent3">#7dcccccc</color>
+
+    <color name="material_blue">#2196F3</color>
 </resources>
