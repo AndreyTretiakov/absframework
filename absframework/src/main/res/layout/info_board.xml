@@ -3,6 +3,7 @@
     android:id="@+id/info_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/gray_light"
     >
 
     <android.support.v7.widget.CardView
@@ -21,7 +22,7 @@
             >
 
             <com.tretiakov.absframework.views.text.AbsTextView
-                android:id="@+id/title"
+                android:id="@+id/info_title"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:paddingLeft="16dp"
@@ -36,7 +37,7 @@
                 />
 
             <com.tretiakov.absframework.views.text.AbsTextView
-                android:id="@+id/sub_title"
+                android:id="@+id/info_sub_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="48dp"
@@ -49,13 +50,14 @@
                 />
 
             <ImageButton
-                android:id="@+id/close"
+                android:id="@+id/info_close"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:src="@drawable/ic_action_close"
                 android:background="@drawable/button_selector"
+                android:visibility="gone"
                 />
 
         </RelativeLayout>
