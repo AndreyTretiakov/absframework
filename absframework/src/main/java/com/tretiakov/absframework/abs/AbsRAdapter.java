@@ -216,7 +216,7 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
         try {
             return (H) mRecyclerView.getChildViewHolder(mRecyclerView.getChildAt(position));
         } catch (NullPointerException e) {
-            Log.e(AbsRAdapter.class.getSimpleName(), e.getMessage());
+            e.printStackTrace();
             return null;
         }
     }
