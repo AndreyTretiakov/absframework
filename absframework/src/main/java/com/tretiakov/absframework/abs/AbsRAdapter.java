@@ -216,7 +216,7 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
         try {
             return (H) mRecyclerView.getChildViewHolder(mRecyclerView.getChildAt(position));
         } catch (NullPointerException e) {
-            Log.e(AbsRAdapter.class.getSimpleName(), e.getMessage());
+            e.printStackTrace();
             return null;
         }
     }
@@ -235,7 +235,7 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
 
     protected void notifyByPos(int pos) {
         notifyItemChanged(pos);
-        mRecyclerView.postDelayed(() -> notifyDataSetChanged(), 300);
+        mRecyclerView.postDelayed(() -> notifyDataSetChanged(), 500);
     }
 
     protected abstract void onView(H h, E item, int pos);
