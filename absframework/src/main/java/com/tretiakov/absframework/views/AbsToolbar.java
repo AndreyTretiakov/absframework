@@ -43,7 +43,7 @@ public class AbsToolbar extends Toolbar {
 
     public void setArrow(View.OnClickListener cl) {
         DrawerArrowDrawable arrow = new DrawerArrowDrawable(getContext());
-        arrow.setColor(ContextCompat.getColor(getContext(), R.color.white));
+        arrow.setColor(ContextCompat.getColor(getContext(), R.color.colorIconDark));
         arrow.setProgress(1);
         setNavigationIcon(arrow);
         setNavigationOnClickListener(cl);

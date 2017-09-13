@@ -29,6 +29,10 @@ public class Message {
         showToast(AbsContext.getInstance().getContext().getString(msg), Toast.LENGTH_LONG);
     }
 
+    public static void longToast(String msg) {
+        showToast(msg, Toast.LENGTH_LONG);
+    }
+
     @SuppressLint("InflateParams")
     private static void showToast(@Nullable String msg, int duration) {
         if (msg == null || msg.isEmpty())
