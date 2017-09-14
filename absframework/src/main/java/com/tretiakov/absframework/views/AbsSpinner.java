@@ -23,7 +23,7 @@ public class AbsSpinner extends AppCompatSpinner implements AbsConstants {
         super(context, attrs);
     }
 
-    public void setDefaultAdpater(@ArrayRes int stringArray, @LayoutRes int item,
+    public void setDefaultAdapter(@ArrayRes int stringArray, @LayoutRes int item,
                                   @NonNull OnItemPositionListener listener) {
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter(getContext(),
                 item == AbsConstants.NO_ID ? android.R.layout.simple_spinner_item : item,
