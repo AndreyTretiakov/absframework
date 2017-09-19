@@ -140,7 +140,7 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
 
         if (needRefresh) {
             notifyItemRemoved(index);
-            mHandler.postDelayed(this::notifyDataSetChanged, 500);
+            mHandler.postDelayed(this::notifyDataSetChanged, 600);
         }
 
         return result;
@@ -235,7 +235,12 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
 
     protected void notifyByPos(int pos) {
         notifyItemChanged(pos);
-        mRecyclerView.postDelayed(() -> notifyDataSetChanged(), 400);
+        mRecyclerView.postDelayed(() -> notifyDataSetChanged(), 500);
+    }
+
+    protected void notifyByPos(int pos, int delay) {
+        notifyItemChanged(pos);
+        mRecyclerView.postDelayed(() -> notifyDataSetChanged(), delay);
     }
 
     protected abstract void onView(H h, E item, int pos);
