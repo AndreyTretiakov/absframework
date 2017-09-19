@@ -23,6 +23,12 @@ public class AbsEditText extends AppCompatEditText {
         void onTextChanged(String text);
     }
 
+    public interface OnAdapterTextChangeListener {
+        void onTextChanged(AbsEditText view, String text);
+    }
+
+    private OnAdapterTextChangeListener mAdapterListener;
+
     public AbsEditText(@NonNull Context context) {
         super(context);
         init(context, null);
@@ -63,6 +69,12 @@ public class AbsEditText extends AppCompatEditText {
         return getText().toString();
     }
 
+    public void setTextBlockListener(String text) {
+        removeTextChangedListener(mAdapterWatcher);
+        super.setText(text);
+        addTextChangedListener(mAdapterWatcher);
+    }
+
     public boolean isEmpty() {
         return TextUtils.isEmpty(getText());
     }
@@ -97,4 +109,27 @@ public class AbsEditText extends AppCompatEditText {
             }
         });
     }
+
+    public void setOnAdapterTextChangeListener(@NonNull OnAdapterTextChangeListener listener) {
+        mAdapterListener = listener;
+        addTextChangedListener(mAdapterWatcher);
+    }
+
+    private TextWatcher mAdapterWatcher = new TextWatcher() {
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            mAdapterListener.onTextChanged(AbsEditText.this, s.toString());
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
 }
