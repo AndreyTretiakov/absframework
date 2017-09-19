@@ -5,6 +5,8 @@ import android.content.res.TypedArray;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.Editable;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
@@ -18,6 +20,8 @@ import com.tretiakov.absframework.utils.Keyboard;
  * @author Andrey Tretiakov. Created 4/15/2016.
  */
 public class AbsEditText extends AppCompatEditText {
+
+    private String pattern;
 
     public interface OnSimpleTextChangeListener {
         void onTextChanged(String text);
@@ -64,6 +68,11 @@ public class AbsEditText extends AppCompatEditText {
 
         return false;
     };
+
+    public void setPattern(String pattern) {
+        this.pattern = pattern;
+        setFilters(new InputFilter[] {filter});
+    }
 
     public String text() {
         return getText().toString();
@@ -130,6 +139,17 @@ public class AbsEditText extends AppCompatEditText {
         @Override
         public void afterTextChanged(Editable s) {
 
+        }
+    };
+
+    InputFilter filter = new InputFilter() {
+        public CharSequence filter(CharSequence source, int start, int end,
+                                   Spanned dest, int dstart, int dend) {
+            if (pattern != null && !source.toString().matches(pattern) && !source.toString().startsWith(".")) {
+                return "";
+            }
+
+            return null;
         }
     };
 }
