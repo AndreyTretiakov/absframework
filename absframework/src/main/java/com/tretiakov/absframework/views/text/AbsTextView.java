@@ -35,10 +35,12 @@ public class AbsTextView extends AppCompatTextView {
             TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AbsFont);
             String font = a.getString(R.styleable.AbsFont_font);
 
+            CharSequence title = a.getText(R.styleable.AbsFont__title);
             CharSequence subtitle = a.getText(R.styleable.AbsFont__subtitle);
             if (subtitle != null) {
-                CharSequence title = a.getText(R.styleable.AbsFont__title);
-                setSubtitle(context, title, subtitle, font);
+                setSubtitle(title, subtitle, font);
+            } else if (title != null){
+                setText(title);
             }
 
             a.recycle();
@@ -48,7 +50,11 @@ public class AbsTextView extends AppCompatTextView {
         }
     }
 
-    private void setSubtitle(Context context, CharSequence title, CharSequence subtitle, String font) {
+    public void setSubtitle(CharSequence subtitle) {
+        setSubtitle(getText(), subtitle, null);
+    }
+
+    private void setSubtitle(CharSequence title, CharSequence subtitle, String font) {
         int subtitleStart;
         SpannableStringBuilder builder = new SpannableStringBuilder(title);
 
@@ -59,7 +65,7 @@ public class AbsTextView extends AppCompatTextView {
         builder.append("\n");
         subtitleStart = builder.length();
         builder.append(subtitle);
-        builder.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.textSecondary)), subtitleStart, builder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        builder.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getContext(), R.color.textSecondary)), subtitleStart, builder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         builder.setSpan(new RelativeSizeSpan(0.7f), subtitleStart, builder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         setText(builder);
     }

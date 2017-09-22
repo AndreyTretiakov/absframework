@@ -100,6 +100,14 @@ public abstract class AbsFragment<T> extends Fragment implements AbsConstants {
         if (mActivity != null) mActivity.showFragment(fragment, bundle, addToBackStack, id, callback);
     }
 
+    protected void addFragment(Class fragment, Bundle bundle, Boolean addToBackStack, IRouter<T> callback) {
+        addFragment(fragment, bundle, addToBackStack, R.id.fragment, callback);
+    }
+
+    protected void addFragment(Class fragment, Bundle bundle, Boolean addToBackStack, int id, IRouter<T> callback) {
+        if (mActivity != null) mActivity.addFragment(fragment, bundle, addToBackStack, id, callback);
+    }
+
     protected void onData(@Nullable T data, boolean needBack) {
         if (mRouter != null) {
             mRouter.onData(data);

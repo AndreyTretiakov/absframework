@@ -139,6 +139,18 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
         return f;
     }
 
+    @NonNull
+    public <F extends AbsFragment> F addFragment(@NonNull Class fragment, @NonNull Bundle bundle,
+                                                  @NonNull Boolean addToBackStack, int id, @Nullable IRouter<T> router) {
+        F f = (F) AbsFragment.instantiate(this, fragment.getName(), bundle);
+        if (router != null) f.setCallback(router);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        if (addToBackStack) transaction.addToBackStack(fragment.getName());
+        transaction.add(id, f);
+        transaction.commit();
+        return f;
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
