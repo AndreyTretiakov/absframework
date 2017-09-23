@@ -7,6 +7,8 @@ import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.graphics.drawable.DrawerArrowDrawable;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -38,6 +40,10 @@ public class AbsToolbar extends Toolbar {
     }
 
     public void setTitle(String title) {
+        ((android.widget.TextView) findViewById(R.id.toolbarTitle)).setText(title);
+    }
+
+    public void setTitle(SpannableStringBuilder title) {
         ((android.widget.TextView) findViewById(R.id.toolbarTitle)).setText(title);
     }
 
