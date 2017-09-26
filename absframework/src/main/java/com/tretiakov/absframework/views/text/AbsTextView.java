@@ -50,6 +50,16 @@ public class AbsTextView extends AppCompatTextView {
         }
     }
 
+    public void setTitle(CharSequence title) {
+        String[] parts = getText().toString().split("\n");
+        parts[0] = title.toString();
+        if (parts.length == 2) {
+            setSubtitle(parts[0], parts[1], null);
+        } else {
+            setText(parts[0]);
+        }
+    }
+
     public void setSubtitle(CharSequence subtitle) {
         setSubtitle(getText(), subtitle, null);
     }
