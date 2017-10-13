@@ -227,6 +227,12 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
         }
     }
 
+    protected <T> void addFragment(Class fragment, Bundle bundle, Boolean addToBackStack, IRouter<T> router) {
+        if (getContext() instanceof AbsActivity) {
+            ((AbsActivity) getContext()).addFragment(fragment, bundle, addToBackStack, R.id.fragment, router);
+        }
+    }
+
     @Override
     public void onBindViewHolder(H h, int position) {
         h.itemView.setTag(R.string.tag_position, position);
