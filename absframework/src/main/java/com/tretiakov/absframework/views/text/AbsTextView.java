@@ -64,6 +64,10 @@ public class AbsTextView extends AppCompatTextView {
         setSubtitle(getText(), subtitle, null);
     }
 
+    public void setTitleSubtitle(CharSequence title, CharSequence subtitle) {
+        setSubtitle(title, subtitle, null);
+    }
+
     private void setSubtitle(CharSequence title, CharSequence subtitle, String font) {
         int subtitleStart;
         SpannableStringBuilder builder = new SpannableStringBuilder(title);

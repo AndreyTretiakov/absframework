@@ -8,11 +8,18 @@
     <color name="textSecondary">#909499</color>
     <color name="textPrimaryLight">#d9d8d1</color>
     <color name="textSecondaryLight">#999890</color>
+    <color name="textBluePrimary">#fff8c6</color>
+    <color name="textGreenPrimary">#1a6c09</color>
+    <color name="textYellowPrimary">#6c6209</color>
+
 
     <color name="white">#fff</color>
 
     <color name="transparent">#0000</color>
     <color name="transparent_black">#8000</color>
+    <color name="transparent_blue">#da2196f3</color>
+    <color name="transparent_green">#da3df321</color>
+    <color name="transparent_yellow">#daf3de21</color>
     <color name="gray_light">#c2c2c2</color>
     <color name="gray_transparent3">#7dcccccc</color>
     <color name="colorIconDark">#262626</color>

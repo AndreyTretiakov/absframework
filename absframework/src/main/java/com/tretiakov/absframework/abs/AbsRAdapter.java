@@ -121,6 +121,14 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
             notifyItemInserted(mItems.size());
     }
 
+    public void addItem(int position, E item, boolean needRefresh) {
+        mItems.add(position, item);
+        if (needRefresh) {
+            notifyItemInserted(position);
+            mHandler.postDelayed(this::notifyDataSetChanged, 500);
+        }
+    }
+
     public void addItems(E[] items, boolean needRefresh) {
         Collections.addAll(mItems, items);
         notifyItems(needRefresh);
