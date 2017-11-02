@@ -264,7 +264,7 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
 
     protected void notifyByPos(int pos, int delay) {
         notifyItemChanged(pos);
-        mRecyclerView.postDelayed(() -> notifyDataSetChanged(), delay);
+//        mRecyclerView.postDelayed(() -> notifyDataSetChanged(), delay);
     }
 
     protected abstract void onView(H h, E item, int pos);
