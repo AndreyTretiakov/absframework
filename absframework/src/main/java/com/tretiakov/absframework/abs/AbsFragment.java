@@ -151,4 +151,8 @@ public abstract class AbsFragment<T> extends Fragment implements AbsConstants {
     protected void unregisterLocalBroadcast(BroadcastReceiver receiver) {
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(receiver);
     }
+
+    protected void runOnUiThread(Runnable action) {
+        getActivity().runOnUiThread(action);
+    }
 }
