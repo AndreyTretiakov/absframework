@@ -152,11 +152,11 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
         return f;
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mRouter = null;
-    }
+//    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+//        mRouter = null;
+//    }
 
     public void requestPermission(IRouter<Bundle> router, String... permissions) {
         mPermissionRouter = router;
