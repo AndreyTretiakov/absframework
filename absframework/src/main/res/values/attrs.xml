@@ -6,7 +6,7 @@
     </declare-styleable>
 
     <declare-styleable name="AbsFont">
-        <attr name="font" format="integer"/>
+        <attr name="_font" format="integer"/>
         <attr name="_title" format="reference"/>
         <attr name="_subtitle" format="reference"/>
     </declare-styleable>

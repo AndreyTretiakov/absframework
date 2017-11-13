@@ -24,7 +24,7 @@
         android:textColor="@color/white"
         android:textSize="18sp"
         android:visibility="visible"
-        app:font="@string/medium"
+        app:_font="@string/medium"
         />
 
     <com.tretiakov.absframework.views.text.AbsEditText
@@ -36,7 +36,7 @@
         android:gravity="center_vertical"
         android:textSize="16sp"
         android:visibility="gone"
-        app:font="@string/medium"
+        app:_font="@string/medium"
         />
 
     <ImageButton

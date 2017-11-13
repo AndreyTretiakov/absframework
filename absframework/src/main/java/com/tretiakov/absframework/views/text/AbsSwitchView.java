@@ -33,7 +33,7 @@ public class AbsSwitchView extends SwitchCompat {
     private void init(@NonNull Context context, AttributeSet attrs) {
         if (!isInEditMode()) {
             TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AbsFont);
-            String font = a.getString(R.styleable.AbsFont_font);
+            String font = a.getString(R.styleable.AbsFont__font);
 
             CharSequence title = a.getText(R.styleable.AbsFont__title);
             CharSequence subtitle = a.getText(R.styleable.AbsFont__subtitle);
