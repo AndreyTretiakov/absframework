@@ -50,6 +50,14 @@ public class AbsTextView extends AppCompatTextView {
         }
     }
 
+    public void setRegularTypeface() {
+        setTypeface(FontsHelper.getTypeFace(getContext(), "fonts/Roboto-Regular.ttf"));
+    }
+
+    public void setMediumTypeface(boolean isMedium) {
+        setTypeface(FontsHelper.getTypeFace(getContext(), isMedium ? "fonts/Roboto-Medium.ttf" : "fonts/Roboto-Regular.ttf"));
+    }
+
     public void setTitle(CharSequence title) {
         String[] parts = getText().toString().split("\n");
         parts[0] = title.toString();
