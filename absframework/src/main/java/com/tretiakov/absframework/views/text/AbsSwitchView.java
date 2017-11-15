@@ -50,7 +50,7 @@ public class AbsSwitchView extends SwitchCompat {
         }
     }
 
-    private void setSubtitle(CharSequence title, CharSequence subtitle, String font) {
+    public void setSubtitle(CharSequence title, CharSequence subtitle, String font) {
         int subtitleStart;
         SpannableStringBuilder builder = new SpannableStringBuilder(title);
 
