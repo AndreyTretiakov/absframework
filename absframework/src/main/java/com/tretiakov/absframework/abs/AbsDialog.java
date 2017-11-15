@@ -112,12 +112,6 @@ public class AbsDialog<T> extends DialogFragment implements AbsConstants {
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mRouter = null;
-    }
-
-    @Override
     public void onStart() {
         super.onStart();
         mIsVisible = true;
