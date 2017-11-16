@@ -63,6 +63,10 @@ public abstract class AbsFragment<T> extends Fragment implements AbsConstants {
     }
 
     protected AbsDialog showDialog(Class dialog, Bundle bundle, IRouter<T> callback) {
+        if (!isVisible()) {
+            return null;
+        }
+
         AbsDialog d = (AbsDialog) AbsDialog.instantiate(getContext(), dialog.getName(), bundle);
         if (callback != null) d.setCallback(callback);
         d.show(getChildFragmentManager(), dialog.getName());
@@ -119,7 +123,7 @@ public abstract class AbsFragment<T> extends Fragment implements AbsConstants {
     }
 
     protected void onBackPressed() {
-        if (mActivity != null)
+        if (mActivity != null && isVisible())
             mActivity.onBackPressed();
     }
 
