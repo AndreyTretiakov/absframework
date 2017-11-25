@@ -28,7 +28,7 @@ import java.util.HashMap;
 @SuppressWarnings("unchecked")
 public abstract class AbsFragment<T> extends Fragment implements AbsConstants {
 
-    final String LOG_TAG = AbsFragment.class.getSimpleName();
+//    final String LOG_TAG = AbsFragment.class.getSimpleName();
 
     private AbsActivity mActivity;
 
@@ -38,31 +38,6 @@ public abstract class AbsFragment<T> extends Fragment implements AbsConstants {
     public void onAttach(Context context) {
         super.onAttach(context);
         mActivity = (AbsActivity) context;
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        if (mCallback != null) {
-            final String className = mCallback.getClass().getName();
-            outState.putString("callback", className);
-            CallbackManager.getInstance().addCallback(mCallback);
-            Log.d(LOG_TAG, "onSaveInstanceState, callback name = " + className);
-        }
-    }
-
-    @Override
-    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
-        if (mCallback == null && savedInstanceState != null) {
-            try {
-                final String callbackName = savedInstanceState.getString("callback");
-                mCallback = CallbackManager.getInstance().getCallback(callbackName);
-                Log.d(LOG_TAG, "onViewStateRestored, class name = " + callbackName + ", callback = " + mCallback);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     public static AbsFragment instance(Class<? extends AbsFragment> fClass, Bundle bundle, Callback callback) {
