@@ -20,7 +20,7 @@ import android.view.Window;
 
 import com.annimon.stream.Stream;
 import com.tretiakov.absframework.constants.AbsConstants;
-import com.tretiakov.absframework.routers.IRouter;
+import com.tretiakov.absframework.routers.Callback;
 
 /**
  * @author Andrey Tretiakov. Created 4/15/2016.
@@ -29,11 +29,11 @@ public class AbsDialog<T> extends DialogFragment implements AbsConstants {
 
     private boolean mIsVisible;
 
-    private IRouter<T> mRouter;
+    private Callback<T> mRouter;
 
     private Handler mHandler = new Handler();
 
-    public void setCallback(@NonNull IRouter<T> callback) {
+    public void setCallback(@NonNull Callback<T> callback) {
         mRouter = callback;
     }
 
@@ -67,7 +67,7 @@ public class AbsDialog<T> extends DialogFragment implements AbsConstants {
 
     public void onData(@Nullable T data) {
         if (mRouter != null) {
-            mRouter.onData(data);
+            mRouter.result(data);
         }
 
         close();
@@ -75,7 +75,7 @@ public class AbsDialog<T> extends DialogFragment implements AbsConstants {
 
     public void onData(@Nullable T data, boolean needDismiss) {
         if (mRouter != null) {
-            mRouter.onData(data);
+            mRouter.result(data);
         }
 
         if (needDismiss) {
@@ -85,7 +85,7 @@ public class AbsDialog<T> extends DialogFragment implements AbsConstants {
 
     public void onDataAllowingStateLoss(@Nullable T data) {
         if (mRouter != null) {
-            mRouter.onData(data);
+            mRouter.result(data);
         }
 
         dismissAllowingStateLoss();

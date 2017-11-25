@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,12 +12,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
-import android.text.TextUtils;
+import android.util.Log;
+import android.widget.TextView;
 
 import com.tretiakov.absframework.R;
 import com.tretiakov.absframework.constants.AbsConstants;
 import com.tretiakov.absframework.context.AbsContext;
-import com.tretiakov.absframework.routers.IRouter;
+import com.tretiakov.absframework.routers.Callback;
 
 import java.util.HashMap;
 
@@ -28,9 +28,11 @@ import java.util.HashMap;
 @SuppressWarnings("unchecked")
 public abstract class AbsFragment<T> extends Fragment implements AbsConstants {
 
+    final String LOG_TAG = AbsFragment.class.getSimpleName();
+
     private AbsActivity mActivity;
 
-    private IRouter<T> mRouter;
+    private Callback<T> mCallback;
 
     @Override
     public void onAttach(Context context) {
@@ -38,39 +40,73 @@ public abstract class AbsFragment<T> extends Fragment implements AbsConstants {
         mActivity = (AbsActivity) context;
     }
 
-    public static AbsFragment instance(Class<? extends AbsFragment> fClass, Bundle bundle, IRouter callback) {
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (mCallback != null) {
+            final String className = mCallback.getClass().getName();
+            outState.putString("callback", className);
+            CallbackManager.getInstance().addCallback(mCallback);
+            Log.d(LOG_TAG, "onSaveInstanceState, callback name = " + className);
+        }
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (mCallback == null && savedInstanceState != null) {
+            try {
+                final String callbackName = savedInstanceState.getString("callback");
+                mCallback = CallbackManager.getInstance().getCallback(callbackName);
+                Log.d(LOG_TAG, "onViewStateRestored, class name = " + callbackName + ", callback = " + mCallback);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static AbsFragment instance(Class<? extends AbsFragment> fClass, Bundle bundle, Callback callback) {
         AbsFragment f = (AbsFragment) instantiate(AbsContext.getInstance().getContext(), fClass.getName());
         f.setArguments(bundle);
         f.setCallback(callback);
         return f;
     }
 
-    protected void requestPermission(IRouter<Bundle> router, String... permissions) {
+    protected AbsFragment<T> instanceFragment(Callback router) {
+        setCallback(router);
+        return this;
+    }
+
+    protected void requestPermission(Callback<Bundle> router, String... permissions) {
         mActivity.requestPermission(router, permissions);
     }
 
-    public void setCallback(@NonNull IRouter<T> router) {
-        mRouter = router;
+    public void setCallback(Callback<T> router) {
+        mCallback = router;
     }
 
     protected <K extends String, V> void switchActivity(@NonNull Class activity, @Nullable HashMap<K, V> map,
-                                                        int request, @Nullable IRouter<T> router) {
-        if (mActivity != null) mActivity.switchActivity(activity, map, request, router);
+                                                        int request, @Nullable Callback<T> router) {
+        if (mActivity != null) {
+            mActivity.switchActivity(activity, map, request, router);
+        }
     }
 
     protected void startActivityAnClearStack(Class newActivity) {
-        if (mActivity != null) mActivity.startActivityAndClearStack(newActivity);
+        if (mActivity != null) {
+            mActivity.startActivityAndClearStack(newActivity);
+        }
     }
 
-    protected AbsDialog showDialog(Class dialog, Bundle bundle, IRouter<T> callback) {
-        if (!isVisible()) {
-            return null;
+    protected AbsDialog showDialog(Class dialog, Bundle bundle, Callback<T> callback) {
+        if (isVisible()) {
+            AbsDialog d = (AbsDialog) AbsDialog.instantiate(getContext(), dialog.getName(), bundle);
+            if (callback != null) d.setCallback(callback);
+            d.show(getChildFragmentManager(), dialog.getName());
+            return d;
         }
 
-        AbsDialog d = (AbsDialog) AbsDialog.instantiate(getContext(), dialog.getName(), bundle);
-        if (callback != null) d.setCallback(callback);
-        d.show(getChildFragmentManager(), dialog.getName());
-        return d;
+        return null;
     }
 
     protected void showAlertDialog(String msg) {
@@ -81,41 +117,25 @@ public abstract class AbsFragment<T> extends Fragment implements AbsConstants {
         alertDialog.show();
     }
 
-    protected void showFragment(Class fragment, IRouter<T> callback) {
-        showFragment(fragment, Bundle.EMPTY, true, R.id.fragment, callback);
-    }
-
-    protected void showFragment(Class fragment, Bundle bundle, IRouter<T> callback) {
-        showFragment(fragment, bundle, true, R.id.fragment, callback);
-    }
-
-    protected void showFragment(Class fragment, Bundle bundle, Boolean addToBackStack) {
-        showFragment(fragment, bundle, addToBackStack, R.id.fragment, null);
-    }
-
-    protected void showFragment(Class fragment, Bundle bundle, Boolean addToBackStack, IRouter<T> callback) {
+    protected void showFragment(Class fragment, Bundle bundle, Boolean addToBackStack, Callback<T> callback) {
         showFragment(fragment, bundle, addToBackStack, R.id.fragment, callback);
     }
 
-    protected void showFragment(Class fragment, Bundle bundle, int id, Boolean addToBackStack) {
-        showFragment(fragment, bundle, addToBackStack, id, null);
-    }
-
-    protected void showFragment(Class fragment, Bundle bundle, Boolean addToBackStack, int id, IRouter<T> callback) {
+    protected void showFragment(Class fragment, Bundle bundle, Boolean addToBackStack, int id, Callback<T> callback) {
         if (mActivity != null) mActivity.showFragment(fragment, bundle, addToBackStack, id, callback);
     }
 
-    protected void addFragment(Class fragment, Bundle bundle, Boolean addToBackStack, IRouter<T> callback) {
+    protected void addFragment(Class fragment, Bundle bundle, Boolean addToBackStack, Callback<T> callback) {
         addFragment(fragment, bundle, addToBackStack, R.id.fragment, callback);
     }
 
-    protected void addFragment(Class fragment, Bundle bundle, Boolean addToBackStack, int id, IRouter<T> callback) {
+    protected void addFragment(Class fragment, Bundle bundle, Boolean addToBackStack, int id, Callback<T> callback) {
         if (mActivity != null) mActivity.addFragment(fragment, bundle, addToBackStack, id, callback);
     }
 
     protected void onData(@Nullable T data, boolean needBack) {
-        if (mRouter != null) {
-            mRouter.onData(data);
+        if (mCallback != null) {
+            mCallback.result(data);
         }
 
         if (needBack)
@@ -159,5 +179,13 @@ public abstract class AbsFragment<T> extends Fragment implements AbsConstants {
 
     protected void runOnUiThread(Runnable action) {
         getActivity().runOnUiThread(action);
+    }
+
+    protected void addDrawableToLeft(TextView view, int res) {
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            view.setCompoundDrawablesWithIntrinsicBounds(res,0,0,0);
+        } else {
+            view.setCompoundDrawablesRelativeWithIntrinsicBounds(res,0,0,0);
+        }
     }
 }

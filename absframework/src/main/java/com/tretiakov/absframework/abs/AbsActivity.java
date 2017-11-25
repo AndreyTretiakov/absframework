@@ -1,6 +1,5 @@
 package com.tretiakov.absframework.abs;
 
-import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -14,18 +13,15 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
-import com.annimon.stream.Stream;
 import com.tretiakov.absframework.R;
 import com.tretiakov.absframework.constants.AbsConstants;
-import com.tretiakov.absframework.routers.IRouter;
+import com.tretiakov.absframework.routers.Callback;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -34,23 +30,23 @@ import java.util.Map;
 @SuppressWarnings("unchecked")
 public abstract class AbsActivity<T> extends AppCompatActivity implements AbsConstants {
 
-    private IRouter<T> mRouter;
-    private IRouter<Bundle> mPermissionRouter;
+    private Callback<T> mCallback;
+    private Callback<Bundle> mPermissionRouter;
     private static final short REQUEST_PERMISSION = 1010;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (mRouter != null && data != null) {
+        if (mCallback != null && data != null) {
             if (data.hasExtra(KEY_DATA)) {
-                mRouter.onData((T) data.getExtras().get(KEY_DATA));
+                mCallback.result((T) data.getExtras().get(KEY_DATA));
             } else {
-                mRouter.onData(null);
+                mCallback.result(null);
             }
         }
     }
 
-    protected void showDialog(Class dialog, Bundle bundle, IRouter<T> callback) {
+    protected void showDialog(Class dialog, Bundle bundle, Callback<T> callback) {
         AbsDialog d = (AbsDialog) AbsDialog.instantiate(this, dialog.getName(), bundle);
         if (callback != null) d.setCallback(callback);
         d.show(getSupportFragmentManager(), dialog.getName());
@@ -68,8 +64,8 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
     }
 
     protected <K extends String, V> void switchActivity(@NonNull Class activity, @Nullable HashMap<K, V> map,
-                                                        int request, @Nullable IRouter<T> router) {
-        mRouter = router;
+                                                        int request, @Nullable Callback<T> router) {
+        mCallback = router;
         Intent intent = new Intent(this, activity);
         if (map != null) {
             Iterator iterator = map.entrySet().iterator();
@@ -119,20 +115,20 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
     }
 
     @NonNull
-    public <F extends AbsFragment> F showMenuFragment(@NonNull Class fragment, int id, @Nullable IRouter<T> router) {
+    public <F extends AbsFragment> F showMenuFragment(@NonNull Class fragment, int id, @Nullable Callback<T> router) {
         return showFragment(fragment, Bundle.EMPTY, false, id, router);
     }
 
     @NonNull
-    public <F extends AbsFragment> F showFragment(@NonNull Class fragment, @NonNull Bundle bundle, @NonNull Boolean addToBackStack, @Nullable IRouter<T> router) {
+    public <F extends AbsFragment> F showFragment(@NonNull Class fragment, @NonNull Bundle bundle, @NonNull Boolean addToBackStack, @Nullable Callback<T> router) {
         return showFragment(fragment, bundle, addToBackStack, R.id.fragment, router);
     }
 
     @NonNull
     public <F extends AbsFragment> F showFragment(@NonNull Class fragment, @NonNull Bundle bundle,
-                                                  @NonNull Boolean addToBackStack, int id, @Nullable IRouter<T> router) {
+                                                  @NonNull Boolean addToBackStack, int id, @Nullable Callback<T> router) {
         F f = (F) AbsFragment.instantiate(this, fragment.getName(), bundle);
-        if (router != null) f.setCallback(router);
+        f.setCallback(router);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (addToBackStack) transaction.addToBackStack(fragment.getName());
         transaction.replace(id, f);
@@ -142,9 +138,9 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
 
     @NonNull
     public <F extends AbsFragment> F addFragment(@NonNull Class fragment, @NonNull Bundle bundle,
-                                                  @NonNull Boolean addToBackStack, int id, @Nullable IRouter<T> router) {
+                                                  @NonNull Boolean addToBackStack, int id, @Nullable Callback<T> router) {
         F f = (F) AbsFragment.instantiate(this, fragment.getName(), bundle);
-        if (router != null) f.setCallback(router);
+        f.setCallback(router);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (addToBackStack) transaction.addToBackStack(fragment.getName());
         transaction.add(id, f);
@@ -155,10 +151,10 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
 //    @Override
 //    protected void onDestroy() {
 //        super.onDestroy();
-//        mRouter = null;
+//        mCallback = null;
 //    }
 
-    public void requestPermission(IRouter<Bundle> router, String... permissions) {
+    public void requestPermission(Callback<Bundle> router, String... permissions) {
         mPermissionRouter = router;
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -169,14 +165,14 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
                     Bundle bundle = new Bundle();
                     bundle.putString("permission", permission);
                     bundle.putBoolean("granted", true);
-                    mPermissionRouter.onData(bundle);
+                    mPermissionRouter.result(bundle);
                 }
             }
         } else {
             Bundle bundle = new Bundle();
             bundle.putString("permission", Arrays.toString(permissions));
             bundle.putBoolean("granted", true);
-            mPermissionRouter.onData(bundle);
+            mPermissionRouter.result(bundle);
         }
     }
 
@@ -187,7 +183,7 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
             Bundle bundle = new Bundle();
             bundle.putString("permission", permissions[0]);
             bundle.putBoolean("granted", grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED);
-            mPermissionRouter.onData(bundle);
+            mPermissionRouter.result(bundle);
         }
     }
 

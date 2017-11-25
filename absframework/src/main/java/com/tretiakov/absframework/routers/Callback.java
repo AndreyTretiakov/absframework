@@ -5,8 +5,8 @@ import android.support.annotation.Nullable;
 /**
  * @author Andrey Tretiakov. Created 4/15/2016.
  */
-public interface IRouter<T> {
+public interface Callback<T> {
 
-    void onData(@Nullable T data);
+    void result(@Nullable T data);
 
 }

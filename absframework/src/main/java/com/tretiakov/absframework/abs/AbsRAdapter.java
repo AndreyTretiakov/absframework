@@ -12,7 +12,6 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,7 @@ import android.widget.Filter;
 
 import com.tretiakov.absframework.R;
 import com.tretiakov.absframework.constants.AbsConstants;
-import com.tretiakov.absframework.routers.IRouter;
+import com.tretiakov.absframework.routers.Callback;
 import com.tretiakov.absframework.routers.TypedFilter;
 import com.tretiakov.absframework.utils.Keyboard;
 
@@ -36,7 +35,7 @@ import java.util.List;
 public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
         extends RecyclerView.Adapter<H> implements AbsConstants {
 
-    private IRouter mRouter;
+    private Callback mRouter;
     private Context mContext;
     private List<E> mItems;
     private LayoutInflater mInflater;
@@ -51,7 +50,7 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
     private boolean mHasFooter;
     private Handler mHandler = new Handler();
 
-    public AbsRAdapter(Context context, List<E> items, IRouter router) {
+    public AbsRAdapter(Context context, List<E> items, Callback router) {
         mInflater = LayoutInflater.from(context);
         mRouter = router;
         mContext = context;
@@ -82,11 +81,11 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
         mRouter = null;
     }
 
-    protected void setRouter(IRouter router) {
+    protected void setRouter(Callback router) {
         mRouter = router;
     }
 
-    protected <T> void showDialog(Class dialog, Bundle bundle, IRouter<T> callback) {
+    protected <T> void showDialog(Class dialog, Bundle bundle, Callback<T> callback) {
         if (mContext instanceof AbsActivity) {
             AbsDialog d = (AbsDialog) AbsDialog.instantiate(getContext(), dialog.getName(), bundle);
             if (callback != null) d.setCallback(callback);
@@ -203,7 +202,7 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
 
     protected <T> boolean onData(@Nullable T data) {
         if (mRouter != null) {
-            mRouter.onData(data);
+            mRouter.result(data);
             return true;
         }
 
@@ -229,13 +228,13 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
         }
     }
 
-    protected <T> void showFragment(Class fragment, Bundle bundle, Boolean addToBackStack, IRouter<T> router) {
+    protected <T> void showFragment(Class fragment, Bundle bundle, Boolean addToBackStack, Callback<T> router) {
         if (getContext() instanceof AbsActivity) {
             ((AbsActivity) getContext()).showFragment(fragment, bundle, addToBackStack, router);
         }
     }
 
-    protected <T> void addFragment(Class fragment, Bundle bundle, Boolean addToBackStack, IRouter<T> router) {
+    protected <T> void addFragment(Class fragment, Bundle bundle, Boolean addToBackStack, Callback<T> router) {
         if (getContext() instanceof AbsActivity) {
             ((AbsActivity) getContext()).addFragment(fragment, bundle, addToBackStack, R.id.fragment, router);
         }
