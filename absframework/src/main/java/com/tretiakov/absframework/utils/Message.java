@@ -3,7 +3,7 @@ package com.tretiakov.absframework.utils;
 import android.annotation.SuppressLint;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
-import android.text.*;
+import android.text.SpannableStringBuilder;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +12,6 @@ import android.widget.Toast;
 
 import com.tretiakov.absframework.R;
 import com.tretiakov.absframework.context.AbsContext;
-
-import java.util.Random;
 
 /**
  * @author Andrey Tretiakov created on 01.02.2015.

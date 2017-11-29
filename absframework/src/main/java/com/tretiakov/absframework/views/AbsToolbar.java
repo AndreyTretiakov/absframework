@@ -7,7 +7,6 @@ import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.graphics.drawable.DrawerArrowDrawable;
 import android.support.v7.widget.Toolbar;
-import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.util.AttributeSet;
 import android.view.View;
