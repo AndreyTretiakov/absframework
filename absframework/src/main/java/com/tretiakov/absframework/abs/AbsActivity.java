@@ -1,5 +1,6 @@
 package com.tretiakov.absframework.abs;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -54,7 +55,7 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
 
     public void startActivityAndClearStack(Class activity) {
         Intent intent = new Intent(this, activity);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();
     }
