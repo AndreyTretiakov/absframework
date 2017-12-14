@@ -133,7 +133,7 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (addToBackStack) transaction.addToBackStack(fragment.getName());
         transaction.replace(id, f);
-        transaction.commit();
+        transaction.commitAllowingStateLoss();
         return f;
     }
 
@@ -145,7 +145,7 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (addToBackStack) transaction.addToBackStack(fragment.getName());
         transaction.add(id, f);
-        transaction.commit();
+        transaction.commitAllowingStateLoss();
         return f;
     }
 
