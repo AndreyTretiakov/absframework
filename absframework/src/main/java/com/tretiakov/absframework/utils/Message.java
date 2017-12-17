@@ -40,6 +40,10 @@ public class Message {
 
     @SuppressLint("InflateParams")
     private static void showToast(@Nullable String msg, SpannableStringBuilder builder, int duration) {
+        if (!AbsContext.hasActivities()) {
+            return;
+        }
+
         if (android.text.TextUtils.isEmpty(msg) && builder == null) {
             return;
         }

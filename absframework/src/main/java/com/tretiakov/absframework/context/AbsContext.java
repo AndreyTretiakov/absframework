@@ -1,12 +1,19 @@
 package com.tretiakov.absframework.context;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Andrey Tretiakov. Created 4/15/2016.
  */
 public class AbsContext {
 
+    private static Set<String> mActiveActivities = new HashSet<>();
+
+    @SuppressLint("StaticFieldLeak")
     private static AbsContext mInstance;
 
     private Context mContext;
@@ -31,6 +38,18 @@ public class AbsContext {
 
     public Context getContext() {
         return mContext;
+    }
+
+    public static void addActivity(String activityName) {
+        mActiveActivities.add(activityName);
+    }
+
+    public static void removeActivity(String activityName) {
+        mActiveActivities.remove(activityName);
+    }
+
+    public static boolean hasActivities() {
+        return !mActiveActivities.isEmpty();
     }
 
 }

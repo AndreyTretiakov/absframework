@@ -64,27 +64,16 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
         switchActivity(act, null, NO_REQUEST, null);
     }
 
-    protected <K extends String, V> void switchActivity(@NonNull Class activity, @Nullable HashMap<K, V> map,
-                                                        int request, @Nullable Callback<T> router) {
+    protected <K extends String, V> void switchActivity(Class act, Bundle bundle) {
+        switchActivity(act, bundle, NO_REQUEST, null);
+    }
+
+    protected void switchActivity(@NonNull Class activity, @Nullable Bundle bundle, int request,
+                                  @Nullable Callback<T> router) {
         mCallback = router;
         Intent intent = new Intent(this, activity);
-        if (map != null) {
-            Iterator iterator = map.entrySet().iterator();
-            while (iterator.hasNext()) {
-                Map.Entry pairs = (Map.Entry)iterator.next();
-                V value = (V) pairs.getValue();
-                if (value instanceof Integer)
-                    intent.putExtra((K) pairs.getKey(), (Integer) value);
-                else if (value instanceof String)
-                    intent.putExtra((K) pairs.getKey(), (String) value);
-                else if (value instanceof Boolean)
-                    intent.putExtra((K) pairs.getKey(), (Boolean) value);
-                else if (value instanceof Parcelable)
-                    intent.putExtra((K) pairs.getKey(), (Parcelable) value);
-                else if (value instanceof ArrayList)
-                    intent.putExtra((K) pairs.getKey(), (ArrayList<Parcelable>) value);
-                iterator.remove();
-            }
+        if (bundle != null) {
+            intent.putExtras(bundle);
         }
 
         if (request == NO_REQUEST) {

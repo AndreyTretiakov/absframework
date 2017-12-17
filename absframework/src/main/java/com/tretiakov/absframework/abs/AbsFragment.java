@@ -62,10 +62,10 @@ public abstract class AbsFragment<T> extends Fragment implements AbsConstants {
         mCallback = router;
     }
 
-    protected <K extends String, V> void switchActivity(@NonNull Class activity, @Nullable HashMap<K, V> map,
+    protected void switchActivity(@NonNull Class activity, @Nullable Bundle bundle,
                                                         int request, @Nullable Callback<T> router) {
         if (mActivity != null) {
-            mActivity.switchActivity(activity, map, request, router);
+            mActivity.switchActivity(activity, bundle, request, router);
         }
     }
 
