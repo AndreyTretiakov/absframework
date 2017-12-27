@@ -51,6 +51,10 @@ public class AbsRadioButton extends AppCompatRadioButton {
         }
     }
 
+    public void setTitleSubtitle(CharSequence title, CharSequence subtitle) {
+        setSubtitle(title, subtitle, null);
+    }
+
     public void setSubtitle(CharSequence title, CharSequence subtitle, String font) {
         int subtitleStart;
         SpannableStringBuilder builder = new SpannableStringBuilder(title);
