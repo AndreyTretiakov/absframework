@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:minHeight="48dp"
     android:layout_gravity="center|top"
-    android:background="@drawable/toast_blue_background"
+    android:background="@drawable/toast_background"
     >
 
     <com.tretiakov.absframework.views.text.AbsTextView
@@ -18,7 +18,7 @@
         android:paddingBottom="8dp"
         android:layout_centerInParent="true"
         android:text="@android:string/untitled"
-        android:textColor="@color/textBluePrimary"
+        android:textColor="@color/textPrimary"
         android:textSize="14sp"
         />
 

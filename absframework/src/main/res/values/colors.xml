@@ -14,8 +14,10 @@
 
 
     <color name="white">#fff</color>
+    <color name="divider">#c8d4d4d4</color>
 
     <color name="transparent">#0000</color>
+    <color name="transparent_white">#c8ffffff</color>
     <color name="transparent_black">#8000</color>
     <color name="transparent_blue">#da2196f3</color>
     <color name="transparent_green">#da3df321</color>
