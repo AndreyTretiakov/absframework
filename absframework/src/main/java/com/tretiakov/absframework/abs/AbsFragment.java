@@ -180,4 +180,8 @@ public abstract class AbsFragment<T> extends Fragment implements AbsConstants {
             window.setStatusBarColor(ContextCompat.getColor(getContext(), color));
         }
     }
+
+    protected Context getAppContext() {
+        return getContext().getApplicationContext();
+    }
 }
