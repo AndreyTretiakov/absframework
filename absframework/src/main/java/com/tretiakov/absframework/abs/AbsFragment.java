@@ -115,13 +115,19 @@ public abstract class AbsFragment<T> extends Fragment implements AbsConstants {
             mCallback.result(data);
         }
 
-        if (needBack)
+        if (needBack) {
             onBackPressed();
+        }
     }
 
     protected void onBackPressed() {
-        if (mActivity != null && isVisible())
-            mActivity.onBackPressed();
+        if (mActivity != null && isVisible()) {
+            try {
+                mActivity.onBackPressed();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @NonNull
