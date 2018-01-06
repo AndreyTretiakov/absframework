@@ -79,8 +79,15 @@ public abstract class AbsFragment<T> extends Fragment implements AbsConstants {
         if (isVisible()) {
             AbsDialog d = (AbsDialog) AbsDialog.instantiate(getContext(), dialog.getName(), bundle);
             if (callback != null) d.setCallback(callback);
-            d.show(getChildFragmentManager(), dialog.getName());
-            return d;
+            if (mActivity != null && isVisible()) {
+                try {
+                    d.show(getChildFragmentManager(), dialog.getName());
+                    return d;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            return null;
         }
 
         return null;
