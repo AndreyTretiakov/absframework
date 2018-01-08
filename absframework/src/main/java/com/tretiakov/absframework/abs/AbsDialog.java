@@ -18,7 +18,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 
-import com.annimon.stream.Stream;
 import com.tretiakov.absframework.constants.AbsConstants;
 import com.tretiakov.absframework.routers.Callback;
 
@@ -99,7 +98,9 @@ public class AbsDialog<T> extends DialogFragment implements AbsConstants {
 
     protected void registerLocalBroadcast(BroadcastReceiver receiver, String... actions) {
         IntentFilter filter = new IntentFilter();
-        Stream.of(actions).forEach(filter::addAction);
+        for (String action : actions) {
+            filter.addAction(action);
+        }
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(receiver, filter);
     }
 
