@@ -117,6 +117,14 @@ public abstract class AbsFragment<T> extends Fragment implements AbsConstants {
         if (mActivity != null) mActivity.addFragment(fragment, bundle, addToBackStack, id, callback);
     }
 
+    protected String getStringBundle(String key) {
+        if (getArguments() != null) {
+            return getArguments().getString(key);
+        } else {
+            return null;
+        }
+    }
+
     protected void onData(@Nullable T data, boolean needBack) {
         if (mCallback != null) {
             mCallback.result(data);
