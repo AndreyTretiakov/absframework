@@ -46,6 +46,14 @@ public class AbsToolbar extends Toolbar {
         ((android.widget.TextView) findViewById(R.id.toolbarTitle)).setText(title);
     }
 
+    public void setWhiteArrow(View.OnClickListener cl) {
+        DrawerArrowDrawable arrow = new DrawerArrowDrawable(getContext());
+        arrow.setColor(ContextCompat.getColor(getContext(), R.color.white));
+        arrow.setProgress(1);
+        setNavigationIcon(arrow);
+        setNavigationOnClickListener(cl);
+    }
+
     public void setArrow(View.OnClickListener cl) {
         DrawerArrowDrawable arrow = new DrawerArrowDrawable(getContext());
         arrow.setColor(ContextCompat.getColor(getContext(), R.color.colorIconDark));
