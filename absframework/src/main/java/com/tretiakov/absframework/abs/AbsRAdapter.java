@@ -123,8 +123,14 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
     public void addItem(int position, E item, boolean needRefresh) {
         mItems.add(position, item);
         if (needRefresh) {
-            notifyItemInserted(position);
-            mHandler.postDelayed(this::notifyDataSetChanged, 500);
+            if (position == 0) {
+                notifyDataSetChanged();
+                mRecyclerView.smoothScrollToPosition(position);
+            } else {
+                notifyItemInserted(position);
+                mHandler.postDelayed(this::notifyDataSetChanged, 500);
+            }
+
         }
     }
 
