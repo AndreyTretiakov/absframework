@@ -175,11 +175,12 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
 
     @Override
     public int getItemCount() {
-        return mItems.size() + (mHasFooter ? 1 : 0);
+        return mHasFooter ? mItems.size() + 1 : mItems.size();
     }
 
     public E getItem(int position) {
-        return position == getItemCount() ? mFooter : mItems.get(position);
+        return (mHasFooter && mItems.isEmpty()) ? mFooter :
+                position == mItems.size() ? mFooter : mItems.get(position);
     }
 
     @Override
