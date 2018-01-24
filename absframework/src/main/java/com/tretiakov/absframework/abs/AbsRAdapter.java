@@ -116,8 +116,9 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
 
     public void addItem(@NonNull E item, boolean needRefresh) {
         mItems.add(item);
-        if (needRefresh)
-            notifyItemInserted(mItems.size());
+        if (needRefresh) {
+            notifyDataSetChanged();
+        }
     }
 
     public void addItem(int position, E item, boolean needRefresh) {
@@ -128,7 +129,7 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
                 mRecyclerView.smoothScrollToPosition(position);
             } else {
                 notifyItemInserted(position);
-                mHandler.postDelayed(this::notifyDataSetChanged, 500);
+                mHandler.postDelayed(this::notifyDataSetChanged, 400);
             }
 
         }
@@ -153,7 +154,7 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
 
         if (needRefresh) {
             notifyItemRemoved(index);
-            mHandler.postDelayed(this::notifyDataSetChanged, 600);
+            mHandler.postDelayed(this::notifyDataSetChanged, 400);
         }
 
         return result;
@@ -163,8 +164,10 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
         if (mItems != null && !mItems.isEmpty() && position < mItems.size())
             mItems.remove(position);
 
-        if (needRefresh)
+        if (needRefresh) {
             notifyItemRemoved(position);
+            mHandler.postDelayed(this::notifyDataSetChanged, 400);
+        }
     }
 
     public void clear(boolean needRefresh) {
@@ -255,17 +258,17 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
 
     protected void notifyByPos(int pos) {
         notifyItemChanged(pos);
-        mRecyclerView.postDelayed(() -> notifyDataSetChanged(), 500);
+        mRecyclerView.postDelayed(() -> notifyDataSetChanged(), 400);
     }
 
     public void notifyAdded() {
         notifyItemInserted(getItemCount() - 1);
-        mRecyclerView.postDelayed(() -> notifyDataSetChanged(), 500);
+        mRecyclerView.postDelayed(() -> notifyDataSetChanged(), 400);
     }
 
     public void notifyChanged(int position) {
         notifyItemChanged(position);
-        mRecyclerView.postDelayed(() -> notifyDataSetChanged(), 500);
+        mRecyclerView.postDelayed(() -> notifyDataSetChanged(), 400);
     }
 
     protected void notifyByPos(int pos, int delay) {
