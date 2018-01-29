@@ -144,4 +144,5 @@ public class AbsDialog<T> extends DialogFragment implements AbsConstants {
 
         return bundle.getString("action", "");
     }
+    
 }
