@@ -125,6 +125,14 @@ public abstract class AbsFragment<T> extends Fragment implements AbsConstants {
         }
     }
 
+    protected long getLongBundle(String key) {
+        if (getArguments() != null) {
+            return getArguments().getLong(key);
+        } else {
+            return 0L;
+        }
+    }
+
     protected T getParcelableBundle(String key) {
         if (getArguments() != null) {
             return getArguments().getParcelable(key);

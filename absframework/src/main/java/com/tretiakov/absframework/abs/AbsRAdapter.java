@@ -81,7 +81,7 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
         mRouter = null;
     }
 
-    protected void setRouter(Callback router) {
+    public void setRouter(Callback router) {
         mRouter = router;
     }
 
