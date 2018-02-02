@@ -138,11 +138,18 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
         return f;
     }
 
-//    @Override
-//    protected void onDestroy() {
-//        super.onDestroy();
-//        mCallback = null;
-//    }
+    @NonNull
+    public <F extends AbsFragment> F addFragment(@NonNull Class fragment, @NonNull Bundle bundle,
+                                                 @NonNull Boolean addToBackStack, boolean animate, int id, @Nullable Callback<T> router) {
+        F f = (F) AbsFragment.instantiate(this, fragment.getName(), bundle);
+        f.setCallback(router);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        if (animate) transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right);
+        if (addToBackStack) transaction.addToBackStack(fragment.getName());
+        transaction.add(id, f);
+        transaction.commitAllowingStateLoss();
+        return f;
+    }
 
     public void requestPermission(Callback<Bundle> router, String... permissions) {
         mPermissionRouter = router;

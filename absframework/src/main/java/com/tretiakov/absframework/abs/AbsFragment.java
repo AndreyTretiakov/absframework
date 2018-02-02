@@ -110,11 +110,15 @@ public abstract class AbsFragment<T> extends Fragment implements AbsConstants {
     }
 
     protected void addFragment(Class fragment, Bundle bundle, Boolean addToBackStack, Callback<T> callback) {
-        addFragment(fragment, bundle, addToBackStack, R.id.fragment, callback);
+        addFragment(fragment, bundle, addToBackStack, false, R.id.fragment, callback);
     }
 
-    protected void addFragment(Class fragment, Bundle bundle, Boolean addToBackStack, int id, Callback<T> callback) {
-        if (mActivity != null) mActivity.addFragment(fragment, bundle, addToBackStack, id, callback);
+    protected void addFragment(Class fragment, Bundle bundle, Boolean addToBackStack, boolean animate, Callback<T> callback) {
+        addFragment(fragment, bundle, addToBackStack, animate, R.id.fragment, callback);
+    }
+
+    protected void addFragment(Class fragment, Bundle bundle, Boolean addToBackStack, boolean animate, int id, Callback<T> callback) {
+        if (mActivity != null) mActivity.addFragment(fragment, bundle, addToBackStack, animate, id, callback);
     }
 
     protected String getStringBundle(String key) {
