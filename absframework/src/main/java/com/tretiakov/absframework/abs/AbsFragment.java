@@ -171,7 +171,7 @@ public abstract class AbsFragment<T> extends Fragment implements AbsConstants {
             return "";
         }
 
-        return bundle.getString("action", "");
+        return bundle.getString(ACTION, "");
     }
 
     public int optColor(@ColorRes int colorRes) {

@@ -32,6 +32,7 @@ public interface AbsConstants {
     int PARAM_CLEAR_TOP = 3;
 
     String KEY_DATA = "data";
+    String ACTION = "action";
 
     int TOOLBAR = R.id.toolbar;
     int PROGRESS = android.R.id.progress;

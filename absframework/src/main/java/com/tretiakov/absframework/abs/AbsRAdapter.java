@@ -204,7 +204,7 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
 
     public boolean isEmpty() {
         return mItems.isEmpty();
-    }    
+    }
 
     protected View inflate(@LayoutRes int layout, ViewGroup parent) {
         return mInflater.inflate(layout, parent, false);
@@ -225,7 +225,7 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
             return "";
         }
 
-        return bundle.getString("action", "");
+        return bundle.getString(ACTION, "");
     }
 
     @Nullable
@@ -257,8 +257,8 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
     }
 
     protected void notifyByPos(int pos) {
-        notifyItemChanged(pos);
-        mRecyclerView.postDelayed(() -> notifyDataSetChanged(), 400);
+        mRecyclerView.postDelayed(() -> notifyItemChanged(pos), 400);
+//        mRecyclerView.postDelayed(() -> notifyDataSetChanged(), 700);
     }
 
     public void notifyAdded() {
@@ -277,7 +277,9 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
     }
 
     protected void notifyDataSetChangedDelayed(int delay) {
-        mRecyclerView.postDelayed(() -> {notifyDataSetChanged();}, delay);
+        mRecyclerView.postDelayed(() -> {
+            notifyDataSetChanged();
+        }, delay);
     }
 
     protected abstract void onView(H h, E item, int pos);
@@ -308,11 +310,11 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
 
 
     /** SEARCHING FILTER */
-    
+
     public void setPrefix(@Nullable String prefix) {
         mPrefix = prefix;
     }
-    
+
     @NonNull
     protected String getPrefix() {
         return mPrefix == null ? "" : mPrefix;
@@ -324,7 +326,7 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
                 break;
             case MODE_SEARCH_START:
                 break;
-            default: 
+            default:
                 throw new IllegalStateException("Filter mode must be SEARCH_ALL or SEARCH_START");
         }
 
@@ -336,7 +338,7 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
         if (mFilter == null) {
             mFilter = new ArrayFilter();
         }
-        
+
         return mFilter;
     }
 

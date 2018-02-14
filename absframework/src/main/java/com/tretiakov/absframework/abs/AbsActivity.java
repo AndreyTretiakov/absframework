@@ -194,7 +194,7 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
             return "";
         }
 
-        return bundle.getString("action", "");
+        return bundle.getString(ACTION, "");
     }
 
     protected void sendLocalAction(@NonNull String action) {
