@@ -144,7 +144,7 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
 //        mCallback = null;
 //    }
 
-    public void requestPermission(Callback<Bundle> router, String... permissions) {
+    public void requestPermission(@NonNull Callback<Bundle> router, String... permissions) {
         mPermissionRouter = router;
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

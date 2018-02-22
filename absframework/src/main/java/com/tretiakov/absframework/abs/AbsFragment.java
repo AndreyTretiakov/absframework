@@ -54,7 +54,7 @@ public abstract class AbsFragment<T> extends Fragment implements AbsConstants {
         return this;
     }
 
-    protected void requestPermission(Callback<Bundle> router, String... permissions) {
+    protected void requestPermission(@NonNull Callback<Bundle> router, String... permissions) {
         mActivity.requestPermission(router, permissions);
     }
 

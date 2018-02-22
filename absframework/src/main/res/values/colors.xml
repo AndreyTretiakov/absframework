@@ -18,7 +18,7 @@
 
     <color name="transparent">#0000</color>
     <color name="transparent_white">#c8ffffff</color>
-    <color name="transparent_gray">#c8e7e7e7</color>
+    <color name="transparent_gray">#d9cecece</color>
     <color name="transparent_black">#8000</color>
     <color name="transparent_blue">#da2196f3</color>
     <color name="transparent_green">#da3df321</color>
