@@ -133,6 +133,15 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
         notifyItems(needRefresh);
     }
 
+    public void addItemsToBeginning(List<E> items, boolean needRefresh) {
+        Collections.reverse(items);
+        for (E element : items) {
+            mItems.add(0, element);
+        }
+
+        notifyItems(needRefresh);
+    }
+
     public void addItems(Collection<E> items, boolean needRefresh) {
         mItems.addAll(items);
         notifyItems(needRefresh);
