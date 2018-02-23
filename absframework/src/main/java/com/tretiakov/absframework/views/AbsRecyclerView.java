@@ -1,6 +1,7 @@
 package com.tretiakov.absframework.views;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
 import android.support.annotation.Nullable;
@@ -10,14 +11,18 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.View;
 
 import com.tretiakov.absframework.R;
+import com.tretiakov.absframework.utils.Utils;
 
 /**
  * @author Andrey Tretiakov. Created 4/16/2016.
  */
 public class AbsRecyclerView extends RecyclerView {
+
+    private int maxHeight = -1;
 
     public AbsRecyclerView(Context context) {
         super(context);
@@ -127,5 +132,22 @@ public class AbsRecyclerView extends RecyclerView {
             }
             outRect.bottom = 0;
         }
+    }
+
+    public void setMaxHeight(int height) {
+        maxHeight = height;
+    }
+
+    @Override
+    protected void onMeasure(int widthSpec, int heightSpec) {
+        if (maxHeight != -1) {
+            heightSpec = MeasureSpec.makeMeasureSpec(dpToPx(maxHeight), MeasureSpec.AT_MOST);
+        }
+        super.onMeasure(widthSpec, heightSpec);
+    }
+
+    public int dpToPx(int dp) {
+        Resources r = getContext().getResources();
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics());
     }
 }
