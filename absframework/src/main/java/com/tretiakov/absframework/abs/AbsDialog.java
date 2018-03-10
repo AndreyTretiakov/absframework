@@ -1,6 +1,7 @@
 package com.tretiakov.absframework.abs;
 
 import android.app.Dialog;
+import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
 import android.content.IntentFilter;
 import android.graphics.Point;
@@ -11,6 +12,7 @@ import android.support.annotation.DimenRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.Size;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;

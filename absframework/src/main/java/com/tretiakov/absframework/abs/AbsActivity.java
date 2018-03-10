@@ -47,6 +47,14 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
         }
     }
 
+
+    protected void showPrivacyDialog(Class dialog, Bundle bundle, Callback<T> callback) {
+        AbsDialog d = (AbsDialog) AbsDialog.instantiate(this, dialog.getName(), bundle);
+        if (callback != null) d.setCallback(callback);
+        d.setCancelable(false);
+        d.show(getSupportFragmentManager(), dialog.getName());
+    }
+
     protected void showDialog(Class dialog, Bundle bundle, Callback<T> callback) {
         AbsDialog d = (AbsDialog) AbsDialog.instantiate(this, dialog.getName(), bundle);
         if (callback != null) d.setCallback(callback);
