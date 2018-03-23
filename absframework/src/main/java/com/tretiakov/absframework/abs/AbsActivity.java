@@ -48,7 +48,7 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
     }
 
 
-    protected void showPrivacyDialog(Class dialog, Bundle bundle, Callback<T> callback) {
+    protected void showUnCancelableDialog(Class dialog, Bundle bundle, Callback<T> callback) {
         AbsDialog d = (AbsDialog) AbsDialog.instantiate(this, dialog.getName(), bundle);
         if (callback != null) d.setCallback(callback);
         d.setCancelable(false);
@@ -154,21 +154,23 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
 
     public void requestPermission(@NonNull Callback<Bundle> router, String... permissions) {
         mPermissionRouter = router;
+        if (permissions == null || permissions.length == 0) {
+            Bundle bundle = new Bundle();
+            bundle.putBoolean("granted", false);
+            mPermissionRouter.result(bundle);
+            return;
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            for (String permission : permissions) {
-                if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(this, new String[]{permission}, REQUEST_PERMISSION);
-                } else {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("permission", permission);
-                    bundle.putBoolean("granted", true);
-                    mPermissionRouter.result(bundle);
-                }
+            if (ContextCompat.checkSelfPermission(this, permissions[0]) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, permissions, REQUEST_PERMISSION);
+            } else {
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("granted", true);
+                mPermissionRouter.result(bundle);
             }
         } else {
             Bundle bundle = new Bundle();
-            bundle.putString("permission", Arrays.toString(permissions));
             bundle.putBoolean("granted", true);
             mPermissionRouter.result(bundle);
         }
@@ -179,7 +181,6 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_PERMISSION && mPermissionRouter != null) {
             Bundle bundle = new Bundle();
-            bundle.putString("permission", permissions[0]);
             bundle.putBoolean("granted", grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED);
             mPermissionRouter.result(bundle);
         }
