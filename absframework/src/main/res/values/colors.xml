@@ -24,12 +24,92 @@
     <color name="transparent_blue">#da2196f3</color>
     <color name="transparent_green">#da3df321</color>
     <color name="transparent_yellow">#daf3de21</color>
-    <color name="gray_light">#c2c2c2</color>
     <color name="gray_transparent3">#7dcccccc</color>
     <color name="colorIconDark">#262626</color>
 
     <color name="material_blue">#2196F3</color>
-
-
     <color name="retro_yellow">#ded7a4</color>
+
+    <color name="red">#F44336</color>
+    <color name="pink">#E91E63</color>
+    <color name="purple">#9C27B0</color>
+    <color name="deep_purple">#673AB7</color>
+    <color name="indigo">#3F51B5</color>
+    <color name="blue">#2196F3</color>
+    <color name="light_blue">#03A9F4</color>
+    <color name="cyan">#00BCD4</color>
+    <color name="teal">#009688</color>
+    <color name="green">#4CAF50</color>
+    <color name="light_green">#8BC34A</color>
+    <color name="lime">#CDDC39</color>
+    <color name="yellow">#FFEB3B</color>
+    <color name="amber">#FFC107</color>
+    <color name="orange">#FF9800</color>
+    <color name="deep_orange">#FF5722</color>
+    <color name="brown">#795548</color>
+    <color name="gray">#9E9E9E</color>
+    <color name="blue_gray">#607D8B</color>
+
+    <!-- 7f transparent -->
+
+    <color name="red_transparent">#7fF44336</color>
+    <color name="pink_transparent">#7fE91E63</color>
+    <color name="purple_transparent">#7f9C27B0</color>
+    <color name="deep_purple_transparent">#7f673AB7</color>
+    <color name="indigo_transparent">#7f3F51B5</color>
+    <color name="blue_transparent">#7f2196f3</color>
+    <color name="light_blue_transparent">#7f03A9F4</color>
+    <color name="cyan_transparent">#7f00BCD4</color>
+    <color name="teal_transparent">#7f009688</color>
+    <color name="green_transparent">#7f4CAF50</color>
+    <color name="light_green_transparent">#7f8BC34A</color>
+    <color name="lime_transparent">#7fCDDC39</color>
+    <color name="yellow_transparent">#7fFFEB3B</color>
+    <color name="amber_transparent">#7fFFC107</color>
+    <color name="orange_transparent">#7fFF9800</color>
+    <color name="deep_orange_transparent">#7fFF5722</color>
+    <color name="brown_transparent">#7f795548</color>
+    <color name="gray_transparent">#7f9E9E9E</color>
+    <color name="blue_gray_transparent">#7f607D8B</color>
+
+    <color name="red_brand">#F44336</color>
+    <color name="pink_brand">#251a1e</color>
+    <color name="purple_brand">#211623</color>
+    <color name="deep_purple_brand">#673AB7</color>
+    <color name="indigo_brand">#3F51B5</color>
+    <color name="blue_brand">#1c262e</color>
+    <color name="light_blue_brand">#03A9F4</color>
+    <color name="cyan_brand">#182426</color>
+    <color name="teal_brand">#009688</color>
+    <color name="green_brand">#4CAF50</color>
+    <color name="light_green_brand">#8BC34A</color>
+    <color name="lime_brand">#CDDC39</color>
+    <color name="yellow_brand">#1e1d12</color>
+    <color name="amber_brand">#FFC107</color>
+    <color name="orange_brand">#FF9800</color>
+    <color name="deep_orange_brand">#FF5722</color>
+    <color name="brown_brand">#795548</color>
+    <color name="gray_brand">#9E9E9E</color>
+    <color name="blue_gray_brand">#607D8B</color>
+
+    <color name="red_dark">#F44336</color>
+    <color name="pink_dark">#ab1649</color>
+    <color name="purple_dark">#9C27B0</color>
+    <color name="deep_purple_dark">#673AB7</color>
+    <color name="indigo_dark">#3F51B5</color>
+    <color name="blue_dark">#1b7bc7</color>
+    <color name="light_blue_dark">#03A9F4</color>
+    <color name="cyan_dark">#00BCD4</color>
+    <color name="teal_dark">#009688</color>
+    <color name="green_dark">#37803a</color>
+    <color name="light_green_dark">#8BC34A</color>
+    <color name="lime_dark">#CDDC39</color>
+    <color name="yellow_dark">#b4a629</color>
+    <color name="amber_dark">#a37b04</color>
+    <color name="orange_dark">#FF9800</color>
+    <color name="deep_orange_dark">#FF5722</color>
+    <color name="brown_dark">#795548</color>
+    <color name="gray_dark">#9E9E9E</color>
+    <color name="blue_gray_dark">#607D8B</color>
+
 </resources>

@@ -8,10 +8,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * @author andrewtretiakov; 12/27/16.
- */
-
 public class AbsPagerAdapter<F extends Fragment> extends FragmentPagerAdapter {
 
     private List<F> mItems = new ArrayList<F>();

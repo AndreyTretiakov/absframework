@@ -50,7 +50,8 @@ public abstract class AbsFragment<T> extends Fragment implements AbsConstants {
         return f;
     }
 
-    protected AbsFragment<T> instanceFragment(Callback router) {
+    protected AbsFragment<T> instanceFragment(Bundle bundle, Callback router) {
+        setArguments(bundle);
         setCallback(router);
         return this;
     }
@@ -74,6 +75,13 @@ public abstract class AbsFragment<T> extends Fragment implements AbsConstants {
         if (mActivity != null) {
             mActivity.startActivityAndClearStack(newActivity);
         }
+    }
+
+    protected void showUnCancelableDialog(Class dialog, Bundle bundle, Callback<T> callback) {
+        AbsDialog d = (AbsDialog) AbsDialog.instantiate(getContext(), dialog.getName(), bundle);
+        if (callback != null) d.setCallback(callback);
+        d.setCancelable(false);
+        d.show(getChildFragmentManager(), dialog.getName());
     }
 
     protected AbsDialog showDialog(Class dialog, Bundle bundle, Callback<T> callback) {
