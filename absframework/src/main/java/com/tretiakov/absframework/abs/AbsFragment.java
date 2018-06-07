@@ -50,9 +50,20 @@ public abstract class AbsFragment<T> extends Fragment implements AbsConstants {
         return f;
     }
 
+    protected AbsFragment<T> instanceFragment(Bundle bundle, Callback router) {
+        setCallback(router);
+        return this;
+    }
+
     protected AbsFragment<T> instanceFragment(Callback router) {
         setCallback(router);
         return this;
+    }
+
+    public void showUnCancelableDialog(Class dialog, Bundle bundle, Callback<T> callback) {
+        if (isVisible() && mActivity != null) {
+            mActivity.showUnCancelableDialog(dialog, bundle, callback);
+        }
     }
 
     protected void requestPermission(@NonNull Callback<Bundle> router, String... permissions) {
