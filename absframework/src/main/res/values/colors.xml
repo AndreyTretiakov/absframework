@@ -3,6 +3,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimaryDarkPre23">#c7c7c7</color>
 
     <color name="textPrimary">#000000</color>
     <color name="textSecondary">#909499</color>
@@ -31,8 +32,16 @@
     <color name="gray_transparent3">#7dcccccc</color>
     <color name="colorIconDark">#262626</color>
 
-    <color name="material_blue">#2196F3</color>
-
 
     <color name="retro_yellow">#ded7a4</color>
+
+
+    <color name="material_dark_gray_1">#3e464c</color>
+    <color name="material_dark_gray_2">#374046</color>
+    <color name="material_orange">#fdb657</color>
+    <color name="material_blue_1">#68b6f3</color>
+    <color name="material_red_1">#f3686a</color>
+    <color name="material_yellow_1">#f3e368</color>
+    <color name="material_green_1">#6af368</color>
+
 </resources>

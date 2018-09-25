@@ -206,6 +206,10 @@ public abstract class AbsFragment<T> extends Fragment implements AbsConstants {
         }
     }
 
+    protected void setStatusBarDefaultColor() {
+        setStatusBarColor(R.color.colorPrimaryDarkPre23);
+    }
+
     protected Context getAppContext() {
         return getContext().getApplicationContext();
     }
