@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.ColorRes;
@@ -193,6 +194,10 @@ public abstract class AbsFragment<T> extends Fragment implements AbsConstants {
 
     protected void setStatusBarColor(int color) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            if (getActivity() == null) {
+                return;
+            }
+
             Window window = getActivity().getWindow();
 
             // clear FLAG_TRANSLUCENT_STATUS flag:
@@ -202,7 +207,9 @@ public abstract class AbsFragment<T> extends Fragment implements AbsConstants {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
 
             // finally change the color
-            window.setStatusBarColor(ContextCompat.getColor(getContext(), color));
+            window.setStatusBarColor(ContextCompat.getColor(getActivity(), color));
+            window.setNavigationBarColor(ContextCompat.getColor(getActivity(),
+                    color == R.color.colorPrimaryDarkPre23 ? R.color.colorPrimary_V3 : color));
         }
     }
 
