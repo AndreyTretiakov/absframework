@@ -193,10 +193,7 @@ public abstract class AbsFragment<T> extends Fragment implements AbsConstants {
     }
 
     protected void setStatusBarColor(int color) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            if (getActivity() == null) {
-                return;
-            }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && getActivity() != null) {
 
             Window window = getActivity().getWindow();
 
@@ -208,13 +205,28 @@ public abstract class AbsFragment<T> extends Fragment implements AbsConstants {
 
             // finally change the color
             window.setStatusBarColor(ContextCompat.getColor(getActivity(), color));
+        }
+    }
+
+    protected void setStatusBarAndNavigationColor(int color) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && getActivity() != null) {
+            Window window = getActivity().getWindow();
+            setStatusBarColor(color);
             window.setNavigationBarColor(ContextCompat.getColor(getActivity(),
-                    color == R.color.colorPrimaryDarkPre23 ? R.color.colorPrimary_V3 : color));
+                    color == R.color.color_status_bar ? R.color.colorPrimary_V3 : color));
         }
     }
 
     protected void setStatusBarDefaultColor() {
-        setStatusBarColor(R.color.colorPrimaryDarkPre23);
+        setStatusBarColor(isPre23() ? R.color.colorPrimaryDarkPre23 : R.color.color_status_bar);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && getActivity() != null) {
+            Window window = getActivity().getWindow();
+            window.setNavigationBarColor(ContextCompat.getColor(getActivity(), R.color.color_status_bar));
+        }
+    }
+
+    private boolean isPre23() {
+        return Build.VERSION.SDK_INT < Build.VERSION_CODES.M;
     }
 
     protected Context getAppContext() {

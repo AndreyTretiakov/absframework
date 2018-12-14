@@ -3,8 +3,9 @@
     <color name="colorPrimary">#72b4da</color>
     <color name="colorPrimaryDark">#dadada</color>
     <color name="colorAccent">#2a9cdf</color>
-    <color name="colorPrimaryDarkPre23">#c7c7c7</color>
+    <color name="colorPrimaryDarkPre23">#e1e5e9</color>
     <color name="colorPrimary_V3">#fafafa</color>
+    <color name="color_status_bar">#fafafa</color>
 
     <color name="textPrimary">#000000</color>
     <color name="textSecondary">#909499</color>
