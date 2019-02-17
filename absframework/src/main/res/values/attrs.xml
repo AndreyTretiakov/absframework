@@ -7,8 +7,8 @@
 
     <declare-styleable name="AbsFont">
         <attr name="_font" format="integer"/>
-        <attr name="_title" format="reference"/>
-        <attr name="_subtitle" format="reference"/>
+        <attr name="_title" format="reference|string"/>
+        <attr name="_subtitle" format="reference|string"/>
     </declare-styleable>
 
     <declare-styleable name="AbsViewPager">
