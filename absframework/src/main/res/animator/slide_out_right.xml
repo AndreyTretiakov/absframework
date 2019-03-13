@@ -5,8 +5,8 @@
         android:interpolator="@android:anim/accelerate_decelerate_interpolator"
         android:propertyName="x"
         android:valueType="floatType"
-        android:valueTo="1500"
-        android:valueFrom="0"
+        android:valueTo="0"
+        android:valueFrom="-1500"
         android:duration="400"/>
 
 </set>
