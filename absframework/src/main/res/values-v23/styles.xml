@@ -37,5 +37,10 @@
         <item name="android:statusBarColor">@color/material_dark_gray_1</item>
         <item name="android:navigationBarColor">@color/material_dark_gray_2</item>
     </style>
+    <style name="Shadow">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">3dp</item>
+        <item name="android:background">@drawable/shadow</item>
+    </style>
 
 </resources>
