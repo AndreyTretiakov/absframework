@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.ColorRes;
@@ -129,6 +130,14 @@ public abstract class AbsFragment<T> extends Fragment implements AbsConstants {
         if (mActivity != null) mActivity.addFragment(fragment, bundle, addToBackStack, id, callback);
     }
 
+    protected void addFragmentRTL(Class fragment, Bundle bundle, Boolean addToBackStack, int id, Callback<T> callback) {
+        if (mActivity != null) mActivity.addFragmentRTL(fragment, bundle, addToBackStack, id, callback);
+    }
+
+    protected void addFragmentRTL(Class fragment, Bundle bundle, Boolean addToBackStack, Callback<T> callback) {
+        addFragmentRTL(fragment, bundle, addToBackStack, R.id.fragment, callback);
+    }
+
     protected void onData(@Nullable T data, boolean needBack) {
         if (mCallback != null) {
             mCallback.result(data);
@@ -192,7 +201,8 @@ public abstract class AbsFragment<T> extends Fragment implements AbsConstants {
     }
 
     protected void setStatusBarColor(int color) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && getActivity() != null) {
+
             Window window = getActivity().getWindow();
 
             // clear FLAG_TRANSLUCENT_STATUS flag:
@@ -202,12 +212,29 @@ public abstract class AbsFragment<T> extends Fragment implements AbsConstants {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
 
             // finally change the color
-            window.setStatusBarColor(ContextCompat.getColor(getContext(), color));
+            window.setStatusBarColor(ContextCompat.getColor(getActivity(), color));
+        }
+    }
+
+    protected void setStatusBarAndNavigationColor(int color) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && getActivity() != null) {
+            Window window = getActivity().getWindow();
+            setStatusBarColor(color);
+            window.setNavigationBarColor(ContextCompat.getColor(getActivity(),
+                    color == R.color.color_status_bar ? R.color.colorPrimary_V3 : color));
         }
     }
 
     protected void setStatusBarDefaultColor() {
-        setStatusBarColor(R.color.colorPrimaryDarkPre23);
+        setStatusBarColor(isPre23() ? R.color.colorPrimaryDarkPre23 : R.color.color_status_bar);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && getActivity() != null) {
+            Window window = getActivity().getWindow();
+            window.setNavigationBarColor(ContextCompat.getColor(getActivity(), R.color.color_status_bar));
+        }
+    }
+
+    private boolean isPre23() {
+        return Build.VERSION.SDK_INT < Build.VERSION_CODES.M;
     }
 
     protected Context getAppContext() {

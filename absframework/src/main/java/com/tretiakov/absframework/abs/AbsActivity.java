@@ -141,6 +141,21 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
         f.setCallback(router);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (addToBackStack) transaction.addToBackStack(fragment.getName());
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        transaction.add(id, f);
+        transaction.commitAllowingStateLoss();
+        return f;
+    }
+
+    @NonNull
+    public <F extends AbsFragment> F addFragmentRTL(@NonNull Class fragment, @NonNull Bundle bundle,
+                                                 @NonNull Boolean addToBackStack, int id, @Nullable Callback<T> router) {
+        F f = (F) AbsFragment.instantiate(this, fragment.getName(), bundle);
+        f.setCallback(router);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        if (addToBackStack) transaction.addToBackStack(fragment.getName());
+        transaction.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_in_right,
+                R.animator.slide_in_left, R.animator.slide_in_right);
         transaction.add(id, f);
         transaction.commitAllowingStateLoss();
         return f;
