@@ -34,6 +34,8 @@
         <item name="android:windowNoTitle">true</item>
         <!--<item name="android:windowFullscreen">true</item>-->
         <item name="android:windowIsFloating">false</item>
+        <item name="android:statusBarColor">@color/material_dark_gray_1</item>
+        <item name="android:navigationBarColor">@color/material_dark_gray_2</item>
     </style>
     <style name="Shadow">
         <item name="android:layout_width">match_parent</item>

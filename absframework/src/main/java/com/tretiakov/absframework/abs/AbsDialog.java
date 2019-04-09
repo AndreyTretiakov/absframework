@@ -59,10 +59,11 @@ public class AbsDialog<T> extends DialogFragment implements AbsConstants {
     }
 
     protected void setCustomWidth(View view, int width) {
+        if (getActivity() == null) return;
         Point point = new Point();
         getActivity().getWindowManager().getDefaultDisplay().getSize(point);
         ViewGroup.LayoutParams params = view.getLayoutParams();
-        params.width = (int) (point.x - getContext().getResources().getDimension(width) * 2);
+        params.width = (int) (point.x - getActivity().getResources().getDimension(width) * 2);
         view.setLayoutParams(params);
     }
 
@@ -135,6 +136,7 @@ public class AbsDialog<T> extends DialogFragment implements AbsConstants {
     }
 
     protected int optColor(@ColorRes int color) {
+        if (getContext() == null) return 0;
         return ContextCompat.getColor(getContext(), color);
     }
 
