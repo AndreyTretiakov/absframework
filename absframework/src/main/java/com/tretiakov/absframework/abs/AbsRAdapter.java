@@ -2,6 +2,7 @@ package com.tretiakov.absframework.abs;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.ColorRes;
@@ -415,6 +416,14 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
 
     public int optColor(@ColorRes int colorRes) {
         return ContextCompat.getColor(getContext(), colorRes);
+    }
+
+    protected TypedArray getTypedArray(int name) {
+        return getContext().getResources().obtainTypedArray(name);
+    }
+
+    protected String[] getStringArray(int name) {
+        return getContext().getResources().getStringArray(name);
     }
 
 }
