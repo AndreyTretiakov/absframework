@@ -21,6 +21,7 @@ import android.widget.Filter;
 import com.tretiakov.absframework.R;
 import com.tretiakov.absframework.constants.AbsConstants;
 import com.tretiakov.absframework.routers.Callback;
+import com.tretiakov.absframework.routers.Callback2;
 import com.tretiakov.absframework.routers.TypedFilter;
 import com.tretiakov.absframework.utils.Keyboard;
 
@@ -37,6 +38,7 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
         extends RecyclerView.Adapter<H> implements AbsConstants {
 
     private Callback mRouter;
+    private Callback2 mRouter2;
     private Context mContext;
     private List<E> mItems;
     private LayoutInflater mInflater;
@@ -51,9 +53,22 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
     private boolean mHasFooter;
     private Handler mHandler = new Handler();
 
+    public AbsRAdapter(Context context, List<E> items) {
+        mInflater = LayoutInflater.from(context);
+        mContext = context;
+        mItems = items;
+    }
+
     public AbsRAdapter(Context context, List<E> items, Callback router) {
         mInflater = LayoutInflater.from(context);
         mRouter = router;
+        mContext = context;
+        mItems = items;
+    }
+
+    public AbsRAdapter(Context context, List<E> items, Callback2 router) {
+        mInflater = LayoutInflater.from(context);
+        mRouter2 = router;
         mContext = context;
         mItems = items;
     }
@@ -213,6 +228,15 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
     protected <T> boolean onData(@Nullable T data) {
         if (mRouter != null) {
             mRouter.result(data);
+            return true;
+        }
+
+        return false;
+    }
+
+    protected <T> boolean onData2(@Nullable T data, T data2) {
+        if (mRouter2 != null) {
+            mRouter2.result(data, data2);
             return true;
         }
 
