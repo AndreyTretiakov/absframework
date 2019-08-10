@@ -37,6 +37,11 @@
 
     <color name="retro_yellow">#ded7a4</color>
 
+    <color name="info_board_background">#CFECFF</color>
+    <color name="material_blue_light_v1">#C5EBFF</color>
+    <color name="material_blue_light_v2">#9edfff</color>
+    <color name="material_blue">#26ace9</color>
+    <color name="material_blue_dark">#0170a3</color>
 
     <color name="material_dark_gray_1">#3e464c</color>
     <color name="material_dark_gray_2">#374046</color>
