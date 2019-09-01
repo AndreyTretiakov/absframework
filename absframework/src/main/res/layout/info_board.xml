@@ -63,6 +63,22 @@
                 android:visibility="gone"
                 />
 
+
+            <com.tretiakov.absframework.views.text.AbsTextView
+                android:id="@+id/info_more"
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:layout_marginLeft="48dp"
+                android:layout_marginRight="48dp"
+                android:layout_below="@+id/info_sub_title"
+                android:textColor="@color/material_blue"
+                android:textSize="12dp"
+                android:gravity="center"
+                android:textAllCaps="true"
+                app:_font="@string/bold"
+                android:visibility="gone"
+                />
+
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>
