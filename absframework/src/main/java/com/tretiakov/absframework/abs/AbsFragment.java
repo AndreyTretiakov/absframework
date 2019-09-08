@@ -52,6 +52,7 @@ public abstract class AbsFragment<T> extends Fragment implements AbsConstants {
     }
 
     protected AbsFragment<T> instanceFragment(Bundle bundle, Callback router) {
+        setArguments(bundle);
         setCallback(router);
         return this;
     }
