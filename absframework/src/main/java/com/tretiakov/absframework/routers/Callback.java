@@ -1,6 +1,6 @@
 package com.tretiakov.absframework.routers;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 /**
  * @author Andrey Tretiakov. Created 4/15/2016.

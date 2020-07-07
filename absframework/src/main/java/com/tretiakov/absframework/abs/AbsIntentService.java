@@ -3,7 +3,7 @@ package com.tretiakov.absframework.abs;
 import android.app.IntentService;
 import android.content.BroadcastReceiver;
 import android.content.IntentFilter;
-import android.support.v4.content.LocalBroadcastManager;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 /**
  * @author andrewtretiakov; 2/10/17.

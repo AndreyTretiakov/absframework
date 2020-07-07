@@ -1,7 +1,7 @@
 package com.tretiakov.absframework.utils;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 /**
  * @author Andrey Tretiakov 23.11.2014.
