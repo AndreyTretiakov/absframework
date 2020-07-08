@@ -5,7 +5,7 @@
         <attr name="menu_layout_res" format="reference"/>
     </declare-styleable>
 
-    <declare-styleable name="AbsFont">
+    <declare-styleable name="AbsTextView">
         <attr name="_font" format="integer"/>
         <attr name="_title" format="reference|string"/>
         <attr name="_subtitle" format="reference|string"/>

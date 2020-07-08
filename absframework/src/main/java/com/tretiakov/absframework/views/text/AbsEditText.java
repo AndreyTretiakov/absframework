@@ -45,8 +45,8 @@ public class AbsEditText extends AppCompatEditText {
 
     private void init(@NonNull Context context, AttributeSet attrs) {
         if (!isInEditMode()) {
-            TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AbsFont);
-            String font = a.getString(R.styleable.AbsFont__font);
+            TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AbsTextView);
+            String font = a.getString(R.styleable.AbsTextView__font);
             a.recycle();
 
             setTypeface(FontsHelper.getTypeFace(getContext(), "fonts/" +

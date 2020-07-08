@@ -18,6 +18,7 @@
         android:layout_marginBottom="8dp"
         app:cardCornerRadius="16dp"
         app:cardBackgroundColor="@color/info_board_background"
+        app:elevation="4dp"
         >
 
         <RelativeLayout
@@ -35,6 +36,7 @@
                 android:textColor="@color/material_blue_dark"
                 android:gravity="center"
                 android:text="Title"
+                android:visibility="gone"
                 />
 
             <com.tretiakov.absframework.views.text.AbsTextView
@@ -42,10 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:layout_marginTop="48dp"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:paddingBottom="16dp"
+                android:padding="16dp"
                 android:textSize="14dp"
                 android:textColor="@color/material_blue_dark"
                 android:text="Subtitle"
@@ -54,11 +53,12 @@
 
             <ImageButton
                 android:id="@+id/info_close"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                android:src="@drawable/ic_action_close"
+                android:scaleType="center"
+                android:src="@drawable/ic_close_small"
                 android:background="@drawable/button_selector"
                 android:visibility="gone"
                 />

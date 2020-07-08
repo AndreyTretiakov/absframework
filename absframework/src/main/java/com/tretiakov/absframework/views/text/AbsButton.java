@@ -32,11 +32,11 @@ public class AbsButton extends AppCompatButton {
 
     private void init(@NonNull Context context, AttributeSet attrs) {
         if (!isInEditMode()) {
-            TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AbsFont);
-            String font = a.getString(R.styleable.AbsFont__font);
+            TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AbsTextView);
+            String font = a.getString(R.styleable.AbsTextView__font);
 
-            CharSequence title = a.getText(R.styleable.AbsFont__title);
-            CharSequence subtitle = a.getText(R.styleable.AbsFont__subtitle);
+            CharSequence title = a.getText(R.styleable.AbsTextView__title);
+            CharSequence subtitle = a.getText(R.styleable.AbsTextView__subtitle);
             if (subtitle != null) {
                 setSubtitle(title, subtitle, font);
             } else if (title != null){
