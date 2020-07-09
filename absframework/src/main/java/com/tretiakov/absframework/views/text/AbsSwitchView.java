@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat;
 import androidx.appcompat.widget.SwitchCompat;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
@@ -58,7 +59,9 @@ public class AbsSwitchView extends SwitchCompat {
             builder.setSpan(new StyleSpan(Typeface.BOLD), 0, builder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
 
-        builder.append("\n");
+        if (!TextUtils.isEmpty(subtitle)) {
+            builder.append("\n");
+        }
         subtitleStart = builder.length();
         builder.append(subtitle);
         builder.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getContext(), R.color.textSecondary)), subtitleStart, builder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
