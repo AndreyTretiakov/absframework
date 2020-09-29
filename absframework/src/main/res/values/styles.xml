@@ -3,15 +3,15 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/abs_colorPrimary</item>
+        <item name="colorPrimaryDark">@color/abs_colorPrimaryDark</item>
+        <item name="colorAccent">@color/abs_colorAccent</item>
     </style>
 
     <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/material_dark_gray_2</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/abs_colorPrimary</item>
+        <item name="colorPrimaryDark">@color/abs_material_dark_gray_2</item>
+        <item name="colorAccent">@color/abs_colorAccent</item>
     </style>
 
     <style name="TransparentDialogStyle" parent="android:Theme.Dialog">

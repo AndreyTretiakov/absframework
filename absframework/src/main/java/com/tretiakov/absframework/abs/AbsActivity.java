@@ -6,14 +6,20 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.annotation.ColorRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+
+import androidx.annotation.ColorRes;
+import androidx.annotation.IdRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentFactory;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.core.content.ContextCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.tretiakov.absframework.R;
 import com.tretiakov.absframework.constants.AbsConstants;
@@ -123,6 +129,11 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
     }
 
     @NonNull
+    public Fragment showKFragment(@NonNull Fragment fragment, @NonNull Bundle bundle, @NonNull Boolean addToBackStack, @Nullable Callback<T> router) {
+        return showKFragment(fragment, bundle, addToBackStack, R.id.fragment, router);
+    }
+
+    @NonNull
     public <F extends AbsFragment> F showFragment(@NonNull Class fragment, @NonNull Bundle bundle,
                                                   @NonNull Boolean addToBackStack, int id, @Nullable Callback<T> router) {
         F f = (F) AbsFragment.instantiate(this, fragment.getName(), bundle);
@@ -132,6 +143,18 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
         transaction.replace(id, f);
         transaction.commitAllowingStateLoss();
         return f;
+    }
+
+    @NonNull
+    public Fragment showKFragment(@NonNull Fragment fragment, @NonNull Bundle bundle,
+                                                  @NonNull Boolean addToBackStack, int id, @Nullable Callback router) {
+        fragment.setArguments(bundle);
+        ((KAbsFragment)fragment).setCallback(router);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        if (addToBackStack) transaction.addToBackStack(fragment.getClass().getName());
+        transaction.replace(id, fragment);
+        transaction.commitAllowingStateLoss();
+        return fragment;
     }
 
     @NonNull
@@ -145,6 +168,33 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
         transaction.add(id, f);
         transaction.commitAllowingStateLoss();
         return f;
+    }
+
+    @NonNull
+    public Fragment addKFragment(@NonNull Fragment fragment, @NonNull Bundle bundle,
+                                                  @NonNull Boolean addToBackStack, int id, @Nullable Callback router) {
+        fragment.setArguments(bundle);
+        ((KAbsFragment)fragment).setCallback(router);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        if (addToBackStack) transaction.addToBackStack(fragment.getClass().getName());
+//        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        transaction.add(id, fragment);
+        transaction.commitAllowingStateLoss();
+        return fragment;
+    }
+
+    @NonNull
+    public <F extends KAbsFragment, O> F addKFragmentRTL(@NonNull F fragment, @NonNull Bundle bundle,
+                                                     @NonNull Boolean addToBackStack, int id, @Nullable Callback<O> router) {
+        fragment.setArguments(bundle);
+        fragment.setCallback(router);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        if (addToBackStack) transaction.addToBackStack(fragment.getClass().getName());
+        transaction.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_in_right,
+                R.animator.slide_in_left, R.animator.slide_in_right);
+        transaction.add(id, fragment);
+        transaction.commitAllowingStateLoss();
+        return fragment;
     }
 
     @NonNull
@@ -216,5 +266,19 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
 
     protected void sendLocalAction(@NonNull String action) {
         LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(action));
+    }
+
+    private FragmentFactory getFragmentFactory() {
+        return getSupportFragmentManager().getFragmentFactory();
+    }
+
+    public void findViewsByIds(View.OnClickListener listener, @IdRes int... ids) {
+        final AppCompatDelegate delegate = getDelegate();
+        for (int id : ids) {
+            final View view = delegate.findViewById(id);
+            if (view != null) {
+                view.setOnClickListener(listener);
+            }
+        }
     }
 }

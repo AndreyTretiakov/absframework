@@ -1,6 +1,6 @@
 package com.tretiakov.absframework.views.text;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 /**
  * @author Andrey Tretiakov

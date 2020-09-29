@@ -2,14 +2,15 @@ package com.tretiakov.absframework.views.text;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.AppCompatEditText;
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatEditText;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.util.Patterns;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 
@@ -55,6 +56,12 @@ public class AbsEditText extends AppCompatEditText {
 //        setOnEditorActionListener(onEdit);
         }
     }
+
+    public boolean isValidEmail() {
+        return (!TextUtils.isEmpty(text()) && Patterns.EMAIL_ADDRESS.matcher(text()).matches());
+    }
+
+//    fun CharSequence?.isValidEmail() = !isNullOrEmpty() && Patterns.EMAIL_ADDRESS.matcher(name.text()).matches()
 
     private final OnTouchListener onTouch = (v, event) -> {
         setFocusableInTouchMode(true);

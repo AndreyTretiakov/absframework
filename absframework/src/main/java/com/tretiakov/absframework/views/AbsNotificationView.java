@@ -1,7 +1,7 @@
 package com.tretiakov.absframework.views;
 
 import android.content.Context;
-import android.support.annotation.IntDef;
+import androidx.annotation.IntDef;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -76,13 +76,13 @@ public class AbsNotificationView extends RelativeLayout {
         switch (mMode) {
 
             case INFO:
-                setBackgroundResource(R.color.notification_background_info);
+                setBackgroundResource(R.color.abs_notification_background_info);
                 break;
             case WARNING:
-                setBackgroundResource(R.color.notification_background_warn);
+                setBackgroundResource(R.color.abs_notification_background_warn);
                 break;
             case ERROR:
-                setBackgroundResource(R.color.notification_background_error);
+                setBackgroundResource(R.color.abs_notification_background_error);
                 break;
         }
     }

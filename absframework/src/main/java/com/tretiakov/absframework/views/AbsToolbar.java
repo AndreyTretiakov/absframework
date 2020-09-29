@@ -2,11 +2,11 @@ package com.tretiakov.absframework.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.graphics.drawable.DrawerArrowDrawable;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.graphics.drawable.DrawerArrowDrawable;
+import androidx.appcompat.widget.Toolbar;
 import android.text.SpannableStringBuilder;
 import android.util.AttributeSet;
 import android.view.View;
@@ -48,7 +48,7 @@ public class AbsToolbar extends Toolbar {
 
     public void setArrow(View.OnClickListener cl) {
         DrawerArrowDrawable arrow = new DrawerArrowDrawable(getContext());
-        arrow.setColor(ContextCompat.getColor(getContext(), R.color.colorIconDark));
+        arrow.setColor(ContextCompat.getColor(getContext(), R.color.abs_colorIconDark));
         arrow.setProgress(1);
         setNavigationIcon(arrow);
         setNavigationOnClickListener(cl);

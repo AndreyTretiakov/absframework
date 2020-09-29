@@ -1,54 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#72b4da</color>
-    <color name="colorPrimaryDark">#dadada</color>
-    <color name="colorAccent">#2a9cdf</color>
-    <color name="colorPrimaryDarkPre23">#e1e5e9</color>
-    <color name="colorPrimary_V3">#fafafa</color>
-    <color name="color_status_bar">#fafafa</color>
+    <color name="abs_colorPrimary">#72b4da</color>
+    <color name="abs_colorPrimaryDark">#dadada</color>
+    <color name="abs_colorAccent">#2a9cdf</color>
+    <color name="abs_colorPrimaryDarkPre23">#e1e5e9</color>
+    <color name="abs_colorPrimary_V3">#fafafa</color>
+    <color name="abs_color_status_bar">#fafafa</color>
 
-    <color name="textPrimary">#000000</color>
-    <color name="textSecondary">#909499</color>
-    <color name="textPrimaryLight">#d9d8d1</color>
-    <color name="textSecondaryLight">#999890</color>
-    <color name="textBluePrimary">#fff8c6</color>
-    <color name="textGreenPrimary">#1a6c09</color>
-    <color name="textYellowPrimary">#6c6209</color>
+    <color name="abs_textPrimary">#000000</color>
+    <color name="abs_textSecondary">#909499</color>
+    <color name="abs_textPrimaryLight">#d9d8d1</color>
+    <color name="abs_textSecondaryLight">#999890</color>
+    <color name="abs_textBluePrimary">#fff8c6</color>
+    <color name="abs_textGreenPrimary">#1a6c09</color>
+    <color name="abs_textYellowPrimary">#6c6209</color>
 
-    <color name="notification_background_warn">#fff9ef</color>
-    <color name="notification_background_info">#eff2ff</color>
-    <color name="notification_background_error">#ffefef</color>
+    <color name="abs_notification_background_warn">#fff9ef</color>
+    <color name="abs_notification_background_info">#eff2ff</color>
+    <color name="abs_notification_background_error">#ffefef</color>
 
-    <color name="white">#fff</color>
-    <color name="divider">#c8d4d4d4</color>
-    <color name="dark">#1e1e1e</color>
+    <color name="abs_white">#fff</color>
+    <color name="abs_divider">#c8d4d4d4</color>
+    <color name="abs_dark">#1e1e1e</color>
 
-    <color name="transparent">#0000</color>
-    <color name="transparent_white">#c8ffffff</color>
-    <color name="transparent_gray">#d9cecece</color>
-    <color name="transparent_black">#8000</color>
-    <color name="transparent_blue">#da2196f3</color>
-    <color name="transparent_green">#da3df321</color>
-    <color name="transparent_yellow">#daf3de21</color>
-    <color name="gray_light">#dee6e4</color>
-    <color name="gray_transparent3">#7dcccccc</color>
-    <color name="colorIconDark">#262626</color>
+    <color name="abs_transparent">#0000</color>
+    <color name="abs_transparent_white">#c8ffffff</color>
+    <color name="abs_transparent_gray">#d9cecece</color>
+    <color name="abs_transparent_black">#8000</color>
+    <color name="abs_transparent_blue">#da2196f3</color>
+    <color name="abs_transparent_green">#da3df321</color>
+    <color name="abs_transparent_yellow">#daf3de21</color>
+    <color name="abs_gray_light">#dee6e4</color>
+    <color name="abs_gray_transparent3">#7dcccccc</color>
+    <color name="abs_colorIconDark">#262626</color>
 
 
-    <color name="retro_yellow">#ded7a4</color>
+    <color name="abs_retro_yellow">#ded7a4</color>
 
-    <color name="info_board_background">#CFECFF</color>
-    <color name="material_blue_light_v1">#C5EBFF</color>
-    <color name="material_blue_light_v2">#9edfff</color>
-    <color name="material_blue">#26ace9</color>
-    <color name="material_blue_dark">#0170a3</color>
+    <color name="abs_info_board_background">#CFECFF</color>
+    <color name="abs_material_blue_light_v1">#C5EBFF</color>
+    <color name="abs_material_blue_light_v2">#9edfff</color>
+    <color name="abs_material_blue">#26ace9</color>
+    <color name="abs_material_blue_dark">#0170a3</color>
 
-    <color name="material_dark_gray_1">#3e464c</color>
-    <color name="material_dark_gray_2">#374046</color>
-    <color name="material_orange">#fdb657</color>
-    <color name="material_blue_1">#68b6f3</color>
-    <color name="material_red_1">#f3686a</color>
-    <color name="material_yellow_1">#f3e368</color>
-    <color name="material_green_1">#6af368</color>
+    <color name="abs_material_dark_gray_1">#3e464c</color>
+    <color name="abs_material_dark_gray_2">#374046</color>
+    <color name="abs_material_orange">#fdb657</color>
+    <color name="abs_material_blue_1">#68b6f3</color>
+    <color name="abs_material_red_1">#f3686a</color>
+    <color name="abs_material_yellow_1">#f3e368</color>
+    <color name="abs_material_green_1">#6af368</color>
 
 </resources>

@@ -1,8 +1,8 @@
 package com.tretiakov.absframework.utils;
 
 import android.annotation.SuppressLint;
-import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import android.text.SpannableStringBuilder;
 import android.view.Gravity;
 import android.view.LayoutInflater;

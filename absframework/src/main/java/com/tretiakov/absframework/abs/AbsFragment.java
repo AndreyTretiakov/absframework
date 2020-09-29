@@ -7,14 +7,14 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.ColorRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.app.AlertDialog;
+import androidx.annotation.ColorRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.fragment.app.Fragment;
+import androidx.core.content.ContextCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.appcompat.app.AlertDialog;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -222,15 +222,15 @@ public abstract class AbsFragment<T> extends Fragment implements AbsConstants {
             Window window = getActivity().getWindow();
             setStatusBarColor(color);
             window.setNavigationBarColor(ContextCompat.getColor(getActivity(),
-                    color == R.color.color_status_bar ? R.color.colorPrimary_V3 : color));
+                    color == R.color.abs_color_status_bar ? R.color.abs_colorPrimary_V3 : color));
         }
     }
 
     protected void setStatusBarDefaultColor() {
-        setStatusBarColor(isPre23() ? R.color.colorPrimaryDarkPre23 : R.color.color_status_bar);
+        setStatusBarColor(isPre23() ? R.color.abs_colorPrimaryDarkPre23 : R.color.abs_color_status_bar);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && getActivity() != null) {
             Window window = getActivity().getWindow();
-            window.setNavigationBarColor(ContextCompat.getColor(getActivity(), R.color.color_status_bar));
+            window.setNavigationBarColor(ContextCompat.getColor(getActivity(), R.color.abs_color_status_bar));
         }
     }
 
