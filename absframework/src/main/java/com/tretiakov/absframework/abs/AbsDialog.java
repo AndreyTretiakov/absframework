@@ -67,6 +67,13 @@ public class AbsDialog<T> extends DialogFragment implements AbsConstants {
         view.setLayoutParams(params);
     }
 
+    protected void switchActivity(@NonNull Class activity, @Nullable Bundle bundle,
+                                  int request, @Nullable Callback<T> router) {
+        if (getContext() != null) {
+            ((AbsActivity) getContext()).switchActivity(activity, bundle, request, router);
+        }
+    }
+
     public void onData(@Nullable T data) {
         if (mRouter != null) {
             mRouter.result(data);

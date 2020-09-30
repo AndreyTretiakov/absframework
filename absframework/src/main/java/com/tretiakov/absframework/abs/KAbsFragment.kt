@@ -260,4 +260,12 @@ abstract class KAbsFragment<T> : Fragment(), AbsConstants {
         }
     }
 
+    fun showProgress(view: View) {
+        view.visibility = View.VISIBLE
+    }
+
+    fun hideProgress(view: View) {
+        view.visibility = View.INVISIBLE
+    }
+
 }

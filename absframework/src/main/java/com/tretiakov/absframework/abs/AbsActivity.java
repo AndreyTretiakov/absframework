@@ -74,16 +74,20 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
         finish();
     }
 
-    protected <K extends String, V> void switchActivity(Class act) {
+    protected void switchActivity(Class act) {
         switchActivity(act, null, NO_REQUEST, null);
     }
 
-    protected <K extends String, V> void switchActivity(Class act, Bundle bundle) {
+    protected void switchActivity(Class act, Bundle bundle) {
         switchActivity(act, bundle, NO_REQUEST, null);
     }
 
+    protected void switchActivity(Class act, @Nullable Bundle bundle, Callback router) {
+        switchActivity(act, bundle, NO_REQUEST, router);
+    }
+
     protected void switchActivity(@NonNull Class activity, @Nullable Bundle bundle, int request,
-                                  @Nullable Callback<T> router) {
+                                  @Nullable Callback router) {
         mCallback = router;
         Intent intent = new Intent(this, activity);
         if (bundle != null) {
@@ -216,6 +220,16 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
 //        super.onDestroy();
 //        mCallback = null;
 //    }
+
+    protected void onData(@Nullable T data, boolean needBack) {
+        if (mCallback != null) {
+            mCallback.result(data);
+        }
+
+        if (needBack) {
+            onBackPressed();
+        }
+    }
 
     public void requestPermission(@NonNull Callback<Bundle> router, String... permissions) {
         mPermissionRouter = router;

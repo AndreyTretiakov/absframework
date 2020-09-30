@@ -2,6 +2,8 @@ package com.tretiakov.absframework.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+
+import androidx.annotation.ColorRes;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.core.content.ContextCompat;
@@ -48,7 +50,7 @@ public class AbsToolbar extends Toolbar {
 
     public void setArrow(View.OnClickListener cl) {
         DrawerArrowDrawable arrow = new DrawerArrowDrawable(getContext());
-        arrow.setColor(ContextCompat.getColor(getContext(), R.color.abs_colorIconDark));
+        arrow.setColor(ContextCompat.getColor(getContext(), R.color.abs_main_icon_tint));
         arrow.setProgress(1);
         setNavigationIcon(arrow);
         setNavigationOnClickListener(cl);
@@ -63,5 +65,9 @@ public class AbsToolbar extends Toolbar {
         findViewById(R.id.toolbarTitle).setVisibility(GONE);
         findViewById(R.id.toolbarSearch).setVisibility(VISIBLE);
         findViewById(R.id.toolbarButton).setVisibility(VISIBLE);
+    }
+
+    public int optColor(@ColorRes int colorRes) {
+        return ContextCompat.getColor(getContext(), colorRes);
     }
 }

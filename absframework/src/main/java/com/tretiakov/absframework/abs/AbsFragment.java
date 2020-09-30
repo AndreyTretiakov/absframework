@@ -227,7 +227,7 @@ public abstract class AbsFragment<T> extends Fragment implements AbsConstants {
     }
 
     protected void setStatusBarDefaultColor() {
-        setStatusBarColor(isPre23() ? R.color.abs_colorPrimaryDarkPre23 : R.color.abs_color_status_bar);
+        setStatusBarColor(isPre23() ? R.color.abs_colorPrimaryDark : R.color.abs_color_status_bar);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && getActivity() != null) {
             Window window = getActivity().getWindow();
             window.setNavigationBarColor(ContextCompat.getColor(getActivity(), R.color.abs_color_status_bar));
