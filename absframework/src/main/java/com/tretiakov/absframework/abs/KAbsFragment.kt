@@ -101,11 +101,12 @@ abstract class KAbsFragment<T> : Fragment(), AbsConstants {
         return null
     }
 
-    protected open fun showAlertDialog(msg: String?) {
+    protected open fun showAlertDialog(msg: String, title: String? = null) {
         val alertDialog = AlertDialog.Builder(activity!!).create()
+        alertDialog.setTitle(title)
         alertDialog.setMessage(msg)
-        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(android.R.string.ok)
-        ) { dialog: DialogInterface?, which: Int -> alertDialog.dismiss() }
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(android.R.string.ok))
+        { _: DialogInterface?, _: Int -> alertDialog.dismiss() }
         alertDialog.show()
     }
 
