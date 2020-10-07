@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -265,6 +266,12 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
     protected <T> void showFragment(Class fragment, Bundle bundle, Boolean addToBackStack, Callback<T> router) {
         if (getContext() instanceof AbsActivity) {
             ((AbsActivity) getContext()).showFragment(fragment, bundle, addToBackStack, router);
+        }
+    }
+
+    public void showKFragment(@NonNull Fragment fragment, Bundle bundle, @Nullable Callback router) {
+        if (getContext() instanceof AbsActivity) {
+            ((AbsActivity) getContext()).showKFragment(fragment, bundle, true, R.id.fragment, router);
         }
     }
 
