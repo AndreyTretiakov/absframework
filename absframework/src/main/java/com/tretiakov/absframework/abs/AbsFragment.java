@@ -30,13 +30,13 @@ import java.util.HashMap;
  * @author Andrey Tretiakov. Created 4/15/2016.
  */
 @SuppressWarnings("unchecked")
-public abstract class AbsFragment<T> extends Fragment implements AbsConstants {
+public abstract class AbsFragment extends Fragment implements AbsConstants {
 
 //    final String LOG_TAG = AbsFragment.class.getSimpleName();
 
     private AbsActivity mActivity;
 
-    private Callback<T> mCallback;
+    private Callback mCallback;
 
     @Override
     public void onAttach(Context context) {
@@ -51,18 +51,18 @@ public abstract class AbsFragment<T> extends Fragment implements AbsConstants {
         return f;
     }
 
-    protected AbsFragment<T> instanceFragment(Bundle bundle, Callback router) {
+    protected AbsFragment instanceFragment(Bundle bundle, Callback router) {
         setArguments(bundle);
         setCallback(router);
         return this;
     }
 
-    protected AbsFragment<T> instanceFragment(Callback router) {
+    protected AbsFragment instanceFragment(Callback router) {
         setCallback(router);
         return this;
     }
 
-    public void showUnCancelableDialog(Class dialog, Bundle bundle, Callback<T> callback) {
+    public void showUnCancelableDialog(Class dialog, Bundle bundle, Callback callback) {
         if (isVisible() && mActivity != null) {
             mActivity.showUnCancelableDialog(dialog, bundle, callback);
         }
@@ -72,12 +72,12 @@ public abstract class AbsFragment<T> extends Fragment implements AbsConstants {
         mActivity.requestPermission(router, permissions);
     }
 
-    public void setCallback(Callback<T> router) {
+    public void setCallback(Callback router) {
         mCallback = router;
     }
 
     protected void switchActivity(@NonNull Class activity, @Nullable Bundle bundle,
-                                                        int request, @Nullable Callback<T> router) {
+                                                        int request, @Nullable Callback router) {
         if (mActivity != null) {
             mActivity.switchActivity(activity, bundle, request, router);
         }
@@ -89,7 +89,7 @@ public abstract class AbsFragment<T> extends Fragment implements AbsConstants {
         }
     }
 
-    protected AbsDialog showDialog(Class dialog, Bundle bundle, Callback<T> callback) {
+    protected AbsDialog showDialog(Class dialog, Bundle bundle, Callback callback) {
         if (isVisible()) {
             AbsDialog d = (AbsDialog) AbsDialog.instantiate(getContext(), dialog.getName(), bundle);
             if (callback != null) d.setCallback(callback);
@@ -115,31 +115,31 @@ public abstract class AbsFragment<T> extends Fragment implements AbsConstants {
         alertDialog.show();
     }
 
-    protected void showFragment(Class fragment, Bundle bundle, Boolean addToBackStack, Callback<T> callback) {
+    protected void showFragment(Class fragment, Bundle bundle, Boolean addToBackStack, Callback callback) {
         showFragment(fragment, bundle, addToBackStack, R.id.fragment, callback);
     }
 
-    protected void showFragment(Class fragment, Bundle bundle, Boolean addToBackStack, int id, Callback<T> callback) {
+    protected void showFragment(Class fragment, Bundle bundle, Boolean addToBackStack, int id, Callback callback) {
         if (mActivity != null) mActivity.showFragment(fragment, bundle, addToBackStack, id, callback);
     }
 
-    protected void addFragment(Class fragment, Bundle bundle, Boolean addToBackStack, Callback<T> callback) {
+    protected void addFragment(Class fragment, Bundle bundle, Boolean addToBackStack, Callback callback) {
         addFragment(fragment, bundle, addToBackStack, R.id.fragment, callback);
     }
 
-    protected void addFragment(Class fragment, Bundle bundle, Boolean addToBackStack, int id, Callback<T> callback) {
+    protected void addFragment(Class fragment, Bundle bundle, Boolean addToBackStack, int id, Callback callback) {
         if (mActivity != null) mActivity.addFragment(fragment, bundle, addToBackStack, id, callback);
     }
 
-    protected void addFragmentRTL(Class fragment, Bundle bundle, Boolean addToBackStack, int id, Callback<T> callback) {
+    protected void addFragmentRTL(Class fragment, Bundle bundle, Boolean addToBackStack, int id, Callback callback) {
         if (mActivity != null) mActivity.addFragmentRTL(fragment, bundle, addToBackStack, id, callback);
     }
 
-    protected void addFragmentRTL(Class fragment, Bundle bundle, Boolean addToBackStack, Callback<T> callback) {
+    protected void addFragmentRTL(Class fragment, Bundle bundle, Boolean addToBackStack, Callback callback) {
         addFragmentRTL(fragment, bundle, addToBackStack, R.id.fragment, callback);
     }
 
-    protected void onData(@Nullable T data, boolean needBack) {
+    protected <T> void onData(@Nullable T data, boolean needBack) {
         if (mCallback != null) {
             mCallback.result(data);
         }

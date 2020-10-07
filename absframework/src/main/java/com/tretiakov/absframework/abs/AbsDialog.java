@@ -30,11 +30,11 @@ public class AbsDialog<T> extends DialogFragment implements AbsConstants {
 
     private boolean mIsVisible;
 
-    private Callback<T> mRouter;
+    private Callback mRouter;
 
     private Handler mHandler = new Handler();
 
-    public void setCallback(@NonNull Callback<T> callback) {
+    public void setCallback(@NonNull Callback callback) {
         mRouter = callback;
     }
 
@@ -68,7 +68,7 @@ public class AbsDialog<T> extends DialogFragment implements AbsConstants {
     }
 
     protected void switchActivity(@NonNull Class activity, @Nullable Bundle bundle,
-                                  int request, @Nullable Callback<T> router) {
+                                  int request, @Nullable Callback router) {
         if (getContext() != null) {
             ((AbsActivity) getContext()).switchActivity(activity, bundle, request, router);
         }

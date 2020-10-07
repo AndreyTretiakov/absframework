@@ -15,7 +15,7 @@
         android:layout_marginRight="16dp"
         android:drawablePadding="16dp"
         android:gravity="center_vertical"
-        android:textColor="@color/textPrimary"
+        android:textColor="@color/abs_textPrimary"
         android:textSize="14dp"
         android:text="@android:string/unknownName"
         />
@@ -28,7 +28,7 @@
         android:layout_marginBottom="16dp"
         android:layout_below="@android:id/text1"
         android:textSize="14dp"
-        android:textColor="@color/textSecondary"
+        android:textColor="@color/abs_textSecondary"
         android:text="@android:string/unknownName"
         />
 

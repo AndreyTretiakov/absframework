@@ -15,7 +15,6 @@ import android.util.TypedValue;
 import android.view.View;
 
 import com.tretiakov.absframework.R;
-import com.tretiakov.absframework.utils.Utils;
 
 /**
  * @author Andrey Tretiakov. Created 4/16/2016.

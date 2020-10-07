@@ -35,9 +35,9 @@ import java.util.Map;
  * @author Andrey Tretiakov. Created 4/15/2016.
  */
 @SuppressWarnings("unchecked")
-public abstract class AbsActivity<T> extends AppCompatActivity implements AbsConstants {
+public abstract class AbsActivity extends AppCompatActivity implements AbsConstants {
 
-    private Callback<T> mCallback;
+    private Callback mCallback;
     private Callback<Bundle> mPermissionRouter;
     private static final short REQUEST_PERMISSION = 1010;
 
@@ -46,7 +46,7 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
         super.onActivityResult(requestCode, resultCode, data);
         if (mCallback != null && data != null) {
             if (data.hasExtra(KEY_DATA)) {
-                mCallback.result((T) data.getExtras().get(KEY_DATA));
+                mCallback.result(data.getExtras().get(KEY_DATA));
             } else {
                 mCallback.result(null);
             }
@@ -54,14 +54,14 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
     }
 
 
-    protected void showUnCancelableDialog(Class dialog, Bundle bundle, Callback<T> callback) {
+    protected void showUnCancelableDialog(Class dialog, Bundle bundle, Callback callback) {
         AbsDialog d = (AbsDialog) AbsDialog.instantiate(this, dialog.getName(), bundle);
         if (callback != null) d.setCallback(callback);
         d.setCancelable(false);
         d.show(getSupportFragmentManager(), dialog.getName());
     }
 
-    protected void showDialog(Class dialog, Bundle bundle, Callback<T> callback) {
+    protected void showDialog(Class dialog, Bundle bundle, Callback callback) {
         AbsDialog d = (AbsDialog) AbsDialog.instantiate(this, dialog.getName(), bundle);
         if (callback != null) d.setCallback(callback);
         d.show(getSupportFragmentManager(), dialog.getName());
@@ -107,7 +107,7 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
         }
     }
 
-    protected void deliverResult(T data) {
+    protected <T> void deliverResult(T data) {
         Intent intent = new Intent();
         if (data instanceof String)
             intent.putExtra(KEY_DATA, (String) data);
@@ -123,23 +123,27 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
     }
 
     @NonNull
-    public <F extends AbsFragment> F showMenuFragment(@NonNull Class fragment, int id, @Nullable Callback<T> router) {
+    public <F extends AbsFragment> F showMenuFragment(@NonNull Class fragment, int id, @Nullable Callback router) {
         return showFragment(fragment, Bundle.EMPTY, false, id, router);
     }
 
     @NonNull
-    public <F extends AbsFragment> F showFragment(@NonNull Class fragment, @NonNull Bundle bundle, @NonNull Boolean addToBackStack, @Nullable Callback<T> router) {
+    public <F extends AbsFragment> F showFragment(@NonNull Class fragment, @NonNull Bundle bundle, @NonNull Boolean addToBackStack, @Nullable Callback router) {
         return showFragment(fragment, bundle, addToBackStack, R.id.fragment, router);
     }
 
+    public Fragment showKFragment(@NonNull Fragment fragment, @Nullable Callback router) {
+        return showKFragment(fragment, Bundle.EMPTY, true, R.id.fragment, router);
+    }
+
     @NonNull
-    public Fragment showKFragment(@NonNull Fragment fragment, @NonNull Bundle bundle, @NonNull Boolean addToBackStack, @Nullable Callback<T> router) {
+    public Fragment showKFragment(@NonNull Fragment fragment, @NonNull Bundle bundle, @NonNull Boolean addToBackStack, @Nullable Callback router) {
         return showKFragment(fragment, bundle, addToBackStack, R.id.fragment, router);
     }
 
     @NonNull
     public <F extends AbsFragment> F showFragment(@NonNull Class fragment, @NonNull Bundle bundle,
-                                                  @NonNull Boolean addToBackStack, int id, @Nullable Callback<T> router) {
+                                                  @NonNull Boolean addToBackStack, int id, @Nullable Callback router) {
         F f = (F) AbsFragment.instantiate(this, fragment.getName(), bundle);
         f.setCallback(router);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -163,7 +167,7 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
 
     @NonNull
     public <F extends AbsFragment> F addFragment(@NonNull Class fragment, @NonNull Bundle bundle,
-                                                  @NonNull Boolean addToBackStack, int id, @Nullable Callback<T> router) {
+                                                  @NonNull Boolean addToBackStack, int id, @Nullable Callback router) {
         F f = (F) AbsFragment.instantiate(this, fragment.getName(), bundle);
         f.setCallback(router);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -188,8 +192,8 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
     }
 
     @NonNull
-    public <F extends KAbsFragment, O> F addKFragmentRTL(@NonNull F fragment, @NonNull Bundle bundle,
-                                                     @NonNull Boolean addToBackStack, int id, @Nullable Callback<O> router) {
+    public <F extends KAbsFragment> F addKFragmentRTL(@NonNull F fragment, @NonNull Bundle bundle,
+                                                     @NonNull Boolean addToBackStack, int id, @Nullable Callback router) {
         fragment.setArguments(bundle);
         fragment.setCallback(router);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -203,7 +207,7 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
 
     @NonNull
     public <F extends AbsFragment> F addFragmentRTL(@NonNull Class fragment, @NonNull Bundle bundle,
-                                                 @NonNull Boolean addToBackStack, int id, @Nullable Callback<T> router) {
+                                                 @NonNull Boolean addToBackStack, int id, @Nullable Callback router) {
         F f = (F) AbsFragment.instantiate(this, fragment.getName(), bundle);
         f.setCallback(router);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -221,7 +225,7 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
 //        mCallback = null;
 //    }
 
-    protected void onData(@Nullable T data, boolean needBack) {
+    protected <T> void onData(@Nullable T data, boolean needBack) {
         if (mCallback != null) {
             mCallback.result(data);
         }
