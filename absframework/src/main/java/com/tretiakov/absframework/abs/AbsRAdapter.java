@@ -269,6 +269,12 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
         }
     }
 
+    public void showKFragment(@NonNull Fragment fragment) {
+        if (getContext() instanceof AbsActivity) {
+            ((AbsActivity) getContext()).showKFragment(fragment, Bundle.EMPTY, true, R.id.fragment, null);
+        }
+    }
+
     public void showKFragment(@NonNull Fragment fragment, Bundle bundle, @Nullable Callback router) {
         if (getContext() instanceof AbsActivity) {
             ((AbsActivity) getContext()).showKFragment(fragment, bundle, true, R.id.fragment, router);
