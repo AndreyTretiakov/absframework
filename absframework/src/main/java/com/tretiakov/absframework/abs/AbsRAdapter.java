@@ -102,7 +102,7 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
         mRouter = router;
     }
 
-    protected <T> void showDialog(Class dialog, Bundle bundle, Callback<T> callback) {
+    protected void showDialog(Class dialog, Bundle bundle, Callback callback) {
         if (mContext instanceof AbsActivity) {
             AbsDialog d = (AbsDialog) AbsDialog.instantiate(getContext(), dialog.getName(), bundle);
             if (callback != null) d.setCallback(callback);

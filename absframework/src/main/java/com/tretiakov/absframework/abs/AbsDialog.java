@@ -26,7 +26,7 @@ import com.tretiakov.absframework.routers.Callback;
 /**
  * @author Andrey Tretiakov. Created 4/15/2016.
  */
-public class AbsDialog<T> extends DialogFragment implements AbsConstants {
+public class AbsDialog extends DialogFragment implements AbsConstants {
 
     private boolean mIsVisible;
 
@@ -74,7 +74,7 @@ public class AbsDialog<T> extends DialogFragment implements AbsConstants {
         }
     }
 
-    public void onData(@Nullable T data) {
+    public <T> void onData(@Nullable T data) {
         if (mRouter != null) {
             mRouter.result(data);
         }
@@ -82,7 +82,7 @@ public class AbsDialog<T> extends DialogFragment implements AbsConstants {
         close();
     }
 
-    public void onData(@Nullable T data, boolean needDismiss) {
+    public <T> void onData(@Nullable T data, boolean needDismiss) {
         if (mRouter != null) {
             mRouter.result(data);
         }
@@ -92,7 +92,7 @@ public class AbsDialog<T> extends DialogFragment implements AbsConstants {
         }
     }
 
-    public void onDataAllowingStateLoss(@Nullable T data) {
+    public <T> void onDataAllowingStateLoss(@Nullable T data) {
         if (mRouter != null) {
             mRouter.result(data);
         }
