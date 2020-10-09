@@ -51,7 +51,7 @@ public class Message {
         View layout = LayoutInflater.from(AbsContext.getInstance().getContext())
                 .inflate(R.layout.toast_layout, null);
 
-        TextView text = (TextView) layout.findViewById(R.id.toastTitle);
+        TextView text = layout.findViewById(R.id.toastTitle);
         if (builder != null) {
             text.setText(builder);
         } else {
