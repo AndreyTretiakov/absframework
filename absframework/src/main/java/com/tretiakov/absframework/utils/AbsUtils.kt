@@ -9,20 +9,20 @@ import org.json.JSONObject
 
 const val TAG = "ABS_UTILS"
 
-fun String.logD(tag: String = TAG) {
+fun String.alogD(tag: String = TAG) {
     Log.d(tag, this)
 }
-fun String.logI(tag: String = TAG) {
+fun String.alogI(tag: String = TAG) {
     Log.i(tag, this)
 }
-fun String.logE(tag: String = TAG) {
+fun String.alogE(tag: String = TAG) {
     Log.e(tag, this)
 }
-fun List<Any>.logD(tag: String = TAG) {
+fun List<Any>.alogD(tag: String = TAG) {
     Log.d(tag, this.toString())
 }
-val Int.px: Int
+val Int.apx: Int
     get() = (this * Resources.getSystem().displayMetrics.density).toInt()
 
-val Int.dp: Int
+val Int.adp: Int
     get() = (this / Resources.getSystem().displayMetrics.density).toInt()
