@@ -58,7 +58,6 @@
                 android:layout_height="24dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="8dp"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:src="@drawable/ic_action_close"
                 android:background="@drawable/button_selector"

@@ -18,8 +18,6 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.tretiakov.absframework.R
 import com.tretiakov.absframework.constants.AbsConstants
 import com.tretiakov.absframework.routers.Callback
-import java.util.*
-import kotlin.collections.ArrayList
 
 @Suppress("UNCHECKED_CAST")
 abstract class KAbsFragment : Fragment(), AbsConstants {
@@ -84,21 +82,11 @@ abstract class KAbsFragment : Fragment(), AbsConstants {
         }
     }
 
-    protected open fun <T> showDialog(dialog: Class<T>, bundle: Bundle?, callback: Callback<Any>?): AbsDialog? {
-        if (isVisible) {
-            val d = AbsDialog.instantiate(context!!, dialog.name, bundle) as AbsDialog
-            if (callback != null) d.setCallback(callback)
-            if (activity != null && isVisible) {
-                try {
-                    d.show(childFragmentManager, dialog.name)
-                    return d
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }
-            return null
-        }
-        return null
+    protected open fun showDialog(dialog: Class<*>, bundle: Bundle?, callback: Callback<*>?) {
+        if (context == null || !isVisible) return
+        val d = AbsDialog.instantiate(context!!, dialog.name, bundle) as AbsDialog
+        if (callback != null) d.setCallback(callback)
+        d.show((context as AbsActivity?)!!.supportFragmentManager, dialog.name)
     }
 
     protected open fun showAlertDialog(msg: String, title: String? = null) {

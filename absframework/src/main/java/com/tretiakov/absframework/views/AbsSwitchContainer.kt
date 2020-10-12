@@ -64,7 +64,7 @@ class AbsSwitchContainer @JvmOverloads constructor(context: Context,
         return switchView.isChecked
     }
 
-    fun setOnCheckedChangeListener(listener: CompoundButton.OnCheckedChangeListener) {
+    fun setOnCheckedChangeListener(listener: CompoundButton.OnCheckedChangeListener?) {
         switchView.setOnCheckedChangeListener(listener)
     }
 

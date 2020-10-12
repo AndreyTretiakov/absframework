@@ -37,6 +37,7 @@
     <color name="abs_gray_light">#dee6e4</color>
     <color name="abs_gray_transparent3">#7dcccccc</color>
     <color name="abs_colorIconDark">#262626</color>
+    <color name="abs_toast_text_color">#F1F1F1</color>
 
 
     <color name="abs_retro_yellow">#ded7a4</color>

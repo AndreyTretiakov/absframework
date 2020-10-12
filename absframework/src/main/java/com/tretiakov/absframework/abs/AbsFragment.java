@@ -89,22 +89,12 @@ public abstract class AbsFragment extends Fragment implements AbsConstants {
         }
     }
 
-    protected AbsDialog showDialog(Class dialog, Bundle bundle, Callback callback) {
-        if (isVisible()) {
-            AbsDialog d = (AbsDialog) AbsDialog.instantiate(getContext(), dialog.getName(), bundle);
-            if (callback != null) d.setCallback(callback);
-            if (mActivity != null && isVisible()) {
-                try {
-                    d.show(getChildFragmentManager(), dialog.getName());
-                    return d;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-            return null;
-        }
+    protected void showDialog(Class dialog, Bundle bundle, Callback callback) {
+        if (getContext() == null) return;
 
-        return null;
+        AbsDialog d = (AbsDialog) AbsDialog.instantiate(getContext(), dialog.getName(), bundle);
+        if (callback != null) d.setCallback(callback);
+        d.show(((AbsActivity) getContext()).getSupportFragmentManager(), dialog.getName());
     }
 
     protected void showAlertDialog(String msg) {

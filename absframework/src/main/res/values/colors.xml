@@ -17,6 +17,7 @@
     <color name="abs_textBluePrimary">#fff8c6</color>
     <color name="abs_textGreenPrimary">#1a6c09</color>
     <color name="abs_textYellowPrimary">#6c6209</color>
+    <color name="abs_toast_text_color">#F1F1F1</color>
 
     <color name="abs_notification_background_warn">#fff9ef</color>
     <color name="abs_notification_background_info">#eff2ff</color>
@@ -25,7 +26,7 @@
     <color name="abs_white">#fff</color>
     <color name="abs_divider">#c8d4d4d4</color>
     <color name="abs_dark">#1e1e1e</color>
-    <color name="abs_toast_color">#1e1e1e</color>
+    <color name="abs_toast_color">#80000000</color>
 
     <color name="abs_transparent">#0000</color>
     <color name="abs_transparent_white">#c8ffffff</color>
