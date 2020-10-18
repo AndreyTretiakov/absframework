@@ -42,11 +42,9 @@
 
     <color name="abs_retro_yellow">#ded7a4</color>
 
-    <color name="abs_info_board_background">#CFECFF</color>
-    <color name="abs_material_blue_light_v1">#C5EBFF</color>
-    <color name="abs_material_blue_light_v2">#9edfff</color>
-    <color name="abs_material_blue">#26ace9</color>
-    <color name="abs_material_blue_dark">#0170a3</color>
+    <color name="abs_info_board_background">#92BFDD</color>
+    <color name="abs_info_board_text">#00547C</color>
+    <color name="abs_info_board_text_dark">#001B25</color>
 
     <color name="abs_material_dark_gray_1">#3e464c</color>
     <color name="abs_material_dark_gray_2">#374046</color>

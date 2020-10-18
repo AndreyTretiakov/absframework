@@ -29,7 +29,7 @@ class AbsSwitchContainer @JvmOverloads constructor(context: Context,
         val subtitle = a.getText(R.styleable.AbsSwitch__subtitle)
 
         val inflater = LayoutInflater.from(context)
-        addView(inflater.inflate(R.layout.abs_switch_content, this, false))
+        addView(inflater.inflate(R.layout.abs_view_switch, this, false))
 
         switchView = findViewById(R.id.switchView)
         val thumbTint = a.getColorStateList(R.styleable.AbsSwitch__thumbColor)

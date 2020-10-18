@@ -49,7 +49,7 @@ public class Message {
         }
 
         View layout = LayoutInflater.from(AbsContext.getInstance().getContext())
-                .inflate(R.layout.toast_layout, null);
+                .inflate(R.layout.abs_toast, null);
 
         TextView text = layout.findViewById(R.id.toastTitle);
         if (builder != null) {
