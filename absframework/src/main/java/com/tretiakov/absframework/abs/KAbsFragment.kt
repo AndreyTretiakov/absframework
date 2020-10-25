@@ -98,6 +98,10 @@ abstract class KAbsFragment : Fragment(), AbsConstants {
         alertDialog.show()
     }
 
+    open fun showKFragment(fragment: Fragment, bundle: Bundle, router: Callback<*>) {
+        activity?.showKFragment(fragment, bundle, true, R.id.fragment, router)
+    }
+
     protected open fun showFragment(fragment: KAbsFragment, bundle: Bundle?, addToBackStack: Boolean?, callback: Callback<Any>?) {
         showFragment(fragment, bundle, addToBackStack, R.id.fragment, callback)
     }
