@@ -1,7 +1,6 @@
 package com.tretiakov.absframework.abs;
 
 import android.app.Dialog;
-import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
 import android.content.IntentFilter;
 import android.graphics.Point;
@@ -12,7 +11,6 @@ import androidx.annotation.DimenRes;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.Size;
 import androidx.fragment.app.DialogFragment;
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -21,7 +19,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 
 import com.tretiakov.absframework.constants.AbsConstants;
-import com.tretiakov.absframework.routers.Callback;
+import com.tretiakov.absframework.routers.AbsCallback;
 
 /**
  * @author Andrey Tretiakov. Created 4/15/2016.
@@ -30,12 +28,12 @@ public class AbsDialog extends DialogFragment implements AbsConstants {
 
     private boolean mIsVisible;
 
-    private Callback mRouter;
+    private AbsCallback mRouter;
 
     private Handler mHandler = new Handler();
 
-    public void setCallback(@NonNull Callback callback) {
-        mRouter = callback;
+    public void setCallback(@NonNull AbsCallback absCallback) {
+        mRouter = absCallback;
     }
 
     @NonNull
@@ -68,7 +66,7 @@ public class AbsDialog extends DialogFragment implements AbsConstants {
     }
 
     protected void switchActivity(@NonNull Class activity, @Nullable Bundle bundle,
-                                  int request, @Nullable Callback router) {
+                                  int request, @Nullable AbsCallback router) {
         if (getContext() != null) {
             ((AbsActivity) getContext()).switchActivity(activity, bundle, request, router);
         }

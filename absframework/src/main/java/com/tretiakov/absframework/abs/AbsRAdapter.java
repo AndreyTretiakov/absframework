@@ -21,7 +21,7 @@ import android.widget.Filter;
 
 import com.tretiakov.absframework.R;
 import com.tretiakov.absframework.constants.AbsConstants;
-import com.tretiakov.absframework.routers.Callback;
+import com.tretiakov.absframework.routers.AbsCallback;
 import com.tretiakov.absframework.routers.Callback2;
 import com.tretiakov.absframework.routers.TypedFilter;
 import com.tretiakov.absframework.utils.Keyboard;
@@ -38,7 +38,7 @@ import java.util.List;
 public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
         extends RecyclerView.Adapter<H> implements AbsConstants {
 
-    private Callback mRouter;
+    private AbsCallback mRouter;
     private Callback2 mRouter2;
     private Context mContext;
     private List<E> mItems;
@@ -60,7 +60,7 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
         mItems = items;
     }
 
-    public AbsRAdapter(Context context, List<E> items, Callback router) {
+    public AbsRAdapter(Context context, List<E> items, AbsCallback router) {
         mInflater = LayoutInflater.from(context);
         mRouter = router;
         mContext = context;
@@ -98,14 +98,14 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
         mRouter = null;
     }
 
-    protected void setRouter(Callback router) {
+    protected void setRouter(AbsCallback router) {
         mRouter = router;
     }
 
-    protected void showDialog(Class dialog, Bundle bundle, Callback callback) {
+    protected void showDialog(Class dialog, Bundle bundle, AbsCallback absCallback) {
         if (mContext instanceof AbsActivity) {
             AbsDialog d = (AbsDialog) AbsDialog.instantiate(getContext(), dialog.getName(), bundle);
-            if (callback != null) d.setCallback(callback);
+            if (absCallback != null) d.setCallback(absCallback);
             d.show(((AbsActivity) mContext).getSupportFragmentManager(), dialog.getName());
         }
     }
@@ -268,7 +268,7 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
         }
     }
 
-    protected <T> void showFragment(Class fragment, Bundle bundle, Boolean addToBackStack, Callback<T> router) {
+    protected <T> void showFragment(Class fragment, Bundle bundle, Boolean addToBackStack, AbsCallback<T> router) {
         if (getContext() instanceof AbsActivity) {
             ((AbsActivity) getContext()).showFragment(fragment, bundle, addToBackStack, router);
         }
@@ -280,13 +280,13 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
         }
     }
 
-    public void showKFragment(@NonNull Fragment fragment, Bundle bundle, @Nullable Callback router) {
+    public void showKFragment(@NonNull Fragment fragment, Bundle bundle, @Nullable AbsCallback router) {
         if (getContext() instanceof AbsActivity) {
             ((AbsActivity) getContext()).showKFragment(fragment, bundle, true, R.id.fragment, router);
         }
     }
 
-    protected <T> void addFragment(Class fragment, Bundle bundle, Boolean addToBackStack, Callback<T> router) {
+    protected <T> void addFragment(Class fragment, Bundle bundle, Boolean addToBackStack, AbsCallback<T> router) {
         if (getContext() instanceof AbsActivity) {
             ((AbsActivity) getContext()).addFragment(fragment, bundle, addToBackStack, R.id.fragment, router);
         }

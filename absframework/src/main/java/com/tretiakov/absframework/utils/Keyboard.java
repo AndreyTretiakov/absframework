@@ -50,6 +50,7 @@ public class Keyboard {
                         context.getSystemService(INPUT_METHOD_SERVICE);
                 if (manager != null) {
                     manager.hideSoftInputFromWindow(view.getWindowToken(), HIDE_NOT_ALWAYS);
+                    view.clearFocus();
                 }
             }
         }

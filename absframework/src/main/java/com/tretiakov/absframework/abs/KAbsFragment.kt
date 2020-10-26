@@ -17,14 +17,14 @@ import androidx.fragment.app.FragmentFactory
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.tretiakov.absframework.R
 import com.tretiakov.absframework.constants.AbsConstants
-import com.tretiakov.absframework.routers.Callback
+import com.tretiakov.absframework.routers.AbsCallback
 
 @Suppress("UNCHECKED_CAST")
 abstract class KAbsFragment : Fragment(), AbsConstants {
     
     private var activity: AbsActivity? = null
 
-    private var callback: Callback<Any>? = null
+    private var absCallback: AbsCallback<Any>? = null
 
     private var fragmentFactory: FragmentFactory? = null
 
@@ -35,42 +35,42 @@ abstract class KAbsFragment : Fragment(), AbsConstants {
         fragmentFactory = activity!!.supportFragmentManager.fragmentFactory
     }
 
-    open fun instance(fClass: Class<out KAbsFragment?>, bundle: Bundle?, callback: Callback<Any>?): KAbsFragment? {
+    open fun instance(fClass: Class<out KAbsFragment?>, bundle: Bundle?, absCallback: AbsCallback<Any>?): KAbsFragment? {
         val loader = fClass.classLoader!!
         val name = fClass.name
         val fragment = fragmentFactory!!.instantiate(loader, name) as KAbsFragment
         fragment.arguments = bundle
-        fragment.callback = callback
+        fragment.absCallback = absCallback
         return fragment
     }
 
-    protected fun instanceFragment(bundle: Bundle?, router: Callback<Any>): KAbsFragment? {
+    protected fun instanceFragment(bundle: Bundle?, router: AbsCallback<Any>): KAbsFragment? {
         arguments = bundle
         setCallback(router)
         return this
     }
 
-    protected open fun instanceFragment(router: Callback<Any>): KAbsFragment? {
+    protected open fun instanceFragment(router: AbsCallback<Any>): KAbsFragment? {
         setCallback(router)
         return this
     }
 
-    open fun <T> showUnCancelableDialog(dialog: Class<T>?, bundle: Bundle?, callback: Callback<Any>?) {
+    open fun <T> showUnCancelableDialog(dialog: Class<T>?, bundle: Bundle?, absCallback: AbsCallback<Any>?) {
         if (isVisible && activity != null) {
-            activity!!.showUnCancelableDialog(dialog, bundle, callback)
+            activity!!.showUnCancelableDialog(dialog, bundle, absCallback)
         }
     }
 
-    protected open fun requestPermission(router: Callback<Bundle?>, vararg permissions: String?) {
+    protected open fun requestPermission(router: AbsCallback<Bundle?>, vararg permissions: String?) {
         activity!!.requestPermission(router, *permissions)
     }
 
-    open fun setCallback(router: Callback<Any>?) {
-        callback = router
+    open fun setCallback(router: AbsCallback<Any>?) {
+        absCallback = router
     }
 
     protected open fun <T> switchActivity(act: Class<T>, bundle: Bundle?,
-                                      request: Int, router: Callback<Any>?) {
+                                      request: Int, router: AbsCallback<Any>?) {
         if (activity != null) {
             activity!!.switchActivity(act, bundle, request, router)
         }
@@ -82,10 +82,10 @@ abstract class KAbsFragment : Fragment(), AbsConstants {
         }
     }
 
-    protected open fun showDialog(dialog: Class<*>, bundle: Bundle?, callback: Callback<*>?) {
+    protected open fun showDialog(dialog: Class<*>, bundle: Bundle?, absCallback: AbsCallback<*>?) {
         if (context == null || !isVisible) return
         val d = AbsDialog.instantiate(context!!, dialog.name, bundle) as AbsDialog
-        if (callback != null) d.setCallback(callback)
+        if (absCallback != null) d.setCallback(absCallback)
         d.show((context as AbsActivity?)!!.supportFragmentManager, dialog.name)
     }
 
@@ -98,37 +98,37 @@ abstract class KAbsFragment : Fragment(), AbsConstants {
         alertDialog.show()
     }
 
-    open fun showKFragment(fragment: Fragment, bundle: Bundle, router: Callback<*>) {
+    open fun showKFragment(fragment: Fragment, bundle: Bundle, router: AbsCallback<*>) {
         activity?.showKFragment(fragment, bundle, true, R.id.fragment, router)
     }
 
-    protected open fun showFragment(fragment: KAbsFragment, bundle: Bundle?, addToBackStack: Boolean?, callback: Callback<Any>?) {
-        showFragment(fragment, bundle, addToBackStack, R.id.fragment, callback)
+    protected open fun showFragment(fragment: KAbsFragment, bundle: Bundle?, addToBackStack: Boolean?, absCallback: AbsCallback<Any>?) {
+        showFragment(fragment, bundle, addToBackStack, R.id.fragment, absCallback)
     }
 
-    protected open fun showFragment(fragment: KAbsFragment, bundle: Bundle?, addToBackStack: Boolean?, id: Int, callback: Callback<Any>?) {
-        if (activity != null) activity!!.showKFragment(fragment, bundle!!, addToBackStack!!, id, callback)
+    protected open fun showFragment(fragment: KAbsFragment, bundle: Bundle?, addToBackStack: Boolean?, id: Int, absCallback: AbsCallback<Any>?) {
+        if (activity != null) activity!!.showKFragment(fragment, bundle!!, addToBackStack!!, id, absCallback)
     }
 
-    protected open fun addFragment(fragment: KAbsFragment, bundle: Bundle?, addToBackStack: Boolean?, callback: Callback<Any>?) {
-        addFragment(fragment, bundle, addToBackStack, R.id.fragment, callback)
+    protected open fun addFragment(fragment: KAbsFragment, bundle: Bundle?, addToBackStack: Boolean?, absCallback: AbsCallback<Any>?) {
+        addFragment(fragment, bundle, addToBackStack, R.id.fragment, absCallback)
     }
 
-    protected open fun addFragment(fragment: KAbsFragment, bundle: Bundle?, addToBackStack: Boolean?, id: Int, callback: Callback<Any>?) {
-        if (activity != null) activity!!.addKFragment(fragment, bundle!!, addToBackStack!!, id, callback)
+    protected open fun addFragment(fragment: KAbsFragment, bundle: Bundle?, addToBackStack: Boolean?, id: Int, absCallback: AbsCallback<Any>?) {
+        if (activity != null) activity!!.addKFragment(fragment, bundle!!, addToBackStack!!, id, absCallback)
     }
 
-    protected open fun addFragmentRTL(fragment: KAbsFragment, bundle: Bundle?, addToBackStack: Boolean?, id: Int, callback: Callback<Any>?) {
-        if (activity != null) activity!!.addKFragment(fragment, bundle!!, addToBackStack!!, id, callback)
+    protected open fun addFragmentRTL(fragment: KAbsFragment, bundle: Bundle?, addToBackStack: Boolean?, id: Int, absCallback: AbsCallback<Any>?) {
+        if (activity != null) activity!!.addKFragment(fragment, bundle!!, addToBackStack!!, id, absCallback)
     }
 
-    protected open fun addFragmentRTL(fragment: KAbsFragment, bundle: Bundle?, addToBackStack: Boolean?, callback: Callback<Any>?) {
-        addFragmentRTL(fragment, bundle, addToBackStack, R.id.fragment, callback)
+    protected open fun addFragmentRTL(fragment: KAbsFragment, bundle: Bundle?, addToBackStack: Boolean?, absCallback: AbsCallback<Any>?) {
+        addFragmentRTL(fragment, bundle, addToBackStack, R.id.fragment, absCallback)
     }
 
     protected open fun <D> onData(data: D, needBack: Boolean) {
-        if (callback != null) {
-            callback!!.result(data)
+        if (absCallback != null) {
+            absCallback!!.result(data)
         }
         if (needBack) {
             onBackPressed()
