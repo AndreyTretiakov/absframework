@@ -24,6 +24,8 @@ import com.tretiakov.absframework.R;
 import com.tretiakov.absframework.constants.AbsConstants;
 import com.tretiakov.absframework.routers.AbsCallback;
 
+import kotlin.reflect.KClass;
+
 /**
  * @author Andrey Tretiakov. Created 4/15/2016.
  */
@@ -123,6 +125,10 @@ public abstract class AbsActivity extends AppCompatActivity implements AbsConsta
     @NonNull
     public <F extends AbsFragment> F showFragment(@NonNull Class fragment, @NonNull Bundle bundle, @NonNull Boolean addToBackStack, @Nullable AbsCallback router) {
         return showFragment(fragment, bundle, addToBackStack, R.id.fragment, router);
+    }
+
+    public Fragment showKFragment(@NonNull Fragment fragment) {
+        return showKFragment(fragment, Bundle.EMPTY, true, R.id.fragment, null);
     }
 
     public Fragment showKFragment(@NonNull Fragment fragment, @Nullable AbsCallback router) {
