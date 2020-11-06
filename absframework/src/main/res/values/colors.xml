@@ -57,7 +57,4 @@
     <color name="colorAccent">#FF5722</color>
     <color name="colorAccent_A50">#80FF5722</color>
 
-    <color name="thumb_inactive">#7A7A7A</color>
-    <color name="track_inactive">#BBBBBB</color>
-
 </resources>
