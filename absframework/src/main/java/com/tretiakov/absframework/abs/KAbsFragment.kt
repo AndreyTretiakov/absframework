@@ -1,8 +1,14 @@
 package com.tretiakov.absframework.abs
 
 import android.content.*
+import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
+import android.text.style.RelativeSizeSpan
+import android.text.style.StyleSpan
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
@@ -18,6 +24,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.tretiakov.absframework.R
 import com.tretiakov.absframework.constants.AbsConstants
 import com.tretiakov.absframework.routers.AbsCallback
+import com.tretiakov.absframework.views.text.AbsTextView
 
 @Suppress("UNCHECKED_CAST")
 abstract class KAbsFragment : Fragment(), AbsConstants {

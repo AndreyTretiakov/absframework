@@ -101,9 +101,15 @@ public class AbsEditText extends AppCompatEditText {
         }
     }
 
+    public boolean isEqual(String value) {
+        return value.contentEquals(String.valueOf(getText())) || value.contentEquals(getHint());
+    }
+
     public void setTextBlockListener(String text) {
         removeTextChangedListener(mAdapterWatcher);
-        super.setText(text);
+        super.setHint(text);
+        super.setText(null);
+//        setSelection(text.length());
         addTextChangedListener(mAdapterWatcher);
     }
 

@@ -10,8 +10,8 @@
     <color name="abs_main_icon_tint">#9fff</color>
     <color name="abs_main_icon_tint_contrast">#83888D</color>
 
-    <color name="abs_textPrimary">#E7E7E7</color>
-    <color name="abs_textSecondary">#909499</color>
+    <color name="abs_textPrimary">#fff</color>
+    <color name="abs_textSecondary">#A0A0A0</color>
     <color name="abs_textPrimaryLight">#d9d8d1</color>
     <color name="abs_textSecondaryLight">#999890</color>
     <color name="abs_textBluePrimary">#fff8c6</color>
