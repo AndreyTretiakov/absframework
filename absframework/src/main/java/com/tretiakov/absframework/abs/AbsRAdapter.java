@@ -336,6 +336,10 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
         return mContext.getString(res);
     }
 
+    protected String getString(@StringRes int res, Object... formatArgs) {
+        return mContext.getString(res, formatArgs);
+    }
+
     protected int getColor(@ColorRes int color) {
         return ContextCompat.getColor(mContext, color);
     }

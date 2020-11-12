@@ -152,10 +152,12 @@ abstract class KAbsFragment : Fragment(), AbsConstants {
         }
     }
 
-    protected open fun getAction(bundle: Bundle?): String {
-        return if (bundle == null) {
-            ""
-        } else bundle.getString("action", "")
+    protected open fun getAction(data: Any?): String {
+        return when (data) {
+            is String -> data
+            is Bundle -> data.getString("action", "")
+            else -> throw Exception("Unknown action: $data")
+        }
     }
 
     open fun optColor(@ColorRes colorRes: Int): Int {
