@@ -26,7 +26,7 @@ import com.tretiakov.absframework.routers.Callback;
 /**
  * @author Andrey Tretiakov. Created 4/15/2016.
  */
-public class AbsDialog<T> extends DialogFragment implements AbsConstants { 
+public class AbsDialog<T> extends DialogFragment implements AbsConstants {
 
     private boolean mIsVisible;
 
