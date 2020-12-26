@@ -59,7 +59,7 @@ public class Message {
         }
 
         Toast toast = new Toast(AbsContext.getInstance().getContext());
-        toast.setGravity(Gravity.BOTTOM, 0, 200);
+        toast.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 200);
         toast.setDuration(duration);
         toast.setView(layout);
         toast.show();

@@ -46,7 +46,7 @@ class AbsSwitchContainer @JvmOverloads constructor(context: Context,
         }
 
         subtitleTextView = findViewById(android.R.id.text2)
-        if (subtitle.isNotEmpty()) {
+        if (subtitle != null && subtitle.isNotEmpty()) {
             subtitleTextView.setTextColor(a.getColor(R.styleable.AbsSwitch__secondaryColor, 0))
             subtitleTextView.text = subtitle
         } else {
