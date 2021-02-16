@@ -209,6 +209,10 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
         return mItems.size() + (mHasFooter ? 1 : 0);
     }
 
+    public int lastIndex() {
+        return getItemCount() - 1;
+    }
+
     public E getItem(int position) {
         return position == getItemCount() ? mFooter : mItems.get(position);
     }
@@ -310,7 +314,7 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
 
     public void notifyChanged(int position) {
         notifyItemChanged(position);
-        mRecyclerView.postDelayed(() -> notifyDataSetChanged(), 500);
+        mRecyclerView.postDelayed(() -> notifyDataSetChanged(), 200);
     }
 
     protected void notifyByPos(int pos, int delay) {

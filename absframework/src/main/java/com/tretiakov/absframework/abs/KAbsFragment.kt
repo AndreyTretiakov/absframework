@@ -76,11 +76,14 @@ abstract class KAbsFragment : Fragment(), AbsConstants {
         absCallback = router
     }
 
+    protected open fun <T> switchActivity(act: Class<T>,
+                                          request: Int, router: AbsCallback<Any>?) {
+        activity?.switchActivity(act, Bundle.EMPTY, request, router)
+    }
+
     protected open fun <T> switchActivity(act: Class<T>, bundle: Bundle?,
                                       request: Int, router: AbsCallback<Any>?) {
-        if (activity != null) {
-            activity!!.switchActivity(act, bundle, request, router)
-        }
+        activity?.switchActivity(act, bundle, request, router)
     }
 
     protected open fun <T> startActivityAnClearStack(newActivity: Class<T>?) {
@@ -103,6 +106,10 @@ abstract class KAbsFragment : Fragment(), AbsConstants {
         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(android.R.string.ok))
         { _: DialogInterface?, _: Int -> alertDialog.dismiss() }
         alertDialog.show()
+    }
+
+    open fun showKFragment(fragment: Fragment, router: AbsCallback<*>) {
+        activity?.showKFragment(fragment, Bundle.EMPTY, true, R.id.fragment, router)
     }
 
     open fun showKFragment(fragment: Fragment, bundle: Bundle, router: AbsCallback<*>) {
