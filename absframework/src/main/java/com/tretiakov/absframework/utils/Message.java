@@ -49,9 +49,9 @@ public class Message {
         }
 
         View layout = LayoutInflater.from(AbsContext.getInstance().getContext())
-                .inflate(R.layout.toast_layout, null);
+                .inflate(R.layout.abs_toast, null);
 
-        TextView text = (TextView) layout.findViewById(R.id.toastTitle);
+        TextView text = layout.findViewById(R.id.toastTitle);
         if (builder != null) {
             text.setText(builder);
         } else {
@@ -59,7 +59,7 @@ public class Message {
         }
 
         Toast toast = new Toast(AbsContext.getInstance().getContext());
-        toast.setGravity(Gravity.BOTTOM, 0, 200);
+        toast.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 200);
         toast.setDuration(duration);
         toast.setView(layout);
         toast.show();

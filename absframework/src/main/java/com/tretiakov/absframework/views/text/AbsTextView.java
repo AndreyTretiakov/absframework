@@ -45,9 +45,17 @@ public class AbsTextView extends AppCompatTextView {
 
             a.recycle();
 
+            String extention = font != null && font.equals("Sutiya") ? ".otf" : ".ttf";
+
             setTypeface(FontsHelper.getTypeFace(getContext(), "fonts/" +
-                    (font == null ? "Roboto-Regular" : font) + ".ttf"));
+                    (font == null ? "Roboto-Regular" : font) + extention));
         }
+    }
+
+    public void setFont(int fontRes) {
+        String font = getContext().getString(fontRes);
+        String extention = font.equals("Sutiya") ? ".otf" : ".ttf";
+        setTypeface(FontsHelper.getTypeFace(getContext(), "fonts/" + font + extention));
     }
 
     public void setRegularTypeface() {

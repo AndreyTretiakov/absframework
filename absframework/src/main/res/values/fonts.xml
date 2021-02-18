@@ -12,4 +12,5 @@
     <string translatable="false" name="regular">Roboto-Regular</string>
     <string translatable="false" name="medium">Roboto-Medium</string>
     <string translatable="false" name="medium_italic">Roboto-MediumItalic</string>
+    <string translatable="false" name="sutiya">Sutiya</string>
 </resources>

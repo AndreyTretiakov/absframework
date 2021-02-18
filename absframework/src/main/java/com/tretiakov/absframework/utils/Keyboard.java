@@ -6,6 +6,7 @@ import android.os.Handler;
 import androidx.fragment.app.Fragment;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
@@ -38,6 +39,10 @@ public class Keyboard {
         setMode(activity, SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
+    public static void STATE_HIDDEN(Window window) {
+        setMode(window, SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+    }
+
     public static void hide(Context context, View view) {
         if (context == null || view == null) return;
 
@@ -50,6 +55,7 @@ public class Keyboard {
                         context.getSystemService(INPUT_METHOD_SERVICE);
                 if (manager != null) {
                     manager.hideSoftInputFromWindow(view.getWindowToken(), HIDE_NOT_ALWAYS);
+                    view.clearFocus();
                 }
             }
         }
@@ -94,6 +100,19 @@ public class Keyboard {
             @Override
             public void run() {
                 activity.getWindow().setSoftInputMode(mode);
+            }
+        }, 200);
+    }
+
+    private static void setMode(Window window, int mode) {
+        if (window == null) {
+            return;
+        }
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                window.setSoftInputMode(mode);
             }
         }, 200);
     }
