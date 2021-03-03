@@ -19,7 +19,7 @@ public class TextUtils {
             return "";
 
         rawTitle = rawTitle.replaceAll("\n+", "\n");
-        if (rawTitle.substring(rawTitle.length() - 1, rawTitle.length()).equals("\n"))
+        if (rawTitle.substring(rawTitle.length() - 1).equals("\n"))
             rawTitle = rawTitle.substring(0, rawTitle.length() - 1);
         return rawTitle;
     }

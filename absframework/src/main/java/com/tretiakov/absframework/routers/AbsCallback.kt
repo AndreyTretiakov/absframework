@@ -1,4 +1,4 @@
-package com.tretiakov.absframework.routers;
+package com.tretiakov.absframework.routers
 
 /**
  * @author Andrey Tretiakov. Created 4/15/2016.

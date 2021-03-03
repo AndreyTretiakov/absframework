@@ -36,6 +36,7 @@ class AbsSwitchContainer @JvmOverloads constructor(context: Context,
         switchView.thumbTintList = thumbTint
         val trackTint = a.getColorStateList(R.styleable.AbsSwitch__trackColor)
         switchView.trackTintList = trackTint
+        switchView.isSaveEnabled = false
 
         titleTextView = findViewById(android.R.id.text1)
         if (title.isNotEmpty()) {
@@ -54,6 +55,8 @@ class AbsSwitchContainer @JvmOverloads constructor(context: Context,
         }
 
         a.recycle()
+
+        setOnClickListener { switchView.toggle() }
     }
 
     fun setChecked(value: Boolean) {

@@ -40,8 +40,8 @@ public class AbsNotificationView extends RelativeLayout {
     }
 
     private void init() {
-        mTitleTextView = (AbsTextView) findViewById(android.R.id.text1);
-        mSubTitleTextView = (AbsTextView) findViewById(android.R.id.text2);
+        mTitleTextView = findViewById(android.R.id.text1);
+        mSubTitleTextView = findViewById(android.R.id.text2);
     }
 
     public void build(@Mode int mode, String title, String subTitle) {
