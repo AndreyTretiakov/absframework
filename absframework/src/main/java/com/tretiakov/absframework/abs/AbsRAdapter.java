@@ -229,7 +229,15 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
 
     public boolean isEmpty() {
         return mItems.isEmpty();
-    }    
+    }
+
+    public boolean isNotEmpty() {
+        return !mItems.isEmpty();
+    }
+
+    public boolean contains(E element) {
+        return mItems.contains(element);
+    }
 
     protected View inflate(@LayoutRes int layout, ViewGroup parent) {
         return mInflater.inflate(layout, parent, false);
@@ -314,6 +322,11 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
 
     public void notifyChanged(int position) {
         notifyItemChanged(position);
+        mRecyclerView.postDelayed(() -> notifyDataSetChanged(), 200);
+    }
+
+    public void notifyRange(int start, int end) {
+        notifyItemRangeChanged(start, end);
         mRecyclerView.postDelayed(() -> notifyDataSetChanged(), 200);
     }
 
