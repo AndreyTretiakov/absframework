@@ -3,6 +3,7 @@ package com.tretiakov.absframework.views.text;
 import android.content.Context;
 import android.content.res.TypedArray;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatEditText;
 
 import android.hardware.input.InputManager;
@@ -115,6 +116,11 @@ public class AbsEditText extends AppCompatEditText {
 
     public boolean isEmpty() {
         return TextUtils.isEmpty(getText());
+    }
+
+    @Nullable
+    public Editable textNullable() {
+        return TextUtils.isEmpty(getText()) ? null : getText();
     }
 
     public void setSelectableMode(View.OnClickListener cl) {
