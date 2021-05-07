@@ -7,8 +7,16 @@
     <color name="abs_colorPrimary_V3">#fafafa</color>
     <color name="abs_color_status_bar">#fafafa</color>
 
-    <color name="abs_main_icon_tint">#7C7C7C</color>
+    <color name="abs_main_icon_tint">#2C2C2C</color>
     <color name="abs_main_icon_tint_contrast">#000000</color>
+
+    <color name="abs_main_item_background">#FFFFFF</color>
+    <color name="abs_main_item_background_pressed">#DDDDDD</color>
+    <color name="abs_main_item_background_selected">#F1F1F1</color>
+    <color name="abs_main_background">#FFFFFF</color>
+    <color name="abs_dark_background">#292a2f</color>
+    <color name="abs_dark_background_v2">#3b3c41</color>
+    <color name="abs_dark_background_v3">#262728</color>
 
     <color name="abs_textPrimary">#1F1F1F</color>
     <color name="abs_textSecondary">#505050</color>
@@ -43,7 +51,7 @@
     <color name="abs_retro_yellow">#ded7a4</color>
 
     <color name="abs_info_board_background">#92BFDD</color>
-    <color name="abs_info_board_text">#00547C</color>
+    <color name="abs_info_board_text">#293033</color>
     <color name="abs_info_board_text_dark">#001B25</color>
 
     <color name="abs_material_dark_gray_1">#3e464c</color>

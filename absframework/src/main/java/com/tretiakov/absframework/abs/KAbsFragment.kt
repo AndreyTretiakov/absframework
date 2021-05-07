@@ -1,14 +1,12 @@
 package com.tretiakov.absframework.abs
 
 import android.content.*
-import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
-import android.text.style.StyleSpan
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
@@ -27,7 +25,7 @@ import com.tretiakov.absframework.routers.AbsCallback
 import com.tretiakov.absframework.views.text.AbsTextView
 
 @Suppress("UNCHECKED_CAST")
-abstract class KAbsFragment : Fragment(), AbsConstants {
+abstract class KAbsFragment<T> : Fragment(), AbsConstants {
     
     private var activity: AbsActivity? = null
 
@@ -42,22 +40,22 @@ abstract class KAbsFragment : Fragment(), AbsConstants {
         fragmentFactory = activity!!.supportFragmentManager.fragmentFactory
     }
 
-    open fun instance(fClass: Class<out KAbsFragment?>, bundle: Bundle?, absCallback: AbsCallback<Any>?): KAbsFragment? {
+    open fun instance(fClass: Class<out KAbsFragment<T>?>, bundle: Bundle?, absCallback: AbsCallback<Any>?): KAbsFragment<T>? {
         val loader = fClass.classLoader!!
         val name = fClass.name
-        val fragment = fragmentFactory!!.instantiate(loader, name) as KAbsFragment
+        val fragment = fragmentFactory!!.instantiate(loader, name) as KAbsFragment<T>
         fragment.arguments = bundle
         fragment.absCallback = absCallback
         return fragment
     }
 
-    protected fun instanceFragment(bundle: Bundle?, router: AbsCallback<Any>): KAbsFragment? {
+    protected fun instanceFragment(bundle: Bundle?, router: AbsCallback<Any>): KAbsFragment<T>? {
         arguments = bundle
         setCallback(router)
         return this
     }
 
-    protected open fun instanceFragment(router: AbsCallback<Any>): KAbsFragment? {
+    protected open fun instanceFragment(router: AbsCallback<Any>): KAbsFragment<T>? {
         setCallback(router)
         return this
     }
@@ -82,7 +80,7 @@ abstract class KAbsFragment : Fragment(), AbsConstants {
     }
 
     protected open fun <T> switchActivity(act: Class<T>, bundle: Bundle?,
-                                      request: Int, router: AbsCallback<Any>?) {
+                                      request: Int, router: AbsCallback<*>?) {
         activity?.switchActivity(act, bundle, request, router)
     }
 
@@ -108,6 +106,18 @@ abstract class KAbsFragment : Fragment(), AbsConstants {
         alertDialog.show()
     }
 
+    fun showBottomSheetDialog(dialog: Class<*>, bundle: Bundle, absCallback: AbsCallback<*>?) {
+        val d = childFragmentManager.fragmentFactory
+                .instantiate(dialog.classLoader!!, dialog.name)
+                as AbsBottomSheetDialog
+
+        d.arguments = bundle
+        if (absCallback != null) {
+            d.setCallback(absCallback as AbsCallback<Any>)
+        }
+        d.show(childFragmentManager, dialog.name)
+    }
+
     open fun showKFragment(fragment: Fragment, router: AbsCallback<*>) {
         activity?.showKFragment(fragment, Bundle.EMPTY, true, R.id.fragment, router)
     }
@@ -116,31 +126,31 @@ abstract class KAbsFragment : Fragment(), AbsConstants {
         activity?.showKFragment(fragment, bundle, true, R.id.fragment, router)
     }
 
-    protected open fun showFragment(fragment: KAbsFragment, bundle: Bundle?, addToBackStack: Boolean?, absCallback: AbsCallback<Any>?) {
+    protected open fun showFragment(fragment: KAbsFragment<T>, bundle: Bundle?, addToBackStack: Boolean?, absCallback: AbsCallback<Any>?) {
         showFragment(fragment, bundle, addToBackStack, R.id.fragment, absCallback)
     }
 
-    protected open fun showFragment(fragment: KAbsFragment, bundle: Bundle?, addToBackStack: Boolean?, id: Int, absCallback: AbsCallback<Any>?) {
+    protected open fun showFragment(fragment: KAbsFragment<T>, bundle: Bundle?, addToBackStack: Boolean?, id: Int, absCallback: AbsCallback<Any>?) {
         if (activity != null) activity!!.showKFragment(fragment, bundle!!, addToBackStack!!, id, absCallback)
     }
 
-    protected open fun addFragment(fragment: KAbsFragment, bundle: Bundle?, addToBackStack: Boolean?, absCallback: AbsCallback<Any>?) {
+    protected open fun addFragment(fragment: KAbsFragment<T>, bundle: Bundle?, addToBackStack: Boolean?, absCallback: AbsCallback<Any>?) {
         addFragment(fragment, bundle, addToBackStack, R.id.fragment, absCallback)
     }
 
-    protected open fun addFragment(fragment: KAbsFragment, bundle: Bundle?, addToBackStack: Boolean?, id: Int, absCallback: AbsCallback<Any>?) {
+    protected open fun addFragment(fragment: KAbsFragment<T>, bundle: Bundle?, addToBackStack: Boolean?, id: Int, absCallback: AbsCallback<Any>?) {
         if (activity != null) activity!!.addKFragment(fragment, bundle!!, addToBackStack!!, id, absCallback)
     }
 
-    protected open fun addFragmentRTL(fragment: KAbsFragment, bundle: Bundle?, addToBackStack: Boolean?, id: Int, absCallback: AbsCallback<Any>?) {
+    protected open fun addFragmentRTL(fragment: KAbsFragment<T>, bundle: Bundle?, addToBackStack: Boolean?, id: Int, absCallback: AbsCallback<Any>?) {
         if (activity != null) activity!!.addKFragment(fragment, bundle!!, addToBackStack!!, id, absCallback)
     }
 
-    protected open fun addFragmentRTL(fragment: KAbsFragment, bundle: Bundle?, addToBackStack: Boolean?, absCallback: AbsCallback<Any>?) {
+    protected open fun addFragmentRTL(fragment: KAbsFragment<T>, bundle: Bundle?, addToBackStack: Boolean?, absCallback: AbsCallback<Any>?) {
         addFragmentRTL(fragment, bundle, addToBackStack, R.id.fragment, absCallback)
     }
 
-    protected open fun <D> onData(data: D, needBack: Boolean) {
+    protected open fun <D : Any> onData(data: D, needBack: Boolean) {
         if (absCallback != null) {
             absCallback!!.result(data)
         }
@@ -275,6 +285,97 @@ abstract class KAbsFragment : Fragment(), AbsConstants {
 
     fun hideProgress(view: View) {
         view.visibility = View.INVISIBLE
+    }
+
+    // 0 = type
+    // 1 = TextView
+    // 2.. = Text
+    // last = Color
+    fun setTextSpan(vararg args: Any) {
+
+        val builder = SpannableStringBuilder()
+
+        when (args[0]) {
+            "auth" -> {
+                val text = getString(args[2] as Int).split("|")
+                builder.append(text[0])
+                builder.append(" ")
+                builder.append(text[1])
+
+                builder.setSpan(
+                        ForegroundColorSpan(optColor(R.color.abs_textSecondary)),
+                        0, text[0].length,
+                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+
+                builder.setSpan(
+                        ForegroundColorSpan(optColor(R.color.colorAccent)),
+                        builder.length - text[1].length, builder.length - 1,
+                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+            }
+            "accent" -> {
+                val title = if (args[2] is String) args[2] as String else getString(args[2] as Int)
+                val subtitle = if (args[3] is String) args[3] as String else getString(args[3] as Int)
+                builder.append(title)
+                builder.append("\n")
+                builder.append(subtitle)
+
+                builder.setSpan(
+                        ForegroundColorSpan(optColor(R.color.colorAccent)),
+                        builder.length - subtitle.length, builder.length,
+                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+            }
+
+            "accent_part_res" -> {
+                val text = args[2] as String
+                val part = args[3] as String
+                builder.append(text)
+                val accentStart = text.indexOf(part)
+
+                builder.setSpan(
+                        ForegroundColorSpan(optColor(R.color.colorAccent)),
+                        accentStart, accentStart + part.length,
+                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+            }
+
+            "accent_part" -> {
+                var text = args[2] as String
+                val accentStart = text.indexOf("{")
+                val accentEnd = text.indexOf("}")
+                text = text.replace("{", "").replace("}", "")
+                builder.append(text)
+
+                builder.setSpan(
+                        ForegroundColorSpan(optColor(R.color.colorAccent)),
+                        accentStart - 1, accentEnd - 1,
+                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+            }
+
+            "subtitle" -> {
+                val title = getString(args[2] as Int)
+                val subtitle = getString(args[3] as Int)
+                builder.append(title)
+                builder.append("\n")
+                builder.append(subtitle)
+
+                builder.setSpan(
+                        RelativeSizeSpan(0.6f),
+                        builder.length - subtitle.length, builder.length,
+                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                builder.setSpan(
+                        ForegroundColorSpan(optColor(R.color.abs_textSecondary)),
+                        builder.length - subtitle.length, builder.length,
+                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+            }
+        }
+
+        val textView = args[1] as AbsTextView
+        textView.text = builder
     }
 
 }

@@ -92,7 +92,7 @@ public class AbsEditText extends AppCompatEditText {
     }
 
     public void clearText() {
-        setText(null);
+        if (!TextUtils.isEmpty(getText())) setText(null);
     }
 
     public void setCursorToEnt() {
@@ -122,7 +122,7 @@ public class AbsEditText extends AppCompatEditText {
     }
 
     public void showKeyboard() {
-        postDelayed(() -> Keyboard.show(getContext(), this), 200);
+        postDelayed(() -> Keyboard.show(getContext(), this), 500);
     }
 
     public void showKeyboardNow() {

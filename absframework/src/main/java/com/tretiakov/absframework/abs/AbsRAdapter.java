@@ -2,6 +2,7 @@ package com.tretiakov.absframework.abs;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,6 +12,7 @@ import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,6 +32,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+
+import static androidx.core.os.LocaleListCompat.create;
 
 /**
  * @author Andrey Tretiakov. Created 4/15/2016.
@@ -110,6 +114,16 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
         }
     }
 
+    protected void showAlertDialog(String msg, String title) {
+        AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
+        alertDialog.setTitle(title);
+        alertDialog.setMessage(msg);
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(android.R.string.ok),
+                (dialog, which) -> alertDialog.dismiss()
+        );
+        alertDialog.show();
+    }
+
     public void setHasFooter(@Nullable E footer, boolean value) {
         mHasFooter = value;
         if (value) mFooter = footer;
@@ -133,8 +147,7 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
 
     public void addItem(@NonNull E item, boolean needRefresh) {
         mItems.add(item);
-        if (needRefresh)
-            notifyItemInserted(mItems.size());
+        if (needRefresh) notifyItemInserted(mItems.size());
     }
 
     public void addItem(int position, E item, boolean needRefresh) {
@@ -142,6 +155,10 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
         if (needRefresh) {
             notifyItemInserted(position);
             mHandler.postDelayed(this::notifyDataSetChanged, 500);
+
+            if (position == 0) {
+                mRecyclerView.scrollToPosition(0);
+            }
         }
     }
 

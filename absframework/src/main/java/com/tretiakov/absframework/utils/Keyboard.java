@@ -79,6 +79,10 @@ public class Keyboard {
         setMode(activity, SOFT_INPUT_STATE_ALWAYS_VISIBLE);
     }
 
+    public static void hide(Activity activity) {
+        setMode(activity, SOFT_INPUT_ADJUST_NOTHING);
+    }
+
     public static void show(Context context, EditText input) {
         if (context == null || input == null) return;
 
@@ -92,7 +96,7 @@ public class Keyboard {
     }
 
     private static void setMode(Activity activity, int mode) {
-        if (activity == null) {
+        if (activity == null || activity.isDestroyed()) {
             return;
         }
 

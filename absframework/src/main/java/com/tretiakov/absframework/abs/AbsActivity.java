@@ -1,9 +1,11 @@
 package com.tretiakov.absframework.abs;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Parcelable;
 import android.view.View;
 
@@ -11,6 +13,7 @@ import androidx.annotation.ColorRes;
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
@@ -23,8 +26,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.tretiakov.absframework.R;
 import com.tretiakov.absframework.constants.AbsConstants;
 import com.tretiakov.absframework.routers.AbsCallback;
-
-import kotlin.reflect.KClass;
 
 /**
  * @author Andrey Tretiakov. Created 4/15/2016.
@@ -39,15 +40,42 @@ public abstract class AbsActivity extends AppCompatActivity implements AbsConsta
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (mAbsCallback != null && data != null) {
-            if (data.hasExtra(KEY_DATA)) {
-                mAbsCallback.result(data.getExtras().get(KEY_DATA));
-            } else {
-                mAbsCallback.result(null);
+        new Handler().post(() -> {
+            if (mAbsCallback != null && data != null) {
+                if (data.hasExtra(KEY_DATA)) {
+                    mAbsCallback.result(data.getExtras().get(KEY_DATA));
+                } else {
+                    mAbsCallback.result(null);
+                }
             }
-        }
+        });
     }
 
+    protected void showAlertDialog(String msg) {
+        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog.setTitle(null);
+        alertDialog.setMessage(msg);
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(android.R.string.ok),
+                (dialog, which) -> alertDialog.dismiss());
+        alertDialog.show();
+    }
+
+    protected void showAlertDialog(String msg, DialogInterface.OnClickListener listener) {
+        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog.setTitle(null);
+        alertDialog.setMessage(msg);
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(android.R.string.ok), listener);
+        alertDialog.show();
+    }
+
+    protected void showAlertDialog2options(String msg, DialogInterface.OnClickListener listener) {
+        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog.setTitle(null);
+        alertDialog.setMessage(msg);
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(android.R.string.cancel), listener);
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(android.R.string.ok), listener);
+        alertDialog.show();
+    }
 
     protected void showUnCancelableDialog(Class dialog, Bundle bundle, AbsCallback absCallback) {
         AbsDialog d = (AbsDialog) AbsDialog.instantiate(this, dialog.getName(), bundle);
@@ -77,6 +105,10 @@ public abstract class AbsActivity extends AppCompatActivity implements AbsConsta
         switchActivity(act, bundle, NO_REQUEST, null);
     }
 
+    protected void switchActivity(Class act, int request, Bundle bundle) {
+        switchActivity(act, bundle, request, null);
+    }
+
     protected void switchActivity(Class act, @Nullable Bundle bundle, AbsCallback router) {
         switchActivity(act, bundle, NO_REQUEST, router);
     }
@@ -91,6 +123,9 @@ public abstract class AbsActivity extends AppCompatActivity implements AbsConsta
 
         if (request == NO_REQUEST) {
             startActivity(intent);
+        } else if (request == PARAM_FINISH) {
+            startActivity(intent);
+            finish();
         } else if (request == PARAM_CLEAR_STACK) {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
@@ -120,6 +155,11 @@ public abstract class AbsActivity extends AppCompatActivity implements AbsConsta
     @NonNull
     public <F extends AbsFragment> F showMenuFragment(@NonNull Class fragment, int id, @Nullable AbsCallback router) {
         return showFragment(fragment, Bundle.EMPTY, false, id, router);
+    }
+
+    @NonNull
+    public <F extends AbsFragment> F showFragment(@NonNull Class fragment, @Nullable AbsCallback router) {
+        return showFragment(fragment, Bundle.EMPTY, true, R.id.fragment, router);
     }
 
     @NonNull
