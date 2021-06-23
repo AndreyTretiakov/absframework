@@ -1,6 +1,7 @@
 package com.tretiakov.absframework.utils
 
 import android.annotation.SuppressLint
+import android.os.Looper
 import android.text.SpannableStringBuilder
 import android.text.TextUtils
 import android.view.Gravity
@@ -11,6 +12,7 @@ import android.widget.Toast
 import androidx.annotation.StringRes
 import com.tretiakov.absframework.R
 import com.tretiakov.absframework.context.AbsContext
+import me.drakeet.support.toast.ToastCompat
 
 /**
  * @author Andrey Tretiakov created on 01.02.2015.
@@ -68,28 +70,11 @@ object Message {
         if (TextUtils.isEmpty(msg) && builder == null) {
             return
         }
-        val layout =
-            LayoutInflater.from(AbsContext.getInstance().context)
-                .inflate(
-                    R.layout.abs_toast,
-                    null
-                )
-        val text =
-            layout.findViewById<TextView>(R.id.toastTitle)
-        if (builder != null) {
-            text.text = builder
-        } else {
-            text.text = msg
+
+        val toast = ToastCompat.makeText(AbsContext.getInstance().context, builder ?: msg, duration)
+        if (android.os.Build.VERSION.SDK_INT == android.os.Build.VERSION_CODES.N_MR1) {
+            toast.setBadTokenListener { }
         }
-        val toast =
-            Toast(AbsContext.getInstance().context)
-        toast.setGravity(
-            Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL,
-            0,
-            200
-        )
-        toast.duration = duration
-        toast.view = layout
         toast.show()
     }
 }
