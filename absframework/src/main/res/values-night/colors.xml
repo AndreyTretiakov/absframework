@@ -62,7 +62,6 @@
     <color name="abs_material_yellow_1">#f3e368</color>
     <color name="abs_material_green_1">#6af368</color>
 
-    <color name="colorAccent">#FFEB3B</color>
-    <color name="colorAccent_A50">#80FFEB3B</color>
+    <color name="abs_colorAccent_A50">#80FFEB3B</color>
 
 </resources>

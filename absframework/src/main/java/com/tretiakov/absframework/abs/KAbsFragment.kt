@@ -309,7 +309,7 @@ abstract class KAbsFragment<T> : Fragment(), AbsConstants {
                 )
 
                 builder.setSpan(
-                        ForegroundColorSpan(optColor(R.color.colorAccent)),
+                        ForegroundColorSpan(optColor(R.color.abs_colorAccent)),
                         builder.length - text[1].length, builder.length - 1,
                         Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
@@ -322,7 +322,7 @@ abstract class KAbsFragment<T> : Fragment(), AbsConstants {
                 builder.append(subtitle)
 
                 builder.setSpan(
-                        ForegroundColorSpan(optColor(R.color.colorAccent)),
+                        ForegroundColorSpan(optColor(R.color.abs_colorAccent)),
                         builder.length - subtitle.length, builder.length,
                         Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
@@ -335,7 +335,7 @@ abstract class KAbsFragment<T> : Fragment(), AbsConstants {
                 val accentStart = text.indexOf(part)
 
                 builder.setSpan(
-                        ForegroundColorSpan(optColor(R.color.colorAccent)),
+                        ForegroundColorSpan(optColor(R.color.abs_colorAccent)),
                         accentStart, accentStart + part.length,
                         Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
@@ -349,7 +349,7 @@ abstract class KAbsFragment<T> : Fragment(), AbsConstants {
                 builder.append(text)
 
                 builder.setSpan(
-                        ForegroundColorSpan(optColor(R.color.colorAccent)),
+                        ForegroundColorSpan(optColor(R.color.abs_colorAccent)),
                         accentStart - 1, accentEnd - 1,
                         Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
                 )

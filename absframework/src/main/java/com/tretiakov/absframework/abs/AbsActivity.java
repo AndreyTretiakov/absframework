@@ -90,6 +90,12 @@ public abstract class AbsActivity extends AppCompatActivity implements AbsConsta
         d.show(getSupportFragmentManager(), dialog.getName());
     }
 
+    protected void showBottomSheet(Class dialog, Bundle bundle, AbsCallback absCallback) {
+        AbsBottomSheetDialog d = (AbsBottomSheetDialog) AbsDialog.instantiate(this, dialog.getName(), bundle);
+        if (absCallback != null) d.setCallback(absCallback);
+        d.show(getSupportFragmentManager(), dialog.getName());
+    }
+
     public void startActivityAndClearStack(Class activity) {
         Intent intent = new Intent(this, activity);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
