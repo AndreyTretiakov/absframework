@@ -13,6 +13,8 @@ import androidx.fragment.app.Fragment;
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.appcompat.app.AlertDialog;
+
+import android.os.Handler;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -76,6 +78,15 @@ public abstract class AbsFragment extends Fragment implements AbsConstants {
                                                         int request, @Nullable AbsCallback router) {
         if (mActivity != null) {
             mActivity.switchActivity(activity, bundle, request, router);
+        }
+    }
+
+    protected void switchActivityDelayed(@NonNull Class activity, @Nullable Bundle bundle,
+                                  int request, @Nullable AbsCallback router) {
+        if (mActivity != null) {
+            new Handler().postDelayed(() ->
+                    mActivity.switchActivity(activity, bundle, request, router),
+                    200);
         }
     }
 
