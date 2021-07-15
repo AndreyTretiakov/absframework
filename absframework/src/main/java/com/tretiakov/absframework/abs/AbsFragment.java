@@ -227,4 +227,8 @@ public abstract class AbsFragment extends Fragment implements AbsConstants {
     protected Context getAppContext() {
         return getContext().getApplicationContext();
     }
+
+    public void execute(Runnable runnable) {
+        new Thread(runnable).start();
+    }
 }

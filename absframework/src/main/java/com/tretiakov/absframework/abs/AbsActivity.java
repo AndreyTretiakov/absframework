@@ -348,4 +348,8 @@ public abstract class AbsActivity extends AppCompatActivity implements AbsConsta
             }
         }
     }
+
+    public void execute(Runnable runnable) {
+        new Thread(runnable).start();
+    }
 }
