@@ -341,7 +341,7 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
 
     protected abstract void onView(H h, E item, int pos);
 
-    protected View.OnClickListener onClick = v -> {
+    protected View.OnClickListener absOnClick = v -> {
         int position = (int) v.getTag(R.string.tag_position);
         E item = getItem(position);
         onData(item);

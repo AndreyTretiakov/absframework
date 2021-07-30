@@ -107,8 +107,7 @@ public class AbsEditText extends AppCompatEditText {
 
     public void setTextBlockListener(String text) {
         removeTextChangedListener(mAdapterWatcher);
-        super.setHint(text);
-        super.setText(null);
+        super.setText(text);
 //        setSelection(text.length());
         addTextChangedListener(mAdapterWatcher);
     }
