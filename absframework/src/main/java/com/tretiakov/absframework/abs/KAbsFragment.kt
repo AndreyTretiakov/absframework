@@ -7,7 +7,9 @@ import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
@@ -25,7 +27,7 @@ import com.tretiakov.absframework.routers.AbsCallback
 import com.tretiakov.absframework.views.text.AbsTextView
 
 @Suppress("UNCHECKED_CAST")
-abstract class KAbsFragment<T> : Fragment(), AbsConstants {
+abstract class KAbsFragment<T>(val layout: Int) : Fragment(), AbsConstants {
     
     private var activity: AbsActivity? = null
 
@@ -37,7 +39,15 @@ abstract class KAbsFragment<T> : Fragment(), AbsConstants {
         super.onAttach(context)
 
         activity = context as AbsActivity
-        fragmentFactory = activity!!.supportFragmentManager.fragmentFactory
+        fragmentFactory = requireActivity().supportFragmentManager.fragmentFactory
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(layout, container, false)
     }
 
     open fun instance(fClass: Class<out KAbsFragment<T>?>, bundle: Bundle?, absCallback: AbsCallback<Any>?): KAbsFragment<T>? {
@@ -92,7 +102,7 @@ abstract class KAbsFragment<T> : Fragment(), AbsConstants {
 
     protected open fun showDialog(dialog: Class<*>, bundle: Bundle?, absCallback: AbsCallback<*>?) {
         if (context == null || !isVisible) return
-        val d = AbsDialog.instantiate(context!!, dialog.name, bundle) as AbsDialog
+        val d = AbsDialog.instantiate(requireContext(), dialog.name, bundle) as AbsDialog
         if (absCallback != null) d.setCallback(absCallback)
         d.show((context as AbsActivity?)!!.supportFragmentManager, dialog.name)
     }

@@ -190,7 +190,7 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
 
         if (needRefresh) {
             notifyItemRemoved(index);
-            mHandler.postDelayed(this::notifyDataSetChanged, 600);
+            mHandler.postDelayed(this::notifyDataSetChanged, 200);
         }
 
         return result;

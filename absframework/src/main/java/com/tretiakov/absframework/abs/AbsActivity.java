@@ -177,8 +177,8 @@ public abstract class AbsActivity extends AppCompatActivity implements AbsConsta
         return showKFragment(fragment, Bundle.EMPTY, true, R.id.fragment, null);
     }
 
-    public Fragment showKFragment(@NonNull Fragment fragment, @Nullable AbsCallback router) {
-        return showKFragment(fragment, Bundle.EMPTY, true, R.id.fragment, router);
+    public Fragment showKFragment(@NonNull Fragment fragment, @NonNull Bundle bundle, @Nullable AbsCallback router) {
+        return showKFragment(fragment, bundle, true, R.id.fragment, router);
     }
 
     @NonNull

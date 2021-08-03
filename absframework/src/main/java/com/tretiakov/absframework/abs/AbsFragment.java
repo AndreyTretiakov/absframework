@@ -15,6 +15,9 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.appcompat.app.AlertDialog;
 
 import android.os.Handler;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -36,10 +39,23 @@ public abstract class AbsFragment extends Fragment implements AbsConstants {
 
     private AbsCallback mAbsCallback;
 
+    private int childLayout;
+
+    protected AbsFragment(int layout) {
+        super();
+        childLayout = layout;
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         mActivity = (AbsActivity) context;
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(childLayout, container, false);
     }
 
     public static AbsFragment instance(Class<? extends AbsFragment> fClass, Bundle bundle, AbsCallback absCallback) {
