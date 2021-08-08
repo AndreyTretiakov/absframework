@@ -142,78 +142,7 @@ abstract class AbsBottomSheetDialog : BottomSheetDialogFragment(), AbsConstants 
         } else bundle.getString("action", "")
     }
 
-    fun setTextSpan(vararg args: Any) {
 
-        val builder = SpannableStringBuilder()
-
-        when (args[0]) {
-            "auth" -> {
-                val text = getString(args[2] as Int).split("|")
-                builder.append(text[0])
-                builder.append(" ")
-                builder.append(text[1])
-
-                builder.setSpan(
-                    ForegroundColorSpan(optColor(R.color.abs_textSecondary)),
-                    0, text[0].length,
-                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-                )
-
-                builder.setSpan(
-                    ForegroundColorSpan(optColor(R.color.abs_colorAccent)),
-                    builder.length - text[1].length, builder.length - 1,
-                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-                )
-            }
-            "accent" -> {
-                val title = if (args[2] is String) args[2] as String else getString(args[2] as Int)
-                val subtitle = if (args[3] is String) args[3] as String else getString(args[3] as Int)
-                builder.append(title)
-                builder.append("\n")
-                builder.append(subtitle)
-
-                builder.setSpan(
-                    ForegroundColorSpan(optColor(R.color.abs_colorAccent)),
-                    builder.length - subtitle.length, builder.length,
-                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-                )
-            }
-
-            "accent_part_res" -> {
-                val text = args[2] as String
-                val part = args[3] as String
-                builder.append(text)
-                val accentStart = text.indexOf(part)
-
-                builder.setSpan(
-                    ForegroundColorSpan(optColor(R.color.abs_colorAccent)),
-                    accentStart, accentStart + part.length,
-                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-                )
-            }
-
-            "subtitle" -> {
-                val title = getString(args[2] as Int)
-                val subtitle = getString(args[3] as Int)
-                builder.append(title)
-                builder.append("\n")
-                builder.append(subtitle)
-
-                builder.setSpan(
-                    RelativeSizeSpan(0.6f),
-                    builder.length - subtitle.length, builder.length,
-                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-                builder.setSpan(
-                    ForegroundColorSpan(optColor(R.color.abs_textSecondary)),
-                    builder.length - subtitle.length, builder.length,
-                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-                )
-            }
-        }
-
-        val textView = args[1] as AbsTextView
-        textView.text = builder
-    }
 
     fun showProgress(view: View) {
         view.visibility = View.VISIBLE
