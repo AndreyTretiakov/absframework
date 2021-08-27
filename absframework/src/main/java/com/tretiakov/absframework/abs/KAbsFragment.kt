@@ -29,7 +29,7 @@ import com.tretiakov.absframework.views.text.AbsTextView
 @Suppress("UNCHECKED_CAST")
 abstract class KAbsFragment<T>(val layout: Int) : Fragment(), AbsConstants {
     
-    private var activity: AbsActivity? = null
+    private lateinit var activity: AbsActivity
 
     private var absCallback: AbsCallback<Any>? = null
 
@@ -72,12 +72,12 @@ abstract class KAbsFragment<T>(val layout: Int) : Fragment(), AbsConstants {
 
     open fun <T> showUnCancelableDialog(dialog: Class<T>?, bundle: Bundle?, absCallback: AbsCallback<Any>?) {
         if (isVisible && activity != null) {
-            activity!!.showUnCancelableDialog(dialog, bundle, absCallback)
+            activity.showUnCancelableDialog(dialog, bundle, absCallback)
         }
     }
 
     protected open fun requestPermission(router: AbsCallback<Bundle?>, vararg permissions: String?) {
-        activity!!.requestPermission(router, *permissions)
+        activity.requestPermission(router, *permissions)
     }
 
     open fun setCallback(router: AbsCallback<Any>?) {
@@ -96,7 +96,7 @@ abstract class KAbsFragment<T>(val layout: Int) : Fragment(), AbsConstants {
 
     protected open fun <T> startActivityAnClearStack(newActivity: Class<T>?) {
         if (activity != null) {
-            activity!!.startActivityAndClearStack(newActivity)
+            activity.startActivityAndClearStack(newActivity)
         }
     }
 
@@ -108,7 +108,7 @@ abstract class KAbsFragment<T>(val layout: Int) : Fragment(), AbsConstants {
     }
 
     protected open fun showAlertDialog(msg: String, title: String? = null) {
-        val alertDialog = AlertDialog.Builder(activity!!).create()
+        val alertDialog = AlertDialog.Builder(activity).create()
         alertDialog.setTitle(title)
         alertDialog.setMessage(msg)
         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(android.R.string.ok))
@@ -141,7 +141,7 @@ abstract class KAbsFragment<T>(val layout: Int) : Fragment(), AbsConstants {
     }
 
     protected open fun showFragment(fragment: KAbsFragment<T>, bundle: Bundle?, addToBackStack: Boolean?, id: Int, absCallback: AbsCallback<Any>?) {
-        if (activity != null) activity!!.showKFragment(fragment, bundle!!, addToBackStack!!, id, absCallback)
+        if (activity != null) activity.showKFragment(fragment, bundle!!, addToBackStack!!, id, absCallback)
     }
 
     protected open fun addFragment(fragment: KAbsFragment<T>, bundle: Bundle?, addToBackStack: Boolean?, absCallback: AbsCallback<Any>?) {
@@ -149,11 +149,11 @@ abstract class KAbsFragment<T>(val layout: Int) : Fragment(), AbsConstants {
     }
 
     protected open fun addFragment(fragment: KAbsFragment<T>, bundle: Bundle?, addToBackStack: Boolean?, id: Int, absCallback: AbsCallback<Any>?) {
-        if (activity != null) activity!!.addKFragment(fragment, bundle!!, addToBackStack!!, id, absCallback)
+        if (activity != null) activity.addKFragment(fragment, bundle!!, addToBackStack!!, id, absCallback)
     }
 
     protected open fun addFragmentRTL(fragment: KAbsFragment<T>, bundle: Bundle?, addToBackStack: Boolean?, id: Int, absCallback: AbsCallback<Any>?) {
-        if (activity != null) activity!!.addKFragment(fragment, bundle!!, addToBackStack!!, id, absCallback)
+        if (activity != null) activity.addKFragment(fragment, bundle!!, addToBackStack!!, id, absCallback)
     }
 
     protected open fun addFragmentRTL(fragment: KAbsFragment<T>, bundle: Bundle?, addToBackStack: Boolean?, absCallback: AbsCallback<Any>?) {
@@ -172,7 +172,7 @@ abstract class KAbsFragment<T>(val layout: Int) : Fragment(), AbsConstants {
     protected open fun onBackPressed() {
         if (activity != null && isVisible) {
             try {
-                activity!!.onBackPressed()
+                activity.onBackPressed()
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -188,11 +188,11 @@ abstract class KAbsFragment<T>(val layout: Int) : Fragment(), AbsConstants {
     }
 
     open fun optColor(@ColorRes colorRes: Int): Int {
-        return ContextCompat.getColor(context!!, colorRes)
+        return ContextCompat.getColor(requireContext(), colorRes)
     }
 
     protected open fun sendLocalBroadcast(intent: Intent?) {
-        LocalBroadcastManager.getInstance(context!!).sendBroadcast(intent!!)
+        LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent!!)
     }
 
     protected open fun registerLocalBroadcast(receiver: BroadcastReceiver?, vararg actions: String?) {
@@ -200,15 +200,15 @@ abstract class KAbsFragment<T>(val layout: Int) : Fragment(), AbsConstants {
         for (action in actions) {
             filter.addAction(action)
         }
-        LocalBroadcastManager.getInstance(context!!).registerReceiver(receiver!!, filter)
+        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(receiver!!, filter)
     }
 
     protected open fun unregisterLocalBroadcast(receiver: BroadcastReceiver?) {
-        LocalBroadcastManager.getInstance(context!!).unregisterReceiver(receiver!!)
+        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(receiver!!)
     }
 
     protected open fun runOnUiThread(action: Runnable?) {
-        activity!!.runOnUiThread(action)
+        activity.runOnUiThread(action)
     }
 
     protected open fun addDrawableToLeft(view: TextView, res: Int) {
@@ -221,7 +221,7 @@ abstract class KAbsFragment<T>(val layout: Int) : Fragment(), AbsConstants {
 
     protected open fun setStatusBarColor(color: Int) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && activity != null) {
-            val window = activity!!.window
+            val window = activity.window
 
             // clear FLAG_TRANSLUCENT_STATUS flag:
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
@@ -230,15 +230,15 @@ abstract class KAbsFragment<T>(val layout: Int) : Fragment(), AbsConstants {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
 
             // finally change the color
-            window.statusBarColor = ContextCompat.getColor(activity!!, color)
+            window.statusBarColor = ContextCompat.getColor(activity, color)
         }
     }
 
     protected open fun setStatusBarAndNavigationColor(color: Int) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && activity != null) {
-            val window = activity!!.window
+            val window = activity.window
             setStatusBarColor(color)
-            window.navigationBarColor = ContextCompat.getColor(activity!!,
+            window.navigationBarColor = ContextCompat.getColor(activity,
                     if (color == R.color.abs_color_status_bar) R.color.abs_colorPrimary_V3 else color)
         }
     }
@@ -246,8 +246,8 @@ abstract class KAbsFragment<T>(val layout: Int) : Fragment(), AbsConstants {
     protected open fun setStatusBarDefaultColor() {
         setStatusBarColor(if (isPre23()) R.color.abs_colorPrimaryDarkPre23 else R.color.abs_color_status_bar)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && activity != null) {
-            val window = activity!!.window
-            window.navigationBarColor = ContextCompat.getColor(activity!!, R.color.abs_color_status_bar)
+            val window = activity.window
+            window.navigationBarColor = ContextCompat.getColor(activity, R.color.abs_color_status_bar)
         }
     }
 
@@ -256,11 +256,11 @@ abstract class KAbsFragment<T>(val layout: Int) : Fragment(), AbsConstants {
     }
 
     protected open fun getAppContext(): Context? {
-        return context!!.applicationContext
+        return requireContext().applicationContext
     }
 
     open fun initButtons(listener: View.OnClickListener?, @IdRes vararg ids: Int) {
-        val delegate: AppCompatDelegate = activity!!.delegate
+        val delegate: AppCompatDelegate = activity.delegate
         for (id in ids) {
             val view = delegate.findViewById<View>(id)
             view?.setOnClickListener(listener)
@@ -269,7 +269,7 @@ abstract class KAbsFragment<T>(val layout: Int) : Fragment(), AbsConstants {
 
     open fun <V : View> initUIViews(@IdRes vararg ids: Int): List<V> {
         val result = ArrayList<V>()
-        val delegate: AppCompatDelegate = activity!!.delegate
+        val delegate: AppCompatDelegate = activity.delegate
         ids.forEach { id -> result.add(delegate.findViewById<V>(id) as V) }
         return result
     }
@@ -283,9 +283,9 @@ abstract class KAbsFragment<T>(val layout: Int) : Fragment(), AbsConstants {
 
     fun showSoftKeyboard(view: View) {
         if (view.requestFocus()) {
-            val imm = context!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
-            activity!!.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+            activity.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
         }
     }
 
@@ -386,6 +386,15 @@ abstract class KAbsFragment<T>(val layout: Int) : Fragment(), AbsConstants {
 
         val textView = args[1] as AbsTextView
         textView.text = builder
+    }
+
+
+    fun getDisplayWidth(): Int {
+        return activity.windowManager.defaultDisplay.width
+    }
+
+    fun getDisplayHeight(): Int {
+        return activity.windowManager.defaultDisplay.height
     }
 
 }
