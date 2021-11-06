@@ -39,20 +39,20 @@ public class AbsToolbar extends Toolbar {
     }
 
     public void setTitle(@StringRes int title) {
-        ((android.widget.TextView) findViewById(R.id.titleLabel)).setText(title);
+        ((android.widget.TextView) findViewById(R.id.toolbarTitle)).setText(title);
     }
 
     public void setTitle(String title) {
-        ((android.widget.TextView) findViewById(R.id.titleLabel)).setText(title);
+        ((android.widget.TextView) findViewById(R.id.toolbarTitle)).setText(title);
     }
 
     public void setTitle(SpannableStringBuilder title) {
-        ((android.widget.TextView) findViewById(R.id.titleLabel)).setText(title);
+        ((android.widget.TextView) findViewById(R.id.toolbarTitle)).setText(title);
     }
 
     public void setArrow(View.OnClickListener cl) {
         DrawerArrowDrawable arrow = new DrawerArrowDrawable(getContext());
-        arrow.setColor(ContextCompat.getColor(getContext(), R.color.abs_main_icon_tint));
+        arrow.setColor(ContextCompat.getColor(getContext(), R.color.abs_main_icon_tint_contrast));
         arrow.setProgress(1);
         setNavigationIcon(arrow);
         setNavigationOnClickListener(cl);
@@ -71,7 +71,7 @@ public class AbsToolbar extends Toolbar {
     }
 
     public void setSearchMode() {
-        findViewById(R.id.titleLabel).setVisibility(GONE);
+        findViewById(R.id.toolbarTitle).setVisibility(GONE);
         findViewById(R.id.toolbarSearch).setVisibility(VISIBLE);
         findViewById(R.id.toolbarButton).setVisibility(VISIBLE);
     }

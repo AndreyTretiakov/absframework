@@ -3,9 +3,11 @@ package com.tretiakov.absframework.views.text;
 import android.content.Context;
 import android.content.res.TypedArray;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatEditText;
 
 import android.hardware.input.InputManager;
+import android.os.Build;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.Spanned;
@@ -58,6 +60,10 @@ public class AbsEditText extends AppCompatEditText {
 
             setTypeface(FontsHelper.getTypeFace(getContext(), "fonts/" +
                     (font == null ? "Roboto-Regular" : font) + ".ttf"));
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                setImportantForAutofill(IMPORTANT_FOR_AUTOFILL_NO);
+            }
 //        setOnTouchListener(onTouch);
 //        setOnEditorActionListener(onEdit);
         }
@@ -88,11 +94,11 @@ public class AbsEditText extends AppCompatEditText {
     }
 
     public String text() {
-        return getText().toString();
+        return getText() == null ? "" : getText().toString();
     }
 
     public void clearText() {
-        setText(null);
+        if (!TextUtils.isEmpty(getText())) setText(null);
     }
 
     public void setCursorToEnt() {
@@ -117,19 +123,28 @@ public class AbsEditText extends AppCompatEditText {
         return TextUtils.isEmpty(getText());
     }
 
+    public boolean isNotEmpty() {
+        return !TextUtils.isEmpty(getText());
+    }
+
     public void setSelectableMode(View.OnClickListener cl) {
         setOnClickListener(cl);
     }
 
     public void showKeyboard() {
-        postDelayed(() -> Keyboard.show(getContext(), this), 200);
+        postDelayed(() -> Keyboard.show(getContext(), this), 500);
     }
 
     public void showKeyboardNow() {
         InputMethodManager manager = (InputMethodManager)
                 getContext().getSystemService(INPUT_METHOD_SERVICE);
         if (manager != null) {
-            manager.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, InputMethodManager.HIDE_NOT_ALWAYS);
+            if (!manager.isActive()) {
+                manager.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT,
+                        InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+            setSelection(text().length());
+            requestFocus();
         }
     }
 

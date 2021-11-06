@@ -13,8 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.appcompat.app.AlertDialog;
-import android.view.Window;
-import android.view.WindowManager;
+
 import android.widget.TextView;
 
 import com.tretiakov.absframework.R;
@@ -113,8 +112,16 @@ public abstract class AbsFragment extends Fragment implements AbsConstants {
         addFragment(fragment, bundle, addToBackStack, R.id.fragment, absCallback);
     }
 
+    protected void addKotlinFragment(Fragment fragment, Bundle bundle, Boolean addToBackStack, AbsCallback<?> absCallback) {
+        addKotlinFragment(fragment, bundle, addToBackStack, R.id.fragment, absCallback);
+    }
+
     protected void addFragment(Class fragment, Bundle bundle, Boolean addToBackStack, int id, AbsCallback absCallback) {
         if (mActivity != null) mActivity.addFragment(fragment, bundle, addToBackStack, id, absCallback);
+    }
+
+    protected void addKotlinFragment(Fragment fragment, Bundle bundle, Boolean addToBackStack, int id, AbsCallback absCallback) {
+        if (mActivity != null) mActivity.addKotlinFragment(fragment, bundle, addToBackStack, id, absCallback);
     }
 
     protected void addFragmentRTL(Class fragment, Bundle bundle, Boolean addToBackStack, int id, AbsCallback absCallback) {
@@ -187,38 +194,38 @@ public abstract class AbsFragment extends Fragment implements AbsConstants {
         }
     }
 
-    protected void setStatusBarColor(int color) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && getActivity() != null) {
+//    protected void setStatusBarColor(int color) {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && getActivity() != null) {
+//
+//            Window window = getActivity().getWindow();
+//
+//            // clear FLAG_TRANSLUCENT_STATUS flag:
+//            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//
+//            // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
+//            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+//
+//            // finally change the color
+//            window.setStatusBarColor(ContextCompat.getColor(getActivity(), color));
+//        }
+//    }
 
-            Window window = getActivity().getWindow();
+//    protected void setStatusBarAndNavigationColor(int color) {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && getActivity() != null) {
+//            Window window = getActivity().getWindow();
+//            setStatusBarColor(color);
+//            window.setNavigationBarColor(ContextCompat.getColor(getActivity(),
+//                    color == R.color.abs_color_status_bar ? R.color.abs_colorPrimary_V3 : color));
+//        }
+//    }
 
-            // clear FLAG_TRANSLUCENT_STATUS flag:
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-
-            // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-
-            // finally change the color
-            window.setStatusBarColor(ContextCompat.getColor(getActivity(), color));
-        }
-    }
-
-    protected void setStatusBarAndNavigationColor(int color) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && getActivity() != null) {
-            Window window = getActivity().getWindow();
-            setStatusBarColor(color);
-            window.setNavigationBarColor(ContextCompat.getColor(getActivity(),
-                    color == R.color.abs_color_status_bar ? R.color.abs_colorPrimary_V3 : color));
-        }
-    }
-
-    protected void setStatusBarDefaultColor() {
-        setStatusBarColor(isPre23() ? R.color.abs_colorPrimaryDark : R.color.abs_color_status_bar);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && getActivity() != null) {
-            Window window = getActivity().getWindow();
-            window.setNavigationBarColor(ContextCompat.getColor(getActivity(), R.color.abs_color_status_bar));
-        }
-    }
+//    protected void setStatusBarDefaultColor() {
+//        setStatusBarColor(isPre23() ? R.color.abs_colorPrimaryDark : R.color.abs_color_status_bar);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && getActivity() != null) {
+//            Window window = getActivity().getWindow();
+//            window.setNavigationBarColor(ContextCompat.getColor(getActivity(), R.color.abs_color_status_bar));
+//        }
+//    }
 
     private boolean isPre23() {
         return Build.VERSION.SDK_INT < Build.VERSION_CODES.M;

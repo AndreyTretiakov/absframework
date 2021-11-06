@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.widget.SwitchCompat;
 import android.text.SpannableStringBuilder;
@@ -58,7 +59,7 @@ public class AbsSwitchView extends SwitchCompat {
         int subtitleStart;
         SpannableStringBuilder builder = new SpannableStringBuilder(title);
 
-        if ("Roboto-Bold".equals(font)) {
+        if ("Roboto-Bold".equals(font) || "bold".equals(font)) {
             builder.setSpan(new StyleSpan(Typeface.BOLD), 0, builder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
 
@@ -68,5 +69,11 @@ public class AbsSwitchView extends SwitchCompat {
         builder.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getContext(), R.color.abs_textSecondary)), subtitleStart, builder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         builder.setSpan(new RelativeSizeSpan(0.7f), subtitleStart, builder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         setText(builder);
+    }
+
+    public void setChecked(boolean value, @Nullable OnCheckedChangeListener listener) {
+        setOnCheckedChangeListener(null);
+        setChecked(value);
+        setOnCheckedChangeListener(listener);
     }
 }

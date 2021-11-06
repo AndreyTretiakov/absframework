@@ -76,6 +76,10 @@ public class AbsTextView extends AppCompatTextView {
         }
     }
 
+    public boolean isEmpty() {
+        return getText() == null || getText().length() == 0;
+    }
+
     public void setSubtitle(CharSequence subtitle) {
         setSubtitle(getText(), subtitle, null);
     }

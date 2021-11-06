@@ -3,18 +3,26 @@
     <color name="abs_colorPrimary">#00A3FF</color>
     <color name="abs_colorPrimaryDark">#292a2f</color>
     <color name="abs_colorAccent">#FFBC2E</color>
-    <color name="abs_colorPrimaryDarkPre23">#292a2f</color>
-    <color name="abs_colorPrimary_V3">#292a2f</color>
-    <color name="abs_color_status_bar">#292a2f</color>
+    <color name="abs_colorPrimaryDarkPre23">#282828</color>
+    <color name="abs_colorPrimary_V3">#282828</color>
+    <color name="abs_color_status_bar">#282828</color>
 
     <color name="abs_main_icon_tint">#9fff</color>
-    <color name="abs_main_icon_tint_contrast">#83888D</color>
+    <color name="abs_main_icon_tint_contrast">#DDDDDD</color>
 
-    <color name="abs_textPrimary">#fff</color>
-    <color name="abs_textSecondary">#A0A0A0</color>
-    <color name="abs_textPrimaryLight">#d9d8d1</color>
-    <color name="abs_textSecondaryLight">#999890</color>
-    <color name="abs_textBluePrimary">#fff8c6</color>
+    <color name="abs_main_item_background">#232323</color>
+    <color name="abs_main_item_background_pressed">#232323</color>
+    <color name="abs_main_item_background_selected">#2E2E2E</color>
+    <color name="abs_main_background">#1E1E1E</color>
+    <color name="abs_dark_background">#1E1E1E</color>
+    <color name="abs_dark_background_v2">#3b3c41</color>
+    <color name="abs_dark_background_v3">#262728</color>
+
+    <color name="abs_textPrimary">#E4E4E4</color>
+    <color name="abs_textSecondary">#929292</color>
+    <color name="abs_textPrimaryLight">#fff0da</color>
+    <color name="abs_textSecondaryLight">#b8bdc2</color>
+    <color name="abs_textBluePrimary">#6D8D9C</color>
     <color name="abs_textGreenPrimary">#1a6c09</color>
     <color name="abs_textYellowPrimary">#6c6209</color>
 
@@ -42,8 +50,8 @@
 
     <color name="abs_retro_yellow">#ded7a4</color>
 
-    <color name="abs_info_board_background">#92BFDD</color>
-    <color name="abs_info_board_text">#00547C</color>
+    <color name="abs_info_board_background">#35454F</color>
+    <color name="abs_info_board_text">#8AABBA</color>
     <color name="abs_info_board_text_dark">#001B25</color>
 
     <color name="abs_material_dark_gray_1">#3e464c</color>

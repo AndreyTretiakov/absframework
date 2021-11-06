@@ -2,6 +2,7 @@ package com.tretiakov.absframework.abs;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,6 +12,7 @@ import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 
+import com.google.android.material.tabs.TabLayout;
 import com.tretiakov.absframework.R;
 import com.tretiakov.absframework.constants.AbsConstants;
 import com.tretiakov.absframework.routers.AbsCallback;
@@ -30,6 +33,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+
+import static androidx.core.os.LocaleListCompat.create;
 
 /**
  * @author Andrey Tretiakov. Created 4/15/2016.
@@ -110,12 +115,28 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
         }
     }
 
+    protected void showAlertDialog(String msg, String title) {
+        AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
+        alertDialog.setTitle(title);
+        alertDialog.setMessage(msg);
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(android.R.string.ok),
+                (dialog, which) -> alertDialog.dismiss()
+        );
+        alertDialog.show();
+    }
+
     public void setHasFooter(@Nullable E footer, boolean value) {
         mHasFooter = value;
         if (value) mFooter = footer;
     }
 
     public void setItems(List<E> items, boolean needRefresh) {
+        mItems = items;
+        notifyItems(needRefresh);
+    }
+
+    public void setReversedItems(List<E> items, boolean needRefresh) {
+        Collections.reverse(items);
         mItems = items;
         notifyItems(needRefresh);
     }
@@ -133,8 +154,7 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
 
     public void addItem(@NonNull E item, boolean needRefresh) {
         mItems.add(item);
-        if (needRefresh)
-            notifyItemInserted(mItems.size());
+        if (needRefresh) notifyItemInserted(mItems.size());
     }
 
     public void addItem(int position, E item, boolean needRefresh) {
@@ -142,6 +162,10 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
         if (needRefresh) {
             notifyItemInserted(position);
             mHandler.postDelayed(this::notifyDataSetChanged, 500);
+
+            if (position == 0) {
+                mRecyclerView.scrollToPosition(0);
+            }
         }
     }
 
@@ -202,6 +226,16 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
     protected void notifyItems(boolean needRefresh) {
         if (needRefresh)
             notifyDataSetChanged();
+    }
+
+    public void notifyItemChanged(E item) {
+        for (int i = 0; i < mItems.size(); i++) {
+            if (mItems.get(i) == item) {
+                notifyItemChanged(i);
+                mHandler.postDelayed(this::notifyDataSetChanged, 250);
+                break;
+            }
+        }
     }
 
     @Override
@@ -315,6 +349,16 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
     public void notifyChanged(int position) {
         notifyItemChanged(position);
         mRecyclerView.postDelayed(() -> notifyDataSetChanged(), 200);
+    }
+
+    public void updateItem(E source, E dest) {
+        for (int i = 0; i < mItems.size(); i++) {
+            if (mItems.get(i) == source) {
+                mItems.set(i, dest);
+                notifyItemChanged(i);
+                mHandler.postDelayed(this::notifyDataSetChanged, 250);
+            }
+        }
     }
 
     protected void notifyByPos(int pos, int delay) {
@@ -474,6 +518,21 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
 
     protected String[] getStringArray(int name) {
         return getContext().getResources().getStringArray(name);
+    }
+
+    protected void setTag(int position, View... views) {
+        for (View view : views) {
+            view.setTag(R.string.tag_position, position);
+        }
+    }
+
+    protected String getStringTag(Object obj) {
+        if (obj instanceof View) {
+            return String.valueOf(((View)obj).getTag());
+        } else if (obj instanceof TabLayout.Tab) {
+            return String.valueOf(((TabLayout.Tab)obj).getTag());
+        }
+        return "";
     }
 
 }
