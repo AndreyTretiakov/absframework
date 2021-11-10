@@ -28,7 +28,7 @@ import com.tretiakov.absframework.routers.AbsCallback
 import com.tretiakov.absframework.views.text.AbsTextView
 
 @Suppress("UNCHECKED_CAST")
-abstract class KAbsFragment<T>(val layout: Int) : Fragment(), AbsConstants {
+abstract class KAbsFragment<T>(val layout: Int = 0) : Fragment(), AbsConstants {
     
     private lateinit var activity: AbsActivity
 
@@ -48,6 +48,7 @@ abstract class KAbsFragment<T>(val layout: Int) : Fragment(), AbsConstants {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        if (layout == 0) return super.onCreateView(inflater, container, savedInstanceState)
         return inflater.inflate(layout, container, false)
     }
 
