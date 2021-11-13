@@ -67,7 +67,7 @@ public class AbsRadioButton extends AppCompatRadioButton {
         subtitleStart = builder.length();
         builder.append(subtitle);
         builder.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getContext(), R.color.abs_textSecondary)), subtitleStart, builder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        builder.setSpan(new RelativeSizeSpan(0.7f), subtitleStart, builder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        builder.setSpan(new RelativeSizeSpan(0.9f), subtitleStart, builder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         setText(builder);
     }
 }
