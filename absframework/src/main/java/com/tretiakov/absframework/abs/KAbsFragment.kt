@@ -262,17 +262,15 @@ abstract class KAbsFragment<T>(val layout: Int = 0) : Fragment(), AbsConstants {
     }
 
     open fun initButtons(listener: View.OnClickListener?, @IdRes vararg ids: Int) {
-        val delegate: AppCompatDelegate = activity.delegate
         for (id in ids) {
-            val view = delegate.findViewById<View>(id)
+            val view = requireView().findViewById<View>(id)
             view?.setOnClickListener(listener)
         }
     }
 
     open fun <V : View> initUIViews(@IdRes vararg ids: Int): List<V> {
         val result = ArrayList<V>()
-        val delegate: AppCompatDelegate = activity.delegate
-        ids.forEach { id -> result.add(delegate.findViewById<V>(id) as V) }
+        ids.forEach { id -> result.add(requireView().findViewById(id) as V) }
         return result
     }
 
