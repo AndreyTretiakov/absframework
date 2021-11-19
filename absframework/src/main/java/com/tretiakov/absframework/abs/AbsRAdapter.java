@@ -2,7 +2,6 @@ package com.tretiakov.absframework.abs;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.os.Handler;
@@ -33,8 +32,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
-import static androidx.core.os.LocaleListCompat.create;
 
 /**
  * @author Andrey Tretiakov. Created 4/15/2016.
