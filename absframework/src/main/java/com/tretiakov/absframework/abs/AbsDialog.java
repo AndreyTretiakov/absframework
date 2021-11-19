@@ -14,27 +14,26 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 
 import com.tretiakov.absframework.constants.AbsConstants;
-import com.tretiakov.absframework.routers.Callback;
+import com.tretiakov.absframework.routers.AbsCallback;
 
 /**
  * @author Andrey Tretiakov. Created 4/15/2016.
  */
-public class AbsDialog<T> extends DialogFragment implements AbsConstants {
+public class AbsDialog extends DialogFragment implements AbsConstants {
 
     private boolean mIsVisible;
 
-    private Callback<T> mRouter;
+    private AbsCallback mRouter;
 
     private Handler mHandler = new Handler();
 
-    public void setCallback(@NonNull Callback<T> callback) {
-        mRouter = callback;
+    public void setCallback(@NonNull AbsCallback absCallback) {
+        mRouter = absCallback;
     }
 
     @NonNull
@@ -66,7 +65,14 @@ public class AbsDialog<T> extends DialogFragment implements AbsConstants {
         view.setLayoutParams(params);
     }
 
-    public void onData(@Nullable T data) {
+    protected void switchActivity(@NonNull Class activity, @Nullable Bundle bundle,
+                                  int request, @Nullable AbsCallback router) {
+        if (getContext() != null) {
+            ((AbsActivity) getContext()).switchActivity(activity, bundle, request, router);
+        }
+    }
+
+    public <T> void onData(@Nullable T data) {
         if (mRouter != null) {
             mRouter.result(data);
         }
@@ -74,7 +80,7 @@ public class AbsDialog<T> extends DialogFragment implements AbsConstants {
         close();
     }
 
-    public void onData(@Nullable T data, boolean needDismiss) {
+    public <T> void onData(@Nullable T data, boolean needDismiss) {
         if (mRouter != null) {
             mRouter.result(data);
         }
@@ -84,7 +90,7 @@ public class AbsDialog<T> extends DialogFragment implements AbsConstants {
         }
     }
 
-    public void onDataAllowingStateLoss(@Nullable T data) {
+    public <T> void onDataAllowingStateLoss(@Nullable T data) {
         if (mRouter != null) {
             mRouter.result(data);
         }

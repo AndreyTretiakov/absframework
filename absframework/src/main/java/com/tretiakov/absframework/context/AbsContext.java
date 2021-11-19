@@ -16,7 +16,7 @@ public class AbsContext {
     @SuppressLint("StaticFieldLeak")
     private static AbsContext mInstance;
 
-    private Context mContext;
+    private final Context mContext;
 
     private AbsContext(Context context) {
         mContext = context;

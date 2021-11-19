@@ -1,56 +1,98 @@
 package com.tretiakov.absframework.abs;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Parcelable;
+import android.view.View;
+
 import androidx.annotation.ColorRes;
+import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentFactory;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.tretiakov.absframework.R;
 import com.tretiakov.absframework.constants.AbsConstants;
-import com.tretiakov.absframework.routers.Callback;
+import com.tretiakov.absframework.routers.AbsCallback;
 
 /**
  * @author Andrey Tretiakov. Created 4/15/2016.
  */
 @SuppressWarnings("unchecked")
-public abstract class AbsActivity<T> extends AppCompatActivity implements AbsConstants {
+public abstract class AbsActivity extends AppCompatActivity implements AbsConstants {
 
-    private Callback<T> mCallback;
-    private Callback<Bundle> mPermissionRouter;
+    private AbsCallback mAbsCallback;
+    private AbsCallback<Bundle> mPermissionRouter;
     private static final short REQUEST_PERMISSION = 1010;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (mCallback != null && data != null) {
-            if (data.hasExtra(KEY_DATA)) {
-                mCallback.result((T) data.getExtras().get(KEY_DATA));
-            } else {
-                mCallback.result(null);
+        new Handler().post(() -> {
+            if (mAbsCallback != null && data != null) {
+                if (data.hasExtra(KEY_DATA)) {
+                    mAbsCallback.result(data.getExtras().get(KEY_DATA));
+                } else {
+                    mAbsCallback.result(null);
+                }
             }
-        }
+        });
     }
 
+    protected void showAlertDialog(String msg) {
+        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog.setTitle(null);
+        alertDialog.setMessage(msg);
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(android.R.string.ok),
+                (dialog, which) -> alertDialog.dismiss());
+        alertDialog.show();
+    }
 
-    protected void showUnCancelableDialog(Class dialog, Bundle bundle, Callback<T> callback) {
+    protected void showAlertDialog(String msg, DialogInterface.OnClickListener listener) {
+        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog.setTitle(null);
+        alertDialog.setMessage(msg);
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(android.R.string.ok), listener);
+        alertDialog.show();
+    }
+
+    protected void showAlertDialog2options(String msg, DialogInterface.OnClickListener listener) {
+        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog.setTitle(null);
+        alertDialog.setMessage(msg);
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(android.R.string.cancel), listener);
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(android.R.string.ok), listener);
+        alertDialog.show();
+    }
+
+    protected void showUnCancelableDialog(Class dialog, Bundle bundle, AbsCallback absCallback) {
         AbsDialog d = (AbsDialog) AbsDialog.instantiate(this, dialog.getName(), bundle);
-        if (callback != null) d.setCallback(callback);
+        if (absCallback != null) d.setCallback(absCallback);
         d.setCancelable(false);
         d.show(getSupportFragmentManager(), dialog.getName());
     }
 
-    protected void showDialog(Class dialog, Bundle bundle, Callback<T> callback) {
+    protected void showDialog(Class dialog, Bundle bundle, AbsCallback absCallback) {
         AbsDialog d = (AbsDialog) AbsDialog.instantiate(this, dialog.getName(), bundle);
-        if (callback != null) d.setCallback(callback);
+        if (absCallback != null) d.setCallback(absCallback);
+        d.show(getSupportFragmentManager(), dialog.getName());
+    }
+
+    protected void showBottomSheet(Class dialog, Bundle bundle, AbsCallback absCallback) {
+        AbsBottomSheetDialog d = (AbsBottomSheetDialog) AbsDialog.instantiate(this, dialog.getName(), bundle);
+        if (absCallback != null) d.setCallback(absCallback);
         d.show(getSupportFragmentManager(), dialog.getName());
     }
 
@@ -61,17 +103,25 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
         finish();
     }
 
-    protected <K extends String, V> void switchActivity(Class act) {
+    protected void switchActivity(Class act) {
         switchActivity(act, null, NO_REQUEST, null);
     }
 
-    protected <K extends String, V> void switchActivity(Class act, Bundle bundle) {
+    protected void switchActivity(Class act, Bundle bundle) {
         switchActivity(act, bundle, NO_REQUEST, null);
     }
 
+    protected void switchActivity(Class act, int request, Bundle bundle) {
+        switchActivity(act, bundle, request, null);
+    }
+
+    protected void switchActivity(Class act, @Nullable Bundle bundle, AbsCallback router) {
+        switchActivity(act, bundle, NO_REQUEST, router);
+    }
+
     protected void switchActivity(@NonNull Class activity, @Nullable Bundle bundle, int request,
-                                  @Nullable Callback<T> router) {
-        mCallback = router;
+                                  @Nullable AbsCallback router) {
+        mAbsCallback = router;
         Intent intent = new Intent(this, activity);
         if (bundle != null) {
             intent.putExtras(bundle);
@@ -79,6 +129,9 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
 
         if (request == NO_REQUEST) {
             startActivity(intent);
+        } else if (request == PARAM_FINISH) {
+            startActivity(intent);
+            finish();
         } else if (request == PARAM_CLEAR_STACK) {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
@@ -90,7 +143,7 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
         }
     }
 
-    protected void deliverResult(T data) {
+    protected <T> void deliverResult(T data) {
         Intent intent = new Intent();
         if (data instanceof String)
             intent.putExtra(KEY_DATA, (String) data);
@@ -106,18 +159,36 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
     }
 
     @NonNull
-    public <F extends AbsFragment> F showMenuFragment(@NonNull Class fragment, int id, @Nullable Callback<T> router) {
+    public <F extends AbsFragment> F showMenuFragment(@NonNull Class fragment, int id, @Nullable AbsCallback router) {
         return showFragment(fragment, Bundle.EMPTY, false, id, router);
     }
 
     @NonNull
-    public <F extends AbsFragment> F showFragment(@NonNull Class fragment, @NonNull Bundle bundle, @NonNull Boolean addToBackStack, @Nullable Callback<T> router) {
+    public <F extends AbsFragment> F showFragment(@NonNull Class fragment, @Nullable AbsCallback router) {
+        return showFragment(fragment, Bundle.EMPTY, true, R.id.fragment, router);
+    }
+
+    @NonNull
+    public <F extends AbsFragment> F showFragment(@NonNull Class fragment, @NonNull Bundle bundle, @NonNull Boolean addToBackStack, @Nullable AbsCallback router) {
         return showFragment(fragment, bundle, addToBackStack, R.id.fragment, router);
+    }
+
+    public Fragment showKFragment(@NonNull Fragment fragment) {
+        return showKFragment(fragment, Bundle.EMPTY, true, R.id.fragment, null);
+    }
+
+    public Fragment showKFragment(@NonNull Fragment fragment, @NonNull Bundle bundle, @Nullable AbsCallback router) {
+        return showKFragment(fragment, bundle, true, R.id.fragment, router);
+    }
+
+    @NonNull
+    public Fragment showKFragment(@NonNull Fragment fragment, @NonNull Bundle bundle, @NonNull Boolean addToBackStack, @Nullable AbsCallback router) {
+        return showKFragment(fragment, bundle, addToBackStack, R.id.fragment, router);
     }
 
     @NonNull
     public <F extends AbsFragment> F showFragment(@NonNull Class fragment, @NonNull Bundle bundle,
-                                                  @NonNull Boolean addToBackStack, int id, @Nullable Callback<T> router) {
+                                                  @NonNull Boolean addToBackStack, int id, @Nullable AbsCallback router) {
         F f = (F) AbsFragment.instantiate(this, fragment.getName(), bundle);
         f.setCallback(router);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -128,27 +199,66 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
     }
 
     @NonNull
+    public Fragment showKFragment(@NonNull Fragment fragment, @NonNull Bundle bundle,
+                                                  @NonNull Boolean addToBackStack, int id, @Nullable AbsCallback router) {
+        fragment.setArguments(bundle);
+        ((KAbsFragment)fragment).setCallback(router);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        if (addToBackStack) transaction.addToBackStack(fragment.getClass().getName());
+        transaction.replace(id, fragment);
+        transaction.commitAllowingStateLoss();
+        return fragment;
+    }
+
+    @NonNull
     public <F extends AbsFragment> F addFragment(@NonNull Class fragment, @NonNull Bundle bundle,
-                                                  @NonNull Boolean addToBackStack, int id, @Nullable Callback<T> router) {
+                                                  @NonNull Boolean addToBackStack, int id, @Nullable AbsCallback router) {
         F f = (F) AbsFragment.instantiate(this, fragment.getName(), bundle);
         f.setCallback(router);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (addToBackStack) transaction.addToBackStack(fragment.getName());
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+//        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaction.add(id, f);
         transaction.commitAllowingStateLoss();
         return f;
     }
 
     @NonNull
+    public Fragment addKotlinFragment(@NonNull Fragment fragment, @NonNull Bundle bundle,
+                                      @NonNull Boolean addToBackStack, int id, @Nullable AbsCallback router) {
+        fragment.setArguments(bundle);
+        ((KAbsFragment)fragment).setCallback(router);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        if (addToBackStack) transaction.addToBackStack(fragment.getClass().getName());
+//        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        transaction.add(id, fragment);
+        transaction.commitAllowingStateLoss();
+        return fragment;
+    }
+
+    @NonNull
+    public <F extends KAbsFragment> F addKotlinFragmentRTL(@NonNull F fragment, @NonNull Bundle bundle,
+                                                     @NonNull Boolean addToBackStack, int id, @Nullable AbsCallback router) {
+        fragment.setArguments(bundle);
+        fragment.setCallback(router);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        if (addToBackStack) transaction.addToBackStack(fragment.getClass().getName());
+//        transaction.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_in_right,
+//                R.animator.slide_in_left, R.animator.slide_in_right);
+        transaction.add(id, fragment);
+        transaction.commitAllowingStateLoss();
+        return fragment;
+    }
+
+    @NonNull
     public <F extends AbsFragment> F addFragmentRTL(@NonNull Class fragment, @NonNull Bundle bundle,
-                                                 @NonNull Boolean addToBackStack, int id, @Nullable Callback<T> router) {
+                                                 @NonNull Boolean addToBackStack, int id, @Nullable AbsCallback router) {
         F f = (F) AbsFragment.instantiate(this, fragment.getName(), bundle);
         f.setCallback(router);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (addToBackStack) transaction.addToBackStack(fragment.getName());
-        transaction.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_in_right,
-                R.animator.slide_in_left, R.animator.slide_in_right);
+//        transaction.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_in_right,
+//                R.animator.slide_in_left, R.animator.slide_in_right);
         transaction.add(id, f);
         transaction.commitAllowingStateLoss();
         return f;
@@ -160,7 +270,17 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
 //        mCallback = null;
 //    }
 
-    public void requestPermission(@NonNull Callback<Bundle> router, String... permissions) {
+    protected <T> void onData(@Nullable T data, boolean needBack) {
+        if (mAbsCallback != null) {
+            mAbsCallback.result(data);
+        }
+
+        if (needBack) {
+            onBackPressed();
+        }
+    }
+
+    public void requestPermission(@NonNull AbsCallback<Bundle> router, String... permissions) {
         mPermissionRouter = router;
         if (permissions == null || permissions.length == 0) {
             Bundle bundle = new Bundle();
@@ -182,6 +302,10 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
             bundle.putBoolean("granted", true);
             mPermissionRouter.result(bundle);
         }
+    }
+
+    protected boolean hasPermission(String permission) {
+        return ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED;
     }
 
     @Override
@@ -209,5 +333,23 @@ public abstract class AbsActivity<T> extends AppCompatActivity implements AbsCon
 
     protected void sendLocalAction(@NonNull String action) {
         LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(action));
+    }
+
+    private FragmentFactory getFragmentFactory() {
+        return getSupportFragmentManager().getFragmentFactory();
+    }
+
+    public void findViewsByIds(View.OnClickListener listener, @IdRes int... ids) {
+        final AppCompatDelegate delegate = getDelegate();
+        for (int id : ids) {
+            final View view = delegate.findViewById(id);
+            if (view != null) {
+                view.setOnClickListener(listener);
+            }
+        }
+    }
+
+    public void execute(Runnable runnable) {
+        new Thread(runnable).start();
     }
 }

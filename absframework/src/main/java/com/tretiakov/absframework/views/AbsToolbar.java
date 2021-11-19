@@ -2,11 +2,15 @@ package com.tretiakov.absframework.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+
+import androidx.annotation.ColorRes;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
+import androidx.core.content.ContextCompat;
 import androidx.appcompat.graphics.drawable.DrawerArrowDrawable;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
+
+import android.graphics.drawable.Drawable;
 import android.text.SpannableStringBuilder;
 import android.util.AttributeSet;
 import android.view.View;
@@ -48,9 +52,16 @@ public class AbsToolbar extends Toolbar {
 
     public void setArrow(View.OnClickListener cl) {
         DrawerArrowDrawable arrow = new DrawerArrowDrawable(getContext());
-        arrow.setColor(ContextCompat.getColor(getContext(), R.color.colorIconDark));
+        arrow.setColor(ContextCompat.getColor(getContext(), R.color.abs_main_icon_tint_contrast));
         arrow.setProgress(1);
         setNavigationIcon(arrow);
+        setNavigationOnClickListener(cl);
+    }
+
+    public void setClose(View.OnClickListener cl) {
+        Drawable drawable = getResources().getDrawable(R.drawable.ic_action_close);
+        drawable.setTint(optColor(R.color.abs_main_icon_tint));
+        setNavigationIcon(drawable);
         setNavigationOnClickListener(cl);
     }
 
@@ -63,5 +74,9 @@ public class AbsToolbar extends Toolbar {
         findViewById(R.id.toolbarTitle).setVisibility(GONE);
         findViewById(R.id.toolbarSearch).setVisibility(VISIBLE);
         findViewById(R.id.toolbarButton).setVisibility(VISIBLE);
+    }
+
+    public int optColor(@ColorRes int colorRes) {
+        return ContextCompat.getColor(getContext(), colorRes);
     }
 }

@@ -4,8 +4,8 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.content.ContextCompat;
+import androidx.appcompat.widget.AppCompatTextView;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
@@ -32,11 +32,11 @@ public class AbsTextView extends AppCompatTextView {
 
     private void init(@NonNull Context context, AttributeSet attrs) {
         if (!isInEditMode()) {
-            TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AbsTextView);
-            String font = a.getString(R.styleable.AbsTextView__font);
+            TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AbsFont);
+            String font = a.getString(R.styleable.AbsFont__font);
 
-            CharSequence title = a.getText(R.styleable.AbsTextView__title);
-            CharSequence subtitle = a.getText(R.styleable.AbsTextView__subtitle);
+            CharSequence title = a.getText(R.styleable.AbsFont__title);
+            CharSequence subtitle = a.getText(R.styleable.AbsFont__subtitle);
             if (subtitle != null) {
                 setSubtitle(title, subtitle, font);
             } else if (title != null){
@@ -45,9 +45,17 @@ public class AbsTextView extends AppCompatTextView {
 
             a.recycle();
 
+            String extention = font != null && font.equals("Sutiya") ? ".otf" : ".ttf";
+
             setTypeface(FontsHelper.getTypeFace(getContext(), "fonts/" +
-                    (font == null ? "Roboto-Regular" : font) + ".ttf"));
+                    (font == null ? "Roboto-Regular" : font) + extention));
         }
+    }
+
+    public void setFont(int fontRes) {
+        String font = getContext().getString(fontRes);
+        String extention = font.equals("Sutiya") ? ".otf" : ".ttf";
+        setTypeface(FontsHelper.getTypeFace(getContext(), "fonts/" + font + extention));
     }
 
     public void setRegularTypeface() {
@@ -66,6 +74,10 @@ public class AbsTextView extends AppCompatTextView {
         } else {
             setText(parts[0]);
         }
+    }
+
+    public boolean isEmpty() {
+        return getText() == null || getText().length() == 0;
     }
 
     public void setSubtitle(CharSequence subtitle) {
@@ -87,7 +99,7 @@ public class AbsTextView extends AppCompatTextView {
         builder.append("\n");
         subtitleStart = builder.length();
         builder.append(subtitle);
-        builder.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getContext(), R.color.textSecondary)), subtitleStart, builder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        builder.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getContext(), R.color.abs_textSecondary)), subtitleStart, builder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         builder.setSpan(new RelativeSizeSpan(0.7f), subtitleStart, builder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         setText(builder);
     }

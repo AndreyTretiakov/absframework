@@ -2,6 +2,7 @@ package com.tretiakov.absframework.abs;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,17 +12,19 @@ import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 
+import com.google.android.material.tabs.TabLayout;
 import com.tretiakov.absframework.R;
 import com.tretiakov.absframework.constants.AbsConstants;
-import com.tretiakov.absframework.routers.Callback;
+import com.tretiakov.absframework.routers.AbsCallback;
 import com.tretiakov.absframework.routers.Callback2;
 import com.tretiakov.absframework.routers.TypedFilter;
 import com.tretiakov.absframework.utils.Keyboard;
@@ -31,6 +34,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import static androidx.core.os.LocaleListCompat.create;
+
 /**
  * @author Andrey Tretiakov. Created 4/15/2016.
  */
@@ -38,7 +43,7 @@ import java.util.List;
 public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
         extends RecyclerView.Adapter<H> implements AbsConstants {
 
-    private Callback mRouter;
+    private AbsCallback mRouter;
     private Callback2 mRouter2;
     private Context mContext;
     private List<E> mItems;
@@ -60,7 +65,7 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
         mItems = items;
     }
 
-    public AbsRAdapter(Context context, List<E> items, Callback router) {
+    public AbsRAdapter(Context context, List<E> items, AbsCallback router) {
         mInflater = LayoutInflater.from(context);
         mRouter = router;
         mContext = context;
@@ -98,16 +103,26 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
         mRouter = null;
     }
 
-    protected void setRouter(Callback router) {
+    protected void setRouter(AbsCallback router) {
         mRouter = router;
     }
 
-    protected <T> void showDialog(Class dialog, Bundle bundle, Callback<T> callback) {
+    protected void showDialog(Class dialog, Bundle bundle, AbsCallback absCallback) {
         if (mContext instanceof AbsActivity) {
             AbsDialog d = (AbsDialog) AbsDialog.instantiate(getContext(), dialog.getName(), bundle);
-            if (callback != null) d.setCallback(callback);
+            if (absCallback != null) d.setCallback(absCallback);
             d.show(((AbsActivity) mContext).getSupportFragmentManager(), dialog.getName());
         }
+    }
+
+    protected void showAlertDialog(String msg, String title) {
+        AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
+        alertDialog.setTitle(title);
+        alertDialog.setMessage(msg);
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(android.R.string.ok),
+                (dialog, which) -> alertDialog.dismiss()
+        );
+        alertDialog.show();
     }
 
     public void setHasFooter(@Nullable E footer, boolean value) {
@@ -116,6 +131,12 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
     }
 
     public void setItems(List<E> items, boolean needRefresh) {
+        mItems = items;
+        notifyItems(needRefresh);
+    }
+
+    public void setReversedItems(List<E> items, boolean needRefresh) {
+        Collections.reverse(items);
         mItems = items;
         notifyItems(needRefresh);
     }
@@ -133,8 +154,7 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
 
     public void addItem(@NonNull E item, boolean needRefresh) {
         mItems.add(item);
-        if (needRefresh)
-            notifyItemInserted(mItems.size());
+        if (needRefresh) notifyItemInserted(mItems.size());
     }
 
     public void addItem(int position, E item, boolean needRefresh) {
@@ -142,6 +162,10 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
         if (needRefresh) {
             notifyItemInserted(position);
             mHandler.postDelayed(this::notifyDataSetChanged, 500);
+
+            if (position == 0) {
+                mRecyclerView.scrollToPosition(0);
+            }
         }
     }
 
@@ -183,8 +207,10 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
         if (mItems != null && !mItems.isEmpty() && position < mItems.size())
             mItems.remove(position);
 
-        if (needRefresh)
+        if (needRefresh) {
             notifyItemRemoved(position);
+            mHandler.postDelayed(this::notifyDataSetChanged, 600);
+        }
     }
 
     public void clear(boolean needRefresh) {
@@ -193,15 +219,32 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
             notifyItems(needRefresh);
         }
     }
+    public void notifyDataWithDelay() {
+        mHandler.postDelayed(this::notifyDataSetChanged, 650);
+    }
 
     protected void notifyItems(boolean needRefresh) {
         if (needRefresh)
             notifyDataSetChanged();
     }
 
+    public void notifyItemChanged(E item) {
+        for (int i = 0; i < mItems.size(); i++) {
+            if (mItems.get(i) == item) {
+                notifyItemChanged(i);
+                mHandler.postDelayed(this::notifyDataSetChanged, 250);
+                break;
+            }
+        }
+    }
+
     @Override
     public int getItemCount() {
         return mItems.size() + (mHasFooter ? 1 : 0);
+    }
+
+    public int lastIndex() {
+        return getItemCount() - 1;
     }
 
     public E getItem(int position) {
@@ -263,13 +306,25 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
         }
     }
 
-    protected <T> void showFragment(Class fragment, Bundle bundle, Boolean addToBackStack, Callback<T> router) {
+    protected <T> void showFragment(Class fragment, Bundle bundle, Boolean addToBackStack, AbsCallback<T> router) {
         if (getContext() instanceof AbsActivity) {
             ((AbsActivity) getContext()).showFragment(fragment, bundle, addToBackStack, router);
         }
     }
 
-    protected <T> void addFragment(Class fragment, Bundle bundle, Boolean addToBackStack, Callback<T> router) {
+    public void showKFragment(@NonNull Fragment fragment) {
+        if (getContext() instanceof AbsActivity) {
+            ((AbsActivity) getContext()).showKFragment(fragment, Bundle.EMPTY, true, R.id.fragment, null);
+        }
+    }
+
+    public void showKFragment(@NonNull Fragment fragment, Bundle bundle, @Nullable AbsCallback router) {
+        if (getContext() instanceof AbsActivity) {
+            ((AbsActivity) getContext()).showKFragment(fragment, bundle, true, R.id.fragment, router);
+        }
+    }
+
+    protected <T> void addFragment(Class fragment, Bundle bundle, Boolean addToBackStack, AbsCallback<T> router) {
         if (getContext() instanceof AbsActivity) {
             ((AbsActivity) getContext()).addFragment(fragment, bundle, addToBackStack, R.id.fragment, router);
         }
@@ -293,7 +348,17 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
 
     public void notifyChanged(int position) {
         notifyItemChanged(position);
-        mRecyclerView.postDelayed(() -> notifyDataSetChanged(), 500);
+        mRecyclerView.postDelayed(() -> notifyDataSetChanged(), 200);
+    }
+
+    public void updateItem(E source, E dest) {
+        for (int i = 0; i < mItems.size(); i++) {
+            if (mItems.get(i) == source) {
+                mItems.set(i, dest);
+                notifyItemChanged(i);
+                mHandler.postDelayed(this::notifyDataSetChanged, 250);
+            }
+        }
     }
 
     protected void notifyByPos(int pos, int delay) {
@@ -317,6 +382,10 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
 
     protected String getString(@StringRes int res) {
         return mContext.getString(res);
+    }
+
+    protected String getString(@StringRes int res, Object... formatArgs) {
+        return mContext.getString(res, formatArgs);
     }
 
     protected int getColor(@ColorRes int color) {
@@ -449,6 +518,21 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
 
     protected String[] getStringArray(int name) {
         return getContext().getResources().getStringArray(name);
+    }
+
+    protected void setTag(int position, View... views) {
+        for (View view : views) {
+            view.setTag(R.string.tag_position, position);
+        }
+    }
+
+    protected String getStringTag(Object obj) {
+        if (obj instanceof View) {
+            return String.valueOf(((View)obj).getTag());
+        } else if (obj instanceof TabLayout.Tab) {
+            return String.valueOf(((TabLayout.Tab)obj).getTag());
+        }
+        return "";
     }
 
 }

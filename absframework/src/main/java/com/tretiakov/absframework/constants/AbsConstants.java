@@ -30,6 +30,7 @@ public interface AbsConstants {
     int RESULT_REQUEST = 1;
     int PARAM_CLEAR_STACK = 2;
     int PARAM_CLEAR_TOP = 3;
+    int PARAM_FINISH = 4;
 
     String KEY_DATA = "data";
 

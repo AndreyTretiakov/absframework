@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.core.content.ContextCompat;
+import androidx.appcompat.widget.AppCompatCheckBox;
+import androidx.appcompat.widget.AppCompatCheckedTextView;
+import androidx.appcompat.widget.AppCompatRadioButton;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
@@ -32,11 +34,11 @@ public class AbsCheckButton extends AppCompatCheckBox {
 
     private void init(@NonNull Context context, AttributeSet attrs) {
         if (!isInEditMode()) {
-            TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AbsTextView);
-            String font = a.getString(R.styleable.AbsTextView__font);
+            TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AbsFont);
+            String font = a.getString(R.styleable.AbsFont__font);
 
-            CharSequence title = a.getText(R.styleable.AbsTextView__title);
-            CharSequence subtitle = a.getText(R.styleable.AbsTextView__subtitle);
+            CharSequence title = a.getText(R.styleable.AbsFont__title);
+            CharSequence subtitle = a.getText(R.styleable.AbsFont__subtitle);
             if (subtitle != null) {
                 setSubtitle(title, subtitle, font);
             } else if (title != null){
@@ -65,7 +67,7 @@ public class AbsCheckButton extends AppCompatCheckBox {
         builder.append("\n");
         subtitleStart = builder.length();
         builder.append(subtitle);
-        builder.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getContext(), R.color.textSecondary)), subtitleStart, builder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        builder.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getContext(), R.color.abs_textSecondary)), subtitleStart, builder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         builder.setSpan(new RelativeSizeSpan(0.7f), subtitleStart, builder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         setText(builder);
     }

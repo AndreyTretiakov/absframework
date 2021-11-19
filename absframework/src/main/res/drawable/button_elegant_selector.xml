@@ -3,7 +3,7 @@
     android:enterFadeDuration="100" android:exitFadeDuration="300"
     >
 
-    <item android:drawable="@color/abs_gray_transparent3" android:state_pressed="true"/>
+    <item android:drawable="@drawable/button_elegant_pressed" android:state_pressed="true"/>
     <item android:drawable="@color/abs_transparent"/>
 
 </selector>

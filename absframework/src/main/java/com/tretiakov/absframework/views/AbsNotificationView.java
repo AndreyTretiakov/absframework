@@ -73,18 +73,18 @@ public class AbsNotificationView extends RelativeLayout {
         setContent();
         setVisibility(VISIBLE);
 
-        switch (mMode) {
-
-            case INFO:
-                setBackgroundResource(R.color.notification_background_info);
-                break;
-            case WARNING:
-                setBackgroundResource(R.color.notification_background_warn);
-                break;
-            case ERROR:
-                setBackgroundResource(R.color.notification_background_error);
-                break;
-        }
+//        switch (mMode) {
+//
+//            case INFO:
+//                setBackgroundResource(R.color.abs_notification_background_info);
+//                break;
+//            case WARNING:
+//                setBackgroundResource(R.color.abs_notification_background_warn);
+//                break;
+//            case ERROR:
+//                setBackgroundResource(R.color.abs_notification_background_error);
+//                break;
+//        }
     }
 
     private void setIcon() {

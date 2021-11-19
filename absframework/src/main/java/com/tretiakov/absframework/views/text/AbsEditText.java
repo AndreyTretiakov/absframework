@@ -3,18 +3,27 @@ package com.tretiakov.absframework.views.text;
 import android.content.Context;
 import android.content.res.TypedArray;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatEditText;
+
+import android.hardware.input.InputManager;
+import android.os.Build;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.util.Patterns;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 
 import com.tretiakov.absframework.R;
 import com.tretiakov.absframework.utils.Keyboard;
+
+import static android.content.Context.INPUT_METHOD_SERVICE;
+import static android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT;
 
 /**
  * @author Andrey Tretiakov. Created 4/15/2016.
@@ -45,16 +54,26 @@ public class AbsEditText extends AppCompatEditText {
 
     private void init(@NonNull Context context, AttributeSet attrs) {
         if (!isInEditMode()) {
-            TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AbsTextView);
-            String font = a.getString(R.styleable.AbsTextView__font);
+            TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AbsFont);
+            String font = a.getString(R.styleable.AbsFont__font);
             a.recycle();
 
             setTypeface(FontsHelper.getTypeFace(getContext(), "fonts/" +
                     (font == null ? "Roboto-Regular" : font) + ".ttf"));
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                setImportantForAutofill(IMPORTANT_FOR_AUTOFILL_NO);
+            }
 //        setOnTouchListener(onTouch);
 //        setOnEditorActionListener(onEdit);
         }
     }
+
+    public boolean isValidEmail() {
+        return (!TextUtils.isEmpty(text()) && Patterns.EMAIL_ADDRESS.matcher(text()).matches());
+    }
+
+//    fun CharSequence?.isValidEmail() = !isNullOrEmpty() && Patterns.EMAIL_ADDRESS.matcher(name.text()).matches()
 
     private final OnTouchListener onTouch = (v, event) -> {
         setFocusableInTouchMode(true);
@@ -75,12 +94,28 @@ public class AbsEditText extends AppCompatEditText {
     }
 
     public String text() {
-        return getText().toString();
+        return getText() == null ? "" : getText().toString();
+    }
+
+    public void clearText() {
+        if (!TextUtils.isEmpty(getText())) setText(null);
+    }
+
+    public void setCursorToEnt() {
+        if (!isEmpty()) {
+            postDelayed(() -> setSelection(getText().length()), 1000);
+        }
+    }
+
+    public boolean isEqual(String value) {
+        return value.contentEquals(String.valueOf(getText())) || value.contentEquals(getHint());
     }
 
     public void setTextBlockListener(String text) {
         removeTextChangedListener(mAdapterWatcher);
-        super.setText(text);
+        super.setHint(text);
+        super.setText(null);
+//        setSelection(text.length());
         addTextChangedListener(mAdapterWatcher);
     }
 
@@ -88,12 +123,29 @@ public class AbsEditText extends AppCompatEditText {
         return TextUtils.isEmpty(getText());
     }
 
+    public boolean isNotEmpty() {
+        return !TextUtils.isEmpty(getText());
+    }
+
     public void setSelectableMode(View.OnClickListener cl) {
         setOnClickListener(cl);
     }
 
     public void showKeyboard() {
-        postDelayed(() -> Keyboard.show(getContext(), this), 200);
+        postDelayed(() -> Keyboard.show(getContext(), this), 500);
+    }
+
+    public void showKeyboardNow() {
+        InputMethodManager manager = (InputMethodManager)
+                getContext().getSystemService(INPUT_METHOD_SERVICE);
+        if (manager != null) {
+            if (!manager.isActive()) {
+                manager.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT,
+                        InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+            setSelection(text().length());
+            requestFocus();
+        }
     }
 
     public void hideKeyboard() {

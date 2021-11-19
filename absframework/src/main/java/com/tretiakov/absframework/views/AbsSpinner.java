@@ -5,7 +5,6 @@ import androidx.annotation.ArrayRes;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatSpinner;
-
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.AdapterView;

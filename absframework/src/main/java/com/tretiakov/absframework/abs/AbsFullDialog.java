@@ -14,14 +14,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 
 import com.tretiakov.absframework.R;
 import com.tretiakov.absframework.constants.AbsConstants;
-import com.tretiakov.absframework.routers.Callback;
+import com.tretiakov.absframework.routers.AbsCallback;
 
 /**
  * @author Andrey Tretiakov. Created 4/15/2016.
@@ -30,12 +29,12 @@ public class AbsFullDialog<T> extends DialogFragment implements AbsConstants {
 
     private boolean mIsVisible;
 
-    private Callback<T> mRouter;
+    private AbsCallback<T> mRouter;
 
     private Handler mHandler = new Handler();
 
-    public void setCallback(@NonNull Callback<T> callback) {
-        mRouter = callback;
+    public void setCallback(@NonNull AbsCallback<T> absCallback) {
+        mRouter = absCallback;
     }
 
     @NonNull

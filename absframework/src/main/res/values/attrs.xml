@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <attr name="_font" format="integer"/>
+    <attr name="_title" format="reference|string"/>
+    <attr name="_subtitle" format="reference|string"/>
+    <attr name="_thumbColor" format="integer"/>
+    <attr name="_trackColor" format="integer"/>
+    <attr name="_primaryColor" format="reference|color"/>
+    <attr name="_secondaryColor" format="reference|color"/>
+
     <declare-styleable name="AbsToolbar">
         <attr name="menu_layout_res" format="reference"/>
     </declare-styleable>
 
-    <declare-styleable name="AbsTextView">
-        <attr name="_font" format="integer"/>
-        <attr name="_title" format="reference|string"/>
-        <attr name="_subtitle" format="reference|string"/>
+    <declare-styleable name="AbsFont">
+        <attr name="_font"/>
+        <attr name="_title"/>
+        <attr name="_subtitle"/>
     </declare-styleable>
 
     <declare-styleable name="AbsViewPager">
@@ -22,6 +30,16 @@
         <attr name="type" format="string"/>
         <attr name="columnCount" format="integer"/>
         <attr name="spaceSize" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="AbsSwitch">
+        <attr name="_title"/>
+        <attr name="_subtitle"/>
+        <attr name="_thumbColor"/>
+        <attr name="_trackColor"/>
+        <attr name="_primaryColor"/>
+        <attr name="_secondaryColor"/>
+        <attr name="_has_switch" format="boolean"/>
     </declare-styleable>
 
 </resources>

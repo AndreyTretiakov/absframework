@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/absInfoLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="8dp"
+    >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@drawable/abs_info_background"
+        >
+
+        <com.tretiakov.absframework.views.text.AbsTextView
+            android:id="@+id/absInfoText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="8dp"
+            android:textSize="14dp"
+            android:textColor="@color/abs_info_board_text"
+            />
+
+        <com.tretiakov.absframework.views.text.AbsTextView
+            android:id="@+id/absInfoClose"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/absInfoText"
+            android:gravity="center"
+            android:textSize="12dp"
+            android:textColor="@color/abs_info_board_text_dark"
+            android:textAllCaps="true"
+            android:visibility="gone"
+            android:text="@android:string/ok"
+            app:_font="@string/medium"
+            />
+
+    </RelativeLayout>
+
+</RelativeLayout>

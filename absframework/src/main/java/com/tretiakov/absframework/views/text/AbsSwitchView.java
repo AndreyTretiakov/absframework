@@ -4,11 +4,11 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.widget.SwitchCompat;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
-import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
@@ -33,11 +33,11 @@ public class AbsSwitchView extends SwitchCompat {
 
     private void init(@NonNull Context context, AttributeSet attrs) {
         if (!isInEditMode()) {
-            TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AbsTextView);
-            String font = a.getString(R.styleable.AbsTextView__font);
+            TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AbsFont);
+            String font = a.getString(R.styleable.AbsFont__font);
 
-            CharSequence title = a.getText(R.styleable.AbsTextView__title);
-            CharSequence subtitle = a.getText(R.styleable.AbsTextView__subtitle);
+            CharSequence title = a.getText(R.styleable.AbsFont__title);
+            CharSequence subtitle = a.getText(R.styleable.AbsFont__subtitle);
             if (subtitle != null) {
                 setSubtitle(title, subtitle, font);
             } else if (title != null){
@@ -51,21 +51,29 @@ public class AbsSwitchView extends SwitchCompat {
         }
     }
 
+    public void setTitle(CharSequence title) {
+        setText(title);
+    }
+
     public void setSubtitle(CharSequence title, CharSequence subtitle, String font) {
         int subtitleStart;
         SpannableStringBuilder builder = new SpannableStringBuilder(title);
 
-        if ("Roboto-Bold".equals(font)) {
+        if ("Roboto-Bold".equals(font) || "bold".equals(font)) {
             builder.setSpan(new StyleSpan(Typeface.BOLD), 0, builder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
 
-        if (!TextUtils.isEmpty(subtitle)) {
-            builder.append("\n");
-        }
+        builder.append("\n");
         subtitleStart = builder.length();
         builder.append(subtitle);
-        builder.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getContext(), R.color.textSecondary)), subtitleStart, builder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        builder.setSpan(new RelativeSizeSpan(0.7f), subtitleStart, builder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        builder.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getContext(), R.color.abs_textSecondary)), subtitleStart, builder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        builder.setSpan(new RelativeSizeSpan(0.9f), subtitleStart, builder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         setText(builder);
+    }
+
+    public void setChecked(boolean value, @Nullable OnCheckedChangeListener listener) {
+        setOnCheckedChangeListener(null);
+        setChecked(value);
+        setOnCheckedChangeListener(listener);
     }
 }

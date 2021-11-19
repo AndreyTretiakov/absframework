@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.ViewPager;
-
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
