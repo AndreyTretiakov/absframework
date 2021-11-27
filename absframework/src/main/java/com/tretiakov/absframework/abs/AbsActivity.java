@@ -27,6 +27,9 @@ import com.tretiakov.absframework.R;
 import com.tretiakov.absframework.constants.AbsConstants;
 import com.tretiakov.absframework.routers.AbsCallback;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  * @author Andrey Tretiakov. Created 4/15/2016.
  */
@@ -304,17 +307,60 @@ public abstract class AbsActivity extends AppCompatActivity implements AbsConsta
         }
     }
 
+    public void requestPermissions(@NonNull AbsCallback<Bundle> router, String... permissions) {
+        mPermissionRouter = router;
+        if (permissions == null || permissions.length == 0) {
+            Bundle bundle = new Bundle();
+            bundle.putBoolean("granted", false);
+            mPermissionRouter.result(bundle);
+            return;
+        }
+
+        ArrayList<String> toRequest = new ArrayList<>();
+
+        for (String permission : permissions) {
+            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+                toRequest.add(permission);
+            } else {
+                Bundle bundle = new Bundle();
+                bundle.putString("permission", permission);
+                bundle.putBoolean("granted", true);
+                mPermissionRouter.result(bundle);
+            }
+        }
+
+        if (!toRequest.isEmpty()) {
+            ActivityCompat.requestPermissions(this,
+                    toRequest.toArray(new String[0]),
+                    REQUEST_PERMISSION);
+        }
+    }
+
     protected boolean hasPermission(String permission) {
         return ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    protected boolean allPermissionsGranted(String... permissions) {
+        for (String permission : permissions) {
+            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
     public void onRequestPermissionsResult(final int requestCode, @NonNull final String[] permissions, @NonNull final int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_PERMISSION && mPermissionRouter != null) {
-            Bundle bundle = new Bundle();
-            bundle.putBoolean("granted", grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED);
-            mPermissionRouter.result(bundle);
+            for (int i = 0; i < permissions.length; i++) {
+                final String permission = permissions[i];
+                Bundle bundle = new Bundle();
+                bundle.putString("permission", permission);
+                bundle.putBoolean("granted", grantResults[i] == PackageManager.PERMISSION_GRANTED);
+                mPermissionRouter.result(bundle);
+            }
+
         }
     }
 

@@ -50,8 +50,8 @@
 
     <color name="abs_retro_yellow">#ded7a4</color>
 
-    <color name="abs_info_board_background">#92BFDD</color>
-    <color name="abs_info_board_text">#293033</color>
+    <color name="abs_info_board_background">#749BB5</color>
+    <color name="abs_info_board_text">#FFFFFF</color>
     <color name="abs_info_board_text_dark">#001B25</color>
 
     <color name="abs_material_dark_gray_1">#3e464c</color>

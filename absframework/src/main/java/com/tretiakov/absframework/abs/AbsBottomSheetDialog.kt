@@ -79,11 +79,11 @@ open class AbsBottomSheetDialog : BottomSheetDialogFragment(), AbsConstants {
         for (action in actions) {
             filter.addAction(action)
         }
-        LocalBroadcastManager.getInstance(context!!).registerReceiver(receiver!!, filter)
+        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(receiver!!, filter)
     }
 
     protected fun unregisterLocalBroadcast(receiver: BroadcastReceiver?) {
-        LocalBroadcastManager.getInstance(context!!).unregisterReceiver(receiver!!)
+        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(receiver!!)
     }
 
     protected fun getDimen(@DimenRes dimen: Int): Int {
@@ -101,7 +101,7 @@ open class AbsBottomSheetDialog : BottomSheetDialogFragment(), AbsConstants {
     }
 
     protected fun optColor(@ColorRes color: Int): Int {
-        return if (context == null) 0 else ContextCompat.getColor(context!!, color)
+        return if (context == null) 0 else ContextCompat.getColor(requireContext(), color)
     }
 
     protected fun getAction(bundle: Bundle?): String {

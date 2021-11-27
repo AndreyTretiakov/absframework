@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.ColorRes;
@@ -65,6 +66,18 @@ public abstract class AbsFragment extends Fragment implements AbsConstants {
 
     protected void requestPermission(@NonNull AbsCallback<Bundle> router, String... permissions) {
         mActivity.requestPermission(router, permissions);
+    }
+
+    protected void requestPermissions(@NonNull AbsCallback<Bundle> router, String... permissions) {
+        mActivity.requestPermissions(router, permissions);
+    }
+
+    protected boolean hasPermission(String permission) {
+        return mActivity.hasPermission(permission);
+    }
+
+    protected boolean allPermissionsGranted(String... permissions) {
+        return mActivity.allPermissionsGranted(permissions);
     }
 
     public void setCallback(AbsCallback router) {
