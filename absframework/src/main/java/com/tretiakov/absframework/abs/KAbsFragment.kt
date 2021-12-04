@@ -109,6 +109,7 @@ abstract class KAbsFragment<T>(val layout: Int = 0) : Fragment(), AbsConstants {
     }
 
     protected open fun showAlertDialog(msg: String, title: String? = null) {
+        if (context == null || !isVisible) return
         val alertDialog = AlertDialog.Builder(activity).create()
         alertDialog.setTitle(title)
         alertDialog.setMessage(msg)
@@ -118,6 +119,7 @@ abstract class KAbsFragment<T>(val layout: Int = 0) : Fragment(), AbsConstants {
     }
 
     fun showBottomSheetDialog(dialog: Class<*>, bundle: Bundle, absCallback: AbsCallback<*>?) {
+        if (context == null || !isVisible) return
         val d = childFragmentManager.fragmentFactory
                 .instantiate(dialog.classLoader!!, dialog.name)
                 as AbsBottomSheetDialog
