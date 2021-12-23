@@ -52,7 +52,8 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
     private ArrayFilter mFilter;
     private int mSearchMode;
 
-    private E mFooter;
+    private E mHeader, mFooter;
+    private boolean mHasHeader;
     private boolean mHasFooter;
     private Handler mHandler = new Handler();
 
@@ -120,6 +121,11 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
                 (dialog, which) -> alertDialog.dismiss()
         );
         alertDialog.show();
+    }
+
+    public void setHasHeader(@Nullable E header, boolean value) {
+        mHasHeader = value;
+        if (value) mHeader = header;
     }
 
     public void setHasFooter(@Nullable E footer, boolean value) {
@@ -237,7 +243,7 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
 
     @Override
     public int getItemCount() {
-        return mItems.size() + (mHasFooter ? 1 : 0);
+        return mItems.size() + (mHasHeader ? 1 : 0) + (mHasFooter ? 1 : 0);
     }
 
     public int lastIndex() {
@@ -250,7 +256,13 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
 
     @Override
     public int getItemViewType(int position) {
-        return mHasFooter ? position == mItems.size() ? FOOTER : ITEM : super.getItemViewType(position);
+        if (mHasHeader && position == 0) {
+            return HEADER;
+        } else if (mHasFooter && position == mItems.size()) {
+            return FOOTER;
+        } else {
+            return super.getItemViewType(position);
+        }
     }
 
     @NonNull
@@ -260,7 +272,11 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
 
     public boolean isEmpty() {
         return mItems.isEmpty();
-    }    
+    }
+
+    public boolean isNotEmpty() {
+        return !mItems.isEmpty();
+    }
 
     protected View inflate(@LayoutRes int layout, ViewGroup parent) {
         return mInflater.inflate(layout, parent, false);

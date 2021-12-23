@@ -76,6 +76,10 @@ public class AbsTextView extends AppCompatTextView {
         }
     }
 
+    public boolean isNotEmpty() {
+        return !isEmpty();
+    }
+
     public boolean isEmpty() {
         return getText() == null || getText().length() == 0;
     }
