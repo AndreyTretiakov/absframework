@@ -56,13 +56,15 @@ public class AbsEditText extends AppCompatEditText {
         if (!isInEditMode()) {
             TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AbsFont);
             String font = a.getString(R.styleable.AbsFont__font);
+            String isImportantForAutofill = a.getString(R.styleable.AbsFont__isImportantForAutofill);
             a.recycle();
 
             setTypeface(FontsHelper.getTypeFace(getContext(), "fonts/" +
                     (font == null ? "Roboto-Regular" : font) + ".ttf"));
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                setImportantForAutofill(IMPORTANT_FOR_AUTOFILL_NO);
+                setImportantForAutofill("yes".equals(isImportantForAutofill) ?
+                        IMPORTANT_FOR_AUTOFILL_YES : IMPORTANT_FOR_AUTOFILL_NO);
             }
 //        setOnTouchListener(onTouch);
 //        setOnEditorActionListener(onEdit);

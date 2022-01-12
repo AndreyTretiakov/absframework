@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <attr name="_font" format="integer"/>
-    <attr name="_title" format="reference|string"/>
-    <attr name="_subtitle" format="reference|string"/>
     <attr name="_thumbColor" format="integer"/>
     <attr name="_trackColor" format="integer"/>
     <attr name="_primaryColor" format="reference|color"/>
@@ -14,9 +11,10 @@
     </declare-styleable>
 
     <declare-styleable name="AbsFont">
-        <attr name="_font"/>
-        <attr name="_title"/>
-        <attr name="_subtitle"/>
+        <attr name="_font" format="reference|string"/>
+        <attr name="_title" format="reference|string"/>
+        <attr name="_subtitle" format="reference|string"/>
+        <attr name="_isImportantForAutofill" format="string"/>
     </declare-styleable>
 
     <declare-styleable name="AbsViewPager">
