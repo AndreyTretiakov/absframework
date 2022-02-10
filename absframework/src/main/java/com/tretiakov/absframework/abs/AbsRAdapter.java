@@ -263,7 +263,11 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
 
     public boolean isEmpty() {
         return mItems.isEmpty();
-    }    
+    }
+
+    public boolean isNotEmpty() {
+        return !mItems.isEmpty();
+    }
 
     protected View inflate(@LayoutRes int layout, ViewGroup parent) {
         return mInflater.inflate(layout, parent, false);
