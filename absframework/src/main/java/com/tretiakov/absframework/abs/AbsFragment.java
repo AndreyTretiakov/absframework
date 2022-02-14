@@ -152,6 +152,11 @@ public abstract class AbsFragment extends Fragment implements AbsConstants {
         }
     }
 
+    protected void sendBroadcast(Intent intent) {
+        if (getContext() == null) return;
+        getContext().getApplicationContext().sendBroadcast(intent);
+    }
+
     @NonNull
     protected String getAction(Bundle bundle) {
         if (bundle == null) {
@@ -226,10 +231,6 @@ public abstract class AbsFragment extends Fragment implements AbsConstants {
 //            window.setNavigationBarColor(ContextCompat.getColor(getActivity(), R.color.abs_color_status_bar));
 //        }
 //    }
-
-    private boolean isPre23() {
-        return Build.VERSION.SDK_INT < Build.VERSION_CODES.M;
-    }
 
     protected Context getAppContext() {
         return getContext().getApplicationContext();
