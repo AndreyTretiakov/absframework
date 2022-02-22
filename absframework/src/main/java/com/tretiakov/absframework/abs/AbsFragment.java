@@ -39,6 +39,11 @@ public abstract class AbsFragment extends Fragment implements AbsConstants {
         mActivity = (AbsActivity) context;
     }
 
+    @Nullable
+    public AbsActivity requireAbsActivity() {
+        return mActivity;
+    }
+
     public static AbsFragment instance(Class<? extends AbsFragment> fClass, Bundle bundle, AbsCallback absCallback) {
         AbsFragment f = (AbsFragment) instantiate(AbsContext.getInstance().getContext(), fClass.getName());
         f.setArguments(bundle);
