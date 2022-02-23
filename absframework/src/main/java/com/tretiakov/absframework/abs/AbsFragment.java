@@ -165,6 +165,11 @@ public abstract class AbsFragment extends Fragment implements AbsConstants {
         }
     }
 
+    protected void sendBroadcast(Intent intent) {
+        if (getContext() == null) return;
+        getContext().getApplicationContext().sendBroadcast(intent);
+    }
+
     @NonNull
     protected String getAction(Bundle bundle) {
         if (bundle == null) {
