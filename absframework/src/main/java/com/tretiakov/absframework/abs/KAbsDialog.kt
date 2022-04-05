@@ -12,22 +12,24 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.DisplayMetrics
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.view.Window
 import androidx.annotation.ColorRes
 import androidx.annotation.DimenRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.DialogFragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.tretiakov.absframework.R
 import com.tretiakov.absframework.constants.AbsConstants
 import com.tretiakov.absframework.routers.AbsCallback
 
-/**
- * @author Andrey Tretiakov. Created 4/15/2016.
- */
-open class AbsBottomSheetDialog : BottomSheetDialogFragment(), AbsConstants {
+open class KAbsDialog(private val layout: Int = 0, private val backgroundRes: Int = 0)
+    : DialogFragment(), AbsConstants {
 
     var isVisibleLocal = false
         private set
@@ -36,8 +38,23 @@ open class AbsBottomSheetDialog : BottomSheetDialogFragment(), AbsConstants {
 
     protected val handler = Handler(Looper.getMainLooper())
 
-    fun setCallback(absCallback: AbsCallback<Any>) {
+    fun setCallback(absCallback: AbsCallback<Any>?) {
         mRouter = absCallback
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        if (layout == 0) return super.onCreateView(inflater, container, savedInstanceState)
+        return inflater.inflate(layout, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        if (backgroundRes != 0)
+            dialog!!.window!!.setBackgroundDrawableResource(backgroundRes)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -107,5 +124,11 @@ open class AbsBottomSheetDialog : BottomSheetDialogFragment(), AbsConstants {
         return if (bundle == null) {
             ""
         } else bundle.getString("action", "")
+    }
+
+    protected fun setOnClickListeners(listener: View.OnClickListener, vararg views: View) {
+        views.forEach {
+            it.setOnClickListener(listener)
+        }
     }
 }
