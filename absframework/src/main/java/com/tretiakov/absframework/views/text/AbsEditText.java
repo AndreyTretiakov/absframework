@@ -100,7 +100,7 @@ public class AbsEditText extends AppCompatEditText {
     }
 
     public void clearText() {
-        if (!TextUtils.isEmpty(getText())) setText(null);
+        setText(null);
     }
 
     public void setCursorToEnt() {
