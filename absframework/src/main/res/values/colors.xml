@@ -6,6 +6,7 @@
     <color name="abs_colorPrimaryDarkPre23">#FFFFFF</color>
     <color name="abs_colorPrimary_V3">#fafafa</color>
     <color name="abs_color_status_bar">#fafafa</color>
+    <color name="abs_accent_board_background">#FAFAFA</color>
 
     <color name="abs_main_icon_tint">#2C2C2C</color>
     <color name="abs_main_icon_tint_contrast">#000000</color>
@@ -51,7 +52,7 @@
     <color name="abs_retro_yellow">#ded7a4</color>
 
     <color name="abs_info_board_background">#749BB5</color>
-    <color name="abs_info_board_text">#FFFFFF</color>
+    <color name="abs_info_board_text">@color/abs_textPrimary</color>
     <color name="abs_info_board_text_dark">#001B25</color>
 
     <color name="abs_material_dark_gray_1">#3e464c</color>

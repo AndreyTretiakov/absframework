@@ -4,14 +4,14 @@
     android:id="@+id/absInfoLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:elevation="8dp"
     >
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:background="@drawable/abs_info_background"
+        android:layout_margin="@dimen/abs_margin_8"
+        android:background="@drawable/abs_rounded_background"
+        android:elevation="@dimen/abs_elevation_4"
         >
 
         <com.tretiakov.absframework.views.text.AbsTextView
@@ -19,24 +19,26 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:padding="8dp"
-            android:textSize="14dp"
+            android:padding="@dimen/abs_padding_8"
+            android:textSize="@dimen/abs_text_14"
             android:textColor="@color/abs_info_board_text"
             />
 
         <com.tretiakov.absframework.views.text.AbsTextView
             android:id="@+id/absInfoClose"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="@dimen/abs_size_32"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/absInfoText"
+            android:layout_marginTop="@dimen/abs_margin_8"
+            android:layout_marginBottom="@dimen/abs_margin_8"
             android:gravity="center"
-            android:textSize="12dp"
+            android:textSize="@dimen/abs_text_12"
             android:textColor="@color/abs_info_board_text_dark"
             android:textAllCaps="true"
             android:visibility="gone"
             android:text="@android:string/ok"
-            app:_font="@string/medium"
+            app:_font="@string/bold"
             />
 
     </RelativeLayout>

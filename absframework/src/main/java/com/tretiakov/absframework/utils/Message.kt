@@ -1,5 +1,7 @@
 package com.tretiakov.absframework.utils
 
+import android.app.Activity
+import android.content.Context
 import android.os.Handler
 import android.text.SpannableStringBuilder
 import android.text.TextUtils
@@ -15,6 +17,11 @@ object Message {
     @JvmStatic
     fun shortToast(msg: String?) {
         showToast(msg, null, Toast.LENGTH_SHORT)
+    }
+
+    @JvmStatic
+    fun <T : Activity> shortToast(context: T?, msg: String?) {
+        showToast(context, msg, null, Toast.LENGTH_SHORT)
     }
 
     @JvmStatic
@@ -47,5 +54,14 @@ object Message {
         Handler(context.mainLooper).post {
             Toast.makeText(context, text, duration).show()
         }
+    }
+
+    private fun showToast(context: Activity?, msg: String?, builder: SpannableStringBuilder?, duration: Int) {
+        if (context == null || (TextUtils.isEmpty(msg) && builder == null)) {
+            return
+        }
+
+        val text = msg ?: builder.toString()
+        Toast.makeText(context, text, duration).show()
     }
 }

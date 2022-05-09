@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="48dp"
+    android:minHeight="@dimen/abs_height_48"
+    android:layout_marginStart="@dimen/abs_margin_16"
+    android:layout_marginEnd="@dimen/abs_margin_16"
+    android:layout_marginBottom="@dimen/abs_margin_16"
+    android:layout_alignParentBottom="true"
     android:layout_gravity="center|top"
     android:background="@drawable/toast_background"
     >
@@ -12,14 +17,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:paddingLeft="@dimen/margin_medium"
-        android:paddingRight="@dimen/margin_medium"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
+        android:paddingStart="@dimen/abs_padding_24"
+        android:paddingEnd="@dimen/abs_padding_24"
+        android:paddingTop="@dimen/abs_padding_8"
+        android:paddingBottom="@dimen/abs_padding_8"
         android:layout_centerInParent="true"
         android:text="@android:string/untitled"
-        android:textColor="@color/abs_textSecondary"
-        android:textSize="14sp"
+        android:textColor="@color/abs_white"
+        android:textSize="@dimen/abs_text_14"
+        app:_font="@string/medium"
         />
 
 </RelativeLayout>

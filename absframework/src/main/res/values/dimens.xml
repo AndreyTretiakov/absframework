@@ -10,5 +10,72 @@
     <dimen name="margin_large1">36dp</dimen>
     <dimen name="margin_large2">30dp</dimen>
 
-    <dimen name="default_divider_height">1dp</dimen>
+    <dimen name="default_divider_height">1px</dimen>
+
+    <dimen name="abs_size_2">2dp</dimen>
+    <dimen name="abs_size_4">4dp</dimen>
+    <dimen name="abs_size_8">8dp</dimen>
+    <dimen name="abs_size_16">16dp</dimen>
+    <dimen name="abs_size_24">24dp</dimen>
+    <dimen name="abs_size_32">32dp</dimen>
+    <dimen name="abs_size_48">48dp</dimen>
+    <dimen name="abs_size_56">56dp</dimen>
+    <dimen name="abs_size_72">72dp</dimen>
+    <dimen name="abs_size_128">128dp</dimen>
+
+    <dimen name="abs_height_24">24dp</dimen>
+    <dimen name="abs_height_28">28dp</dimen>
+    <dimen name="abs_height_30">30dp</dimen>
+    <dimen name="abs_height_32">32dp</dimen>
+    <dimen name="abs_height_48">48dp</dimen>
+    <dimen name="abs_height_56">56dp</dimen>
+    <dimen name="abs_height_64">64dp</dimen>
+
+    <dimen name="abs_margin_1">1dp</dimen>
+    <dimen name="abs_margin_2">2dp</dimen>
+    <dimen name="abs_margin_4">4dp</dimen>
+    <dimen name="abs_margin_8">8dp</dimen>
+    <dimen name="abs_margin_16">16dp</dimen>
+    <dimen name="abs_margin_20">20dp</dimen>
+    <dimen name="abs_margin_24">24dp</dimen>
+    <dimen name="abs_margin_48">48dp</dimen>
+    <dimen name="abs_margin_56">56dp</dimen>
+    <dimen name="abs_margin_84">84dp</dimen>
+
+    <dimen name="abs_margin_4r">-4dp</dimen>
+    <dimen name="abs_margin_8r">-8dp</dimen>
+    <dimen name="abs_margin_16r">-16dp</dimen>
+    <dimen name="abs_margin_24r">-24dp</dimen>
+    <dimen name="abs_margin_48r">-48dp</dimen>
+    <dimen name="abs_margin_56r">-56dp</dimen>
+
+    <dimen name="abs_corner_2">2dp</dimen>
+    <dimen name="abs_corner_4">4dp</dimen>
+    <dimen name="abs_corner_8">8dp</dimen>
+
+    <dimen name="abs_padding_0">0dp</dimen>
+    <dimen name="abs_padding_2">2dp</dimen>
+    <dimen name="abs_padding_3">3dp</dimen>
+    <dimen name="abs_padding_4">4dp</dimen>
+    <dimen name="abs_padding_8">8dp</dimen>
+    <dimen name="abs_padding_16">16dp</dimen>
+    <dimen name="abs_padding_24">24dp</dimen>
+    <dimen name="abs_padding_32">32dp</dimen>
+    <dimen name="abs_padding_48">48dp</dimen>
+    <dimen name="abs_padding_56">56dp</dimen>
+
+    <dimen name="abs_elevation_2">2dp</dimen>
+    <dimen name="abs_elevation_4">4dp</dimen>
+    <dimen name="abs_elevation_8">8dp</dimen>
+    <dimen name="abs_elevation_16">16dp</dimen>
+    <dimen name="abs_elevation_32">32dp</dimen>
+
+    <dimen name="abs_text_10">10dp</dimen>
+    <dimen name="abs_text_12">12dp</dimen>
+    <dimen name="abs_text_14">14dp</dimen>
+    <dimen name="abs_text_16">16dp</dimen>
+
+    <dimen name="abs_radius_8">8dp</dimen>
+    <dimen name="abs_radius_16">16dp</dimen>
+
 </resources>

@@ -4,20 +4,20 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/abs_main_background"
-    android:elevation="2dp"
+    android:elevation="@dimen/abs_elevation_4"
     >
 
     <com.tretiakov.absframework.views.text.AbsTextView
         android:id="@android:id/text1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:drawablePadding="16dp"
+        android:layout_marginTop="@dimen/abs_margin_16"
+        android:layout_marginLeft="@dimen/abs_margin_16"
+        android:layout_marginRight="@dimen/abs_margin_16"
+        android:drawablePadding="@dimen/abs_padding_16"
         android:gravity="center_vertical"
         android:textColor="@color/abs_textPrimary"
-        android:textSize="14dp"
+        android:textSize="@dimen/abs_text_14"
         android:text="@android:string/unknownName"
         />
 
@@ -25,11 +25,11 @@
         android:id="@android:id/text2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="56dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginStart="@dimen/abs_margin_56"
+        android:layout_marginEnd="@dimen/abs_margin_16"
+        android:layout_marginBottom="@dimen/abs_margin_16"
         android:layout_below="@android:id/text1"
-        android:textSize="14dp"
+        android:textSize="@dimen/abs_text_14"
         android:textColor="@color/abs_textSecondary"
         android:text="@android:string/unknownName"
         />

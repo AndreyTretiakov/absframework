@@ -4,14 +4,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
-    android:layout_height="?attr/actionBarSize"
+    android:layout_height="@dimen/abs_size_48"
     app:layout_scrollFlags="enterAlways|scroll"
     >
 
     <com.tretiakov.absframework.views.AbsSpinner
         android:id="@+id/toolbarSpinner"
         android:layout_width="wrap_content"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="@dimen/abs_size_48"
         android:background="@null"
         android:visibility="gone"
         />
@@ -22,7 +22,7 @@
         android:layout_height="match_parent"
         android:gravity="center_vertical"
         android:textColor="@color/abs_white"
-        android:textSize="18sp"
+        android:textSize="@dimen/abs_text_16"
         android:visibility="visible"
         app:_font="@string/medium"
         />
@@ -31,18 +31,18 @@
         android:id="@+id/toolbarSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="?attr/actionBarSize"
-        android:layout_marginRight="?attr/actionBarSize"
+        android:layout_marginEnd="@dimen/abs_size_48"
+        android:layout_marginRight="@dimen/abs_size_48"
         android:gravity="center_vertical"
-        android:textSize="16sp"
+        android:textSize="@dimen/abs_text_16"
         android:visibility="gone"
         app:_font="@string/medium"
         />
 
     <ImageButton
         android:id="@+id/toolbarButton"
-        android:layout_width="?attr/actionBarSize"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_width="@dimen/abs_size_48"
+        android:layout_height="@dimen/abs_size_48"
         android:layout_gravity="end"
         android:contentDescription="@null"
         android:background="@color/abs_transparent"

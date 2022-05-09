@@ -135,6 +135,9 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
 
     public void setItems(List<E> items, boolean needRefresh) {
         mItems = items;
+        if (mOriginalValues != null) {
+            mOriginalValues.clear();
+        }
         notifyItems(needRefresh);
     }
 
@@ -151,6 +154,9 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
 
     public void setItems(E[] items, boolean needRefresh) {
         mItems.clear();
+        if (mOriginalValues != null) {
+            mOriginalValues.clear();
+        }
         Collections.addAll(mItems, items);
         notifyItems(needRefresh);
     }
@@ -217,10 +223,14 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
     }
 
     public void clear(boolean needRefresh) {
-        if (mItems != null && !mItems.isEmpty()) {
+        if (mItems != null) {
             mItems.clear();
-            notifyItems(needRefresh);
         }
+        if (mOriginalValues != null) {
+            mOriginalValues.clear();
+        }
+
+        notifyItems(needRefresh);
     }
     public void notifyDataWithDelay() {
         mHandler.postDelayed(this::notifyDataSetChanged, 650);

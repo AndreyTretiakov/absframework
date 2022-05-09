@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="abs_colorPrimary">#00A3FF</color>
+    <color name="abs_colorPrimary">#72b4da</color>
     <color name="abs_colorPrimaryDark">#292a2f</color>
     <color name="abs_colorAccent">#FFBC2E</color>
     <color name="abs_colorPrimaryDarkPre23">#282828</color>
     <color name="abs_colorPrimary_V3">#282828</color>
     <color name="abs_color_status_bar">#282828</color>
+    <color name="abs_accent_board_background">#292C2F</color>
 
     <color name="abs_main_icon_tint">#9fff</color>
     <color name="abs_main_icon_tint_contrast">#DDDDDD</color>
@@ -51,8 +52,8 @@
     <color name="abs_retro_yellow">#ded7a4</color>
 
     <color name="abs_info_board_background">#35454F</color>
-    <color name="abs_info_board_text">#8AABBA</color>
-    <color name="abs_info_board_text_dark">#001B25</color>
+    <color name="abs_info_board_text">@color/abs_textSecondary</color>
+    <color name="abs_info_board_text_dark">@color/abs_colorPrimary</color>
 
     <color name="abs_material_dark_gray_1">#3e464c</color>
     <color name="abs_material_dark_gray_2">#374046</color>
