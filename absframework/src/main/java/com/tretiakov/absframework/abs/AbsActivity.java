@@ -292,14 +292,8 @@ public abstract class AbsActivity extends AppCompatActivity implements AbsConsta
             return;
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(this, permissions[0]) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, permissions, REQUEST_PERMISSION);
-            } else {
-                Bundle bundle = new Bundle();
-                bundle.putBoolean("granted", true);
-                mPermissionRouter.result(bundle);
-            }
+        if (ContextCompat.checkSelfPermission(this, permissions[0]) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, permissions, REQUEST_PERMISSION);
         } else {
             Bundle bundle = new Bundle();
             bundle.putBoolean("granted", true);
