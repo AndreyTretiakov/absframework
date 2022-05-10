@@ -498,6 +498,7 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
 
                             break;
                         }
+                        default:
                         case MODE_SEARCH_ALL: {
                             final String[] searchPrefixes = prefixString.split(" ");
 

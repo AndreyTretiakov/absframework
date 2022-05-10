@@ -72,7 +72,7 @@ public class AbsEditText extends AppCompatEditText {
     }
 
     public boolean isValidEmail() {
-        return (!TextUtils.isEmpty(text()) && Patterns.EMAIL_ADDRESS.matcher(text()).matches());
+        return (!TextUtils.isEmpty(email()) && Patterns.EMAIL_ADDRESS.matcher(email()).matches());
     }
 
 //    fun CharSequence?.isValidEmail() = !isNullOrEmpty() && Patterns.EMAIL_ADDRESS.matcher(name.text()).matches()
@@ -97,6 +97,12 @@ public class AbsEditText extends AppCompatEditText {
 
     public String text() {
         return getText() == null ? "" : getText().toString();
+    }
+
+    public String email() {
+        if (getText() == null) return "";
+        String text = getText().toString();
+        return text.replaceAll(" ", "").toLowerCase();
     }
 
     public void clearText() {
