@@ -28,7 +28,9 @@ import com.tretiakov.absframework.views.text.AbsTextView
 
 @Suppress("UNCHECKED_CAST")
 abstract class KAbsFragment : Fragment(), AbsConstants {
-    
+
+    private var instanceAlreadySaved = false
+
     private var activity: AbsActivity? = null
 
     private var absCallback: AbsCallback<Any>? = null
@@ -63,43 +65,56 @@ abstract class KAbsFragment : Fragment(), AbsConstants {
     }
 
     open fun <T> showUnCancelableDialog(dialog: Class<T>?, bundle: Bundle?, absCallback: AbsCallback<Any>?) {
-        if (isVisible && activity != null) {
-            activity!!.showUnCancelableDialog(dialog, bundle, absCallback)
-        }
+        if (!isOnScreen()) return
+        activity?.showUnCancelableDialog(dialog, bundle, absCallback)
     }
 
     protected open fun requestPermission(router: AbsCallback<Bundle?>, vararg permissions: String?) {
-        activity!!.requestPermission(router, *permissions)
+        activity?.requestPermission(router, *permissions)
     }
 
     open fun setCallback(router: AbsCallback<Any>?) {
         absCallback = router
     }
 
-    protected open fun <T> switchActivity(act: Class<T>,
-                                          request: Int, router: AbsCallback<Any>?) {
+    protected open fun <T> switchActivity(act: Class<T>, request: Int,
+                                          router: AbsCallback<Any>?) {
         activity?.switchActivity(act, Bundle.EMPTY, request, router)
     }
 
-    protected open fun <T> switchActivity(act: Class<T>, bundle: Bundle?,
-                                      request: Int, router: AbsCallback<Any>?) {
+    protected open fun <T> switchActivity(act: Class<T>, bundle: Bundle?, request: Int,
+                                          router: AbsCallback<Any>?) {
         activity?.switchActivity(act, bundle, request, router)
     }
 
     protected open fun <T> startActivityAnClearStack(newActivity: Class<T>?) {
-        if (activity != null) {
-            activity!!.startActivityAndClearStack(newActivity)
-        }
+        activity?.startActivityAndClearStack(newActivity)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        instanceAlreadySaved = true
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        instanceAlreadySaved = false
+    }
+
+    override fun onStart() {
+        super.onStart()
+        instanceAlreadySaved = false
     }
 
     protected open fun showDialog(dialog: Class<*>, bundle: Bundle?, absCallback: AbsCallback<*>?) {
-        if (context == null || !isVisible) return
+        if (!isOnScreen() || activity == null) return
         val d = AbsDialog.instantiate(context!!, dialog.name, bundle) as AbsDialog
         if (absCallback != null) d.setCallback(absCallback)
-        d.show((context as AbsActivity?)!!.supportFragmentManager, dialog.name)
+        d.show(activity!!.supportFragmentManager, dialog.name)
     }
 
     protected open fun showAlertDialog(msg: String, title: String? = null) {
+        if (!isOnScreen()) return
         val alertDialog = AlertDialog.Builder(activity!!).create()
         alertDialog.setTitle(title)
         alertDialog.setMessage(msg)
@@ -109,34 +124,42 @@ abstract class KAbsFragment : Fragment(), AbsConstants {
     }
 
     open fun showKFragment(fragment: Fragment, router: AbsCallback<*>) {
+        if (!isOnScreen()) return
         activity?.showKFragment(fragment, Bundle.EMPTY, true, R.id.fragment, router)
     }
 
     open fun showKFragment(fragment: Fragment, bundle: Bundle, router: AbsCallback<*>) {
+        if (!isOnScreen()) return
         activity?.showKFragment(fragment, bundle, true, R.id.fragment, router)
     }
 
     protected open fun showFragment(fragment: KAbsFragment, bundle: Bundle?, addToBackStack: Boolean?, absCallback: AbsCallback<Any>?) {
+        if (!isOnScreen()) return
         showFragment(fragment, bundle, addToBackStack, R.id.fragment, absCallback)
     }
 
     protected open fun showFragment(fragment: KAbsFragment, bundle: Bundle?, addToBackStack: Boolean?, id: Int, absCallback: AbsCallback<Any>?) {
-        if (activity != null) activity!!.showKFragment(fragment, bundle!!, addToBackStack!!, id, absCallback)
+        if (!isOnScreen()) return
+        activity?.showKFragment(fragment, bundle!!, addToBackStack!!, id, absCallback)
     }
 
     protected open fun addFragment(fragment: KAbsFragment, bundle: Bundle?, addToBackStack: Boolean?, absCallback: AbsCallback<Any>?) {
+        if (!isOnScreen()) return
         addFragment(fragment, bundle, addToBackStack, R.id.fragment, absCallback)
     }
 
     protected open fun addFragment(fragment: KAbsFragment, bundle: Bundle?, addToBackStack: Boolean?, id: Int, absCallback: AbsCallback<Any>?) {
-        if (activity != null) activity!!.addKFragment(fragment, bundle!!, addToBackStack!!, id, absCallback)
+        if (!isOnScreen()) return
+        activity?.addKFragment(fragment, bundle!!, addToBackStack!!, id, absCallback)
     }
 
     protected open fun addFragmentRTL(fragment: KAbsFragment, bundle: Bundle?, addToBackStack: Boolean?, id: Int, absCallback: AbsCallback<Any>?) {
-        if (activity != null) activity!!.addKFragment(fragment, bundle!!, addToBackStack!!, id, absCallback)
+        if (!isOnScreen()) return
+        activity?.addKFragment(fragment, bundle!!, addToBackStack!!, id, absCallback)
     }
 
     protected open fun addFragmentRTL(fragment: KAbsFragment, bundle: Bundle?, addToBackStack: Boolean?, absCallback: AbsCallback<Any>?) {
+        if (!isOnScreen()) return
         addFragmentRTL(fragment, bundle, addToBackStack, R.id.fragment, absCallback)
     }
 
@@ -150,13 +173,8 @@ abstract class KAbsFragment : Fragment(), AbsConstants {
     }
 
     protected open fun onBackPressed() {
-        if (activity != null && isVisible) {
-            try {
-                activity!!.onBackPressed()
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
+        if (!isOnScreen()) return
+        activity?.onBackPressed()
     }
 
     protected open fun getAction(data: Any?): String {
@@ -192,47 +210,38 @@ abstract class KAbsFragment : Fragment(), AbsConstants {
     }
 
     protected open fun addDrawableToLeft(view: TextView, res: Int) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            view.setCompoundDrawablesWithIntrinsicBounds(res, 0, 0, 0)
-        } else {
-            view.setCompoundDrawablesRelativeWithIntrinsicBounds(res, 0, 0, 0)
-        }
+        view.setCompoundDrawablesRelativeWithIntrinsicBounds(res, 0, 0, 0)
     }
 
     protected open fun setStatusBarColor(color: Int) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && activity != null) {
-            val window = activity!!.window
-
-            // clear FLAG_TRANSLUCENT_STATUS flag:
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-
-            // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-
-            // finally change the color
-            window.statusBarColor = ContextCompat.getColor(activity!!, color)
-        }
+        val window = activity!!.window
+        // clear FLAG_TRANSLUCENT_STATUS flag:
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        // finally change the color
+        window.statusBarColor = ContextCompat.getColor(activity!!, color)
     }
 
     protected open fun setStatusBarAndNavigationColor(color: Int) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && activity != null) {
-            val window = activity!!.window
-            setStatusBarColor(color)
-            window.navigationBarColor = ContextCompat.getColor(activity!!,
-                    if (color == R.color.abs_color_status_bar) R.color.abs_colorPrimary_V3 else color)
-        }
+        val window = activity!!.window
+        setStatusBarColor(color)
+        window.navigationBarColor = ContextCompat.getColor(activity!!,
+            if (color == R.color.abs_color_status_bar) R.color.abs_colorPrimary_V3 else color)
     }
 
     protected open fun setStatusBarDefaultColor() {
         setStatusBarColor(if (isPre23()) R.color.abs_colorPrimaryDarkPre23 else R.color.abs_color_status_bar)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && activity != null) {
-            val window = activity!!.window
-            window.navigationBarColor = ContextCompat.getColor(activity!!, R.color.abs_color_status_bar)
-        }
+        val window = activity!!.window
+        window.navigationBarColor = ContextCompat.getColor(activity!!, R.color.abs_color_status_bar)
     }
 
     private fun isPre23(): Boolean {
         return Build.VERSION.SDK_INT < Build.VERSION_CODES.M
+    }
+
+    private fun isOnScreen(): Boolean {
+        return context != null && isVisible && !instanceAlreadySaved
     }
 
     protected open fun getAppContext(): Context? {
