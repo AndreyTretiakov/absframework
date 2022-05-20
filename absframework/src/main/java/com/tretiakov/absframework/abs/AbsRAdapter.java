@@ -1,5 +1,6 @@
 package com.tretiakov.absframework.abs;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -37,6 +38,7 @@ import java.util.List;
  * @author Andrey Tretiakov. Created 4/15/2016.
  */
 @SuppressWarnings("unchecked")
+@SuppressLint("NotifyDataSetChanged")
 public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
         extends RecyclerView.Adapter<H> implements AbsConstants {
 
@@ -239,6 +241,10 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
     protected void notifyItems(boolean needRefresh) {
         if (needRefresh)
             notifyDataSetChanged();
+    }
+
+    public void notifyItems() {
+        notifyDataSetChanged();
     }
 
     public void notifyItemChanged(E item) {

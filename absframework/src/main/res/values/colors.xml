@@ -66,4 +66,6 @@
     <color name="colorAccent">#FF5722</color>
     <color name="colorAccent_A50">#80FF5722</color>
 
+    <color name="ripple">#DDDDDD</color>
+
 </resources>
