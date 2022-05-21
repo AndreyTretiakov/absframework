@@ -1,5 +1,6 @@
 package com.tretiakov.absframework.abs
 
+import android.app.Activity
 import android.content.*
 import android.os.Build
 import android.os.Bundle
@@ -24,6 +25,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.tretiakov.absframework.R
 import com.tretiakov.absframework.constants.AbsConstants
 import com.tretiakov.absframework.routers.AbsCallback
+import com.tretiakov.absframework.utils.Message
 import com.tretiakov.absframework.views.text.AbsTextView
 
 @Suppress("UNCHECKED_CAST")
@@ -258,7 +260,7 @@ abstract class KAbsFragment<T>(val layout: Int = 0) : Fragment(), AbsConstants {
         return Build.VERSION.SDK_INT < Build.VERSION_CODES.M
     }
 
-    protected open fun getAppContext(): Context? {
+    protected open fun getAppContext(): Context {
         return requireContext().applicationContext
     }
 
@@ -412,6 +414,15 @@ abstract class KAbsFragment<T>(val layout: Int = 0) : Fragment(), AbsConstants {
         }
 
         return outMetrics
+    }
+
+    fun startActivitySafe(intent: Intent) {
+        try {
+            startActivity(intent)
+        } catch (e: ActivityNotFoundException) {
+            e.printStackTrace()
+            Message.shortToast("No Application Found")
+        }
     }
 
 }
