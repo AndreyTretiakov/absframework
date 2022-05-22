@@ -359,6 +359,12 @@ public abstract class AbsRAdapter <E, H extends RecyclerView.ViewHolder>
         }
     }
 
+    protected <T> void switchActivity(Class act, Bundle bundle, AbsCallback<T> router) {
+        if (getContext() instanceof AbsActivity) {
+            ((AbsActivity) getContext()).switchActivity(act, bundle, 101, router);
+        }
+    }
+
     @Override
     public void onBindViewHolder(H h, int position) {
         h.itemView.setTag(R.string.tag_position, position);

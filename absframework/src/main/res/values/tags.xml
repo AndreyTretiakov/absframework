@@ -3,4 +3,5 @@
     <string translatable="false" name="tag_action">tag_action</string>
     <string translatable="false" name="tag_position">tag_position</string>
     <string translatable="false" name="tag_item">tag_item</string>
+    <string translatable="false" name="tag_metadata">tag_metadata</string>
 </resources>
